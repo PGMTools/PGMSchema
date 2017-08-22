@@ -3,7 +3,6 @@
   <xs:element name="map">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="below"/>
         <xs:element ref="cores"/>
         <xs:element ref="damage"/>
         <xs:element ref="destroyables"/>
@@ -30,7 +29,6 @@
         <xs:element ref="blockdrops"/>
         <xs:element ref="broadcasts"/>
         <xs:element ref="classes"/>
-        <xs:element ref="contributers"/>
         <xs:element ref="contributors"/>
         <xs:element ref="control-points"/>
         <xs:element ref="crafting"/>
@@ -81,7 +79,7 @@
       <xs:attribute name="game"/>
       <xs:attribute name="internal" type="xs:boolean"/>
       <xs:attribute name="name"/>
-      <xs:attribute name="proto" type="xs:NMTOKEN"/>
+      <xs:attribute name="proto" type="xs:NMTOKEN" use="required"/>
       <xs:attribute name="title"/>
     </xs:complexType>
   </xs:element>
@@ -95,7 +93,7 @@
   <xs:element name="authors">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="author"/>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="author"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -107,16 +105,11 @@
       <xs:sequence>
         <xs:element minOccurs="0" ref="lives"/>
         <xs:element minOccurs="0" ref="broadcastLives"/>
-        <xs:choice minOccurs="0">
-          <xs:element ref="map"/>
-          <xs:element ref="life"/>
-        </xs:choice>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="lives" type="xs:integer"/>
   <xs:element name="broadcastLives" type="xs:boolean"/>
-  <xs:element name="life" type="xs:integer"/>
   <xs:element name="block-drops">
     <xs:complexType>
       <xs:sequence>
@@ -142,19 +135,18 @@
   </xs:element>
   <xs:element name="alert">
     <xs:complexType mixed="true">
-      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="count" type="xs:string"/>
-      <xs:attribute name="every" type="xs:NMTOKEN"/>
+      <xs:attribute name="after" type="timeType" use="required"/>
+      <xs:attribute name="every" type="timeType"/>
+      <xs:attribute name="count" type="xs:NMTOKEN"/>
       <xs:attribute name="filter" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="tip">
     <xs:complexType mixed="true">
-      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="after" type="timeType" use="required"/>
+      <xs:attribute name="every" type="timeType"/>
       <xs:attribute name="count" type="xs:NMTOKEN"/>
-      <xs:attribute name="every" type="xs:NMTOKEN"/>
       <xs:attribute name="filter" type="xs:string"/>
-      <xs:attribute name="repeat" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="classes">
@@ -162,31 +154,16 @@
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="class"/>
       </xs:sequence>
-      <xs:attribute name="family" use="required" type="xs:string"/>
+      <xs:attribute name="family" type="xs:string"/>
       <xs:attribute name="restrict" type="xs:boolean"/>
       <xs:attribute name="sticky" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="contributers">
-    <xs:complexType>
-      <xs:choice>
-        <xs:element ref="contributor"/>
-        <xs:element ref="contributer"/>
-      </xs:choice>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="contributer">
-    <xs:complexType>
-      <xs:attribute name="contribution"/>
-      <xs:attribute name="uuid" use="required"/>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="contributors">
     <xs:complexType>
-      <xs:choice>
-        <xs:element ref="author"/>
-        <xs:element maxOccurs="unbounded" ref="contributor"/>
-      </xs:choice>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="contributor"/>
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="control-points">
@@ -308,7 +285,7 @@
         <xs:element ref="shape"/>
         <xs:element ref="ingredient"/>
       </xs:sequence>
-      <xs:attribute name="override" use="required" type="xs:boolean"/>
+      <xs:attribute name="override" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="shape">
@@ -332,13 +309,11 @@
   <xs:element name="disabledamage">
     <xs:complexType>
       <xs:choice>
-        <xs:element ref="damge"/>
         <xs:element maxOccurs="unbounded" ref="damage"/>
         <xs:element maxOccurs="unbounded" ref="cause"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
-  <xs:element name="damge" type="xs:string"/>
   <xs:element name="edition" type="xs:string"/>
   <xs:element name="falling-blocks">
     <xs:complexType>
@@ -387,7 +362,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:string">
-          <xs:attribute name="id" use="required" type="xs:string"/>
+          <xs:attribute name="id" type="xs:string"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -397,13 +372,13 @@
       <xs:sequence>
         <xs:element ref="all"/>
       </xs:sequence>
-      <xs:attribute name="duration" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="message" use="required" type="xs:string"/>
+      <xs:attribute name="duration" type="xs:NMTOKEN"/>
+      <xs:attribute name="message" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="flying">
     <xs:complexType>
-      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="friendlyfire" type="xs:string"/>
@@ -440,7 +415,7 @@
   <xs:element name="depletion" type="xs:string"/>
   <xs:element name="include">
     <xs:complexType>
-      <xs:attribute name="src" use="required" type="xs:string"/>
+      <xs:attribute name="src" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="item-mods">
@@ -555,7 +530,6 @@
   <xs:element name="kits">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="potion"/>
         <xs:choice maxOccurs="unbounded">
           <xs:element ref="kit"/>
           <xs:element ref="give"/>
@@ -569,7 +543,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" ref="kit"/>
       </xs:sequence>
-      <xs:attribute name="filter" use="required" type="xs:string"/>
+      <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="kit" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -578,7 +552,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" ref="kit"/>
       </xs:sequence>
-      <xs:attribute name="filter" use="required" type="xs:string"/>
+      <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="kit" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -593,10 +567,10 @@
   <xs:element name="fill">
     <xs:complexType>
       <xs:attribute name="filter" type="xs:string"/>
-      <xs:attribute name="loot" use="required" type="xs:string"/>
+      <xs:attribute name="loot" type="xs:string"/>
       <xs:attribute name="refill-clear" type="xs:boolean"/>
       <xs:attribute name="refill-interval" type="xs:NMTOKEN"/>
-      <xs:attribute name="refill-trigger" use="required" type="xs:string"/>
+      <xs:attribute name="refill-trigger" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="loot">
@@ -604,7 +578,7 @@
       <xs:sequence>
         <xs:element ref="any"/>
       </xs:sequence>
-      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="maxbuildheight" type="xs:integer"/>
@@ -626,7 +600,7 @@
   </xs:element>
   <xs:element name="mode">
     <xs:complexType>
-      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="after" type="xs:NMTOKEN" use="required"/>
       <xs:attribute name="material" use="required"/>
       <xs:attribute name="name"/>
       <xs:attribute name="show-before" type="xs:NMTOKEN"/>
@@ -637,7 +611,7 @@
   </xs:element>
   <xs:element name="mutations">
     <xs:complexType>
-      <xs:attribute name="chance" use="required" type="xs:decimal"/>
+      <xs:attribute name="chance" type="xs:decimal"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="name" type="xs:string"/>
@@ -654,24 +628,24 @@
       <xs:sequence>
         <xs:element ref="region"/>
       </xs:sequence>
-      <xs:attribute name="appearance" use="required"/>
-      <xs:attribute name="effects" use="required" type="xs:boolean"/>
-      <xs:attribute name="id" use="required" type="xs:string"/>
-      <xs:attribute name="kit" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="name" use="required"/>
-      <xs:attribute name="pickup-filter" use="required" type="xs:string"/>
-      <xs:attribute name="pickup-time" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="respawn-time" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="sounds" use="required" type="xs:boolean"/>
-      <xs:attribute name="spawn-filter" use="required" type="xs:string"/>
+      <xs:attribute name="appearance" use="required"/>
+      <xs:attribute name="effects" type="xs:boolean"/>
+      <xs:attribute name="kit" type="xs:string"/>
+      <xs:attribute name="pickup-filter" type="xs:string"/>
+      <xs:attribute name="pickup-time" type="timeType"/>
+      <xs:attribute name="respawn-time" type="timeType"/>
+      <xs:attribute name="sounds" type="xs:boolean"/>
+      <xs:attribute name="spawn-filter" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="players">
     <xs:complexType>
-      <xs:attribute name="colors" type="xs:boolean"/>
-      <xs:attribute name="max" use="required" type="xs:integer"/>
-      <xs:attribute name="max-overfill" type="xs:integer"/>
       <xs:attribute name="min" type="xs:integer"/>
+      <xs:attribute name="max" type="xs:integer"/>
+      <xs:attribute name="max-overfill" type="xs:integer"/>
+      <xs:attribute name="colors" type="xs:boolean"/>
       <xs:attribute name="show-name-tags" type="xs:boolean"/>
       <xs:attribute name="spread" type="xs:boolean"/>
     </xs:complexType>
@@ -690,16 +664,16 @@
         <xs:element ref="destroy-filter"/>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="potion"/>
       </xs:choice>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="name"/>
       <xs:attribute name="click" type="xs:string"/>
       <xs:attribute name="cooldown" type="xs:NMTOKEN"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="destroy-filter" type="xs:string"/>
       <xs:attribute name="effect" type="xs:NMTOKEN"/>
       <xs:attribute name="effects" type="xs:anyURI"/>
-      <xs:attribute name="id" use="required" type="xs:string"/>
-      <xs:attribute name="name"/>
       <xs:attribute name="potion" type="xs:anyURI"/>
-      <xs:attribute name="projectile" use="required" type="xs:string"/>
+      <xs:attribute name="projectile" type="entityTypes"/>
       <xs:attribute name="throwable" type="xs:boolean"/>
       <xs:attribute name="velocity" type="xs:decimal"/>
     </xs:complexType>
@@ -723,9 +697,9 @@
       <xs:sequence>
         <xs:element ref="detect"/>
       </xs:sequence>
-      <xs:attribute name="flare-radius" use="required" type="xs:integer"/>
+      <xs:attribute name="flare-radius" type="xs:integer"/>
       <xs:attribute name="message"/>
-      <xs:attribute name="region" use="required" type="xs:string"/>
+      <xs:attribute name="region" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="detect">
@@ -757,8 +731,6 @@
         <xs:element minOccurs="0" ref="renew-filter"/>
         <xs:element minOccurs="0" ref="replace-filter"/>
       </xs:sequence>
-      <xs:attribute name="aviod-entities" type="xs:boolean"/>
-      <xs:attribute name="avoid-entites" type="xs:boolean"/>
       <xs:attribute name="avoid-entities" type="xs:boolean"/>
       <xs:attribute name="avoid-players" type="xs:integer"/>
       <xs:attribute name="grow" type="xs:boolean"/>
@@ -836,11 +808,11 @@
   </xs:element>
   <xs:element name="dispenser-tnt-limit" type="xs:integer"/>
   <xs:element name="dispenser-tnt-multiplier" type="xs:decimal"/>
-  <xs:element name="blockdamage" type="xs:string"/>
+  <xs:element name="blockdamage" type="xs:boolean"/>
   <xs:element name="friendly-defuse" type="xs:string"/>
   <xs:element name="fuse" type="xs:NMTOKEN"/>
-  <xs:element name="instantignite" type="xs:string"/>
-  <xs:element name="licensing" type="xs:string"/>
+  <xs:element name="instantignite" type="xs:boolean"/>
+  <xs:element name="licensing" type="xs:boolean"/>
   <xs:element name="power" type="xs:decimal"/>
   <xs:element name="yield" type="xs:integer"/>
   <xs:element name="toolrepair">
@@ -875,23 +847,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="version" type="xs:NMTOKEN"/>
+  <xs:element name="version" type="semanticType"/>
   <xs:element name="world-borders">
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="world-border"/>
       </xs:sequence>
       <xs:attribute name="buffer" type="xs:integer"/>
-      <xs:attribute name="center" use="required"/>
+      <xs:attribute name="center"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="warning-distance" type="xs:integer"/>
+      <xs:attribute name="warning-time" type="timeType"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="world-border">
     <xs:complexType>
-      <xs:attribute name="after" type="xs:NMTOKEN"/>
-      <xs:attribute name="duration" type="xs:NMTOKEN"/>
-      <xs:attribute name="size" use="required" type="xs:integer"/>
+      <xs:attribute name="after" type="timeType"/>
+      <xs:attribute name="duration" type="timeType"/>
+      <xs:attribute name="size" type="xs:integer"/>
       <xs:attribute name="when" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -905,7 +878,7 @@
         <xs:element ref="fall-chance"/>
         <xs:element ref="fall-speed"/>
         <xs:element ref="land-chance"/>
-        <xs:element ref="match"/>
+         <xs:element ref="match"/> <!-- Error? -->
         <xs:element ref="modify"/>
         <xs:element ref="replacement"/>
         <xs:element ref="sticky"/>
@@ -1041,10 +1014,10 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="any"/>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
       </xs:sequence>
-      <xs:attribute name="weight" use="required" type="xs:integer"/>
+      <xs:attribute name="weight" type="xs:integer"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="entity" type="xs:string"/>
+  <xs:element name="entity" type="entityType"/>
   <xs:element name="region">
     <xs:complexType>
       <xs:sequence>
@@ -1231,9 +1204,9 @@
   <xs:element name="cuboid">
     <xs:complexType>
       <xs:attribute name="id" type="xs:string"/>
-      <xs:attribute name="max"/>
-      <xs:attribute name="min" use="required"/>
       <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="min" type="xyzType" use="required"/>
+      <xs:attribute name="max" type="xyzType" use="required"/>
       <xs:attribute name="size"/>
     </xs:complexType>
   </xs:element>
@@ -1356,7 +1329,7 @@
   <xs:element name="match-running">
     <xs:complexType/>
   </xs:element>
-  <xs:element name="mob" type="xs:string"/>
+  <xs:element name="mob" type="creatureType"/>
   <xs:element name="participating">
     <xs:complexType/>
   </xs:element>
@@ -1378,9 +1351,11 @@
         <xs:element ref="potion"/>
         <xs:element ref="skin"/>
       </xs:choice>
-      <xs:attribute name="amont" type="xs:integer"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="lore"/>
       <xs:attribute name="amount" type="xs:integer"/>
-      <xs:attribute name="amout" type="xs:integer"/>
+      <xs:attribute name="material" type="itemType"/>
       <xs:attribute name="attributes" type="xs:anyURI"/>
       <xs:attribute name="chance" type="xs:decimal"/>
       <xs:attribute name="damage" type="xs:integer"/>
@@ -1391,12 +1366,7 @@
       <xs:attribute name="grenade-destroy" type="xs:boolean"/>
       <xs:attribute name="grenade-fire" type="xs:boolean"/>
       <xs:attribute name="grenade-power" type="xs:decimal"/>
-      <xs:attribute name="id"/>
       <xs:attribute name="locked" type="xs:boolean"/>
-      <xs:attribute name="lore"/>
-      <xs:attribute name="material"/>
-      <xs:attribute name="name"/>
-      <xs:attribute name="point" type="xs:integer"/>
       <xs:attribute name="points" type="xs:integer"/>
       <xs:attribute name="potions" type="xs:NMTOKEN"/>
       <xs:attribute name="prevent-sharing" type="xs:boolean"/>
@@ -1439,12 +1409,12 @@
       <xs:sequence>
         <xs:element minOccurs="0" ref="monument"/>
       </xs:sequence>
-      <xs:attribute name="color" use="required"/>
+      <xs:attribute name="color" type="dyeType" use="required"/>
       <xs:attribute name="craftable" type="xs:boolean"/>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="location"/>
       <xs:attribute name="monument" type="xs:string"/>
-      <xs:attribute name="team" type="xs:string"/>
+      <xs:attribute name="team" type="xs:string" use="required"/>
       <xs:attribute name="woolproximity-horizontal" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
@@ -1578,7 +1548,6 @@
   <xs:element name="effect">
     <xs:complexType mixed="true">
       <xs:attribute name="amplifier" type="xs:integer"/>
-      <xs:attribute name="amplifire" type="xs:integer"/>
       <xs:attribute name="duration" type="xs:NMTOKEN"/>
       <xs:attribute name="level" type="xs:integer"/>
     </xs:complexType>
@@ -1586,8 +1555,6 @@
   <xs:element name="potion">
     <xs:complexType mixed="true">
       <xs:attribute name="ambient" type="xs:boolean"/>
-      <xs:attribute name="amplfier" type="xs:integer"/>
-      <xs:attribute name="amplifer" type="xs:integer"/>
       <xs:attribute name="amplifier" type="xs:integer"/>
       <xs:attribute name="duration" type="xs:NMTOKEN"/>
     </xs:complexType>
@@ -1598,7 +1565,7 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="enchantment"/>
       </xs:sequence>
       <xs:attribute name="amount" type="xs:integer"/>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
       <xs:attribute name="material"/>
       <xs:attribute name="name"/>
@@ -1618,7 +1585,7 @@
   </xs:element>
   <xs:element name="kill-streak">
     <xs:complexType>
-      <xs:attribute name="count" use="required" type="xs:integer"/>
+      <xs:attribute name="count" type="xs:integer"/>
       <xs:attribute name="repeat" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
@@ -1669,7 +1636,7 @@
         <xs:element ref="enchantment"/>
       </xs:choice>
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="durability" type="xs:integer"/>
       <xs:attribute name="enchantment"/>
@@ -1690,9 +1657,8 @@
         <xs:element ref="enchantment"/>
       </xs:choice>
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
-      <xs:attribute name="damamge" type="xs:integer"/>
       <xs:attribute name="enchantment"/>
       <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
       <xs:attribute name="locked" type="xs:boolean"/>
@@ -1701,9 +1667,7 @@
       <xs:attribute name="name"/>
       <xs:attribute name="prevent-sharing" type="xs:boolean"/>
       <xs:attribute name="show-attributes" type="xs:boolean"/>
-      <xs:attribute name="unbreable" type="xs:boolean"/>
       <xs:attribute name="unbreakable" type="xs:boolean"/>
-      <xs:attribute name="unbrekable" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="clear">
@@ -1717,21 +1681,21 @@
       <xs:attribute name="enabled" type="xs:boolean"/>
       <xs:attribute name="power" type="xs:decimal"/>
       <xs:attribute name="recharge-before-landing" type="xs:boolean"/>
-      <xs:attribute name="recharge-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="recharge-time" type="timeType"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="fly">
     <xs:complexType>
       <xs:attribute name="can-fly" type="xs:boolean"/>
       <xs:attribute name="fly-speed" type="xs:decimal"/>
-      <xs:attribute name="flying" use="required" type="xs:boolean"/>
+      <xs:attribute name="flying" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="foodlevel" type="xs:integer"/>
   <xs:element name="force">
     <xs:complexType mixed="true">
-      <xs:attribute name="pitch" use="required" type="xs:boolean"/>
-      <xs:attribute name="yaw" use="required" type="xs:boolean"/>
+      <xs:attribute name="pitch" type="xs:boolean"/>
+      <xs:attribute name="yaw" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="head">
@@ -1740,14 +1704,14 @@
         <xs:element ref="can-destroy"/>
         <xs:element ref="can-place-on"/>
       </xs:sequence>
-      <xs:attribute name="amount" use="required" type="xs:integer"/>
+      <xs:attribute name="amount" type="xs:integer"/>
       <xs:attribute name="lore" use="required"/>
       <xs:attribute name="name" use="required"/>
-      <xs:attribute name="show-can-destroy" use="required" type="xs:boolean"/>
-      <xs:attribute name="show-can-place-on" use="required" type="xs:boolean"/>
-      <xs:attribute name="skin" use="required" type="xs:base64Binary"/>
-      <xs:attribute name="slot" use="required" type="xs:integer"/>
-      <xs:attribute name="uuid" use="required"/>
+      <xs:attribute name="show-can-destroy" type="xs:boolean"/>
+      <xs:attribute name="show-can-place-on" type="xs:boolean"/>
+      <xs:attribute name="skin" type="xs:base64Binary"/>
+      <xs:attribute name="slot" type="xs:integer"/>
+      <xs:attribute name="uuid" type="uuidType" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="health" type="xs:integer"/>
@@ -1757,7 +1721,7 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="enchantment"/>
       </xs:sequence>
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="enchantment"/>
       <xs:attribute name="lock" type="xs:boolean"/>
@@ -1772,8 +1736,8 @@
   </xs:element>
   <xs:element name="impulse">
     <xs:complexType mixed="true">
-      <xs:attribute name="pitch" use="required" type="xs:boolean"/>
-      <xs:attribute name="yaw" use="required" type="xs:boolean"/>
+      <xs:attribute name="pitch" type="xs:boolean"/>
+      <xs:attribute name="yaw" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="knockback-reduction" type="xs:decimal"/>
@@ -1783,7 +1747,7 @@
         <xs:element ref="attribute"/>
         <xs:element ref="enchantment"/>
       </xs:choice>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="enchantment"/>
       <xs:attribute name="lock" type="xs:boolean"/>
@@ -1798,8 +1762,8 @@
   <xs:element name="saturation" type="xs:integer"/>
   <xs:element name="shield">
     <xs:complexType>
-      <xs:attribute name="delay" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="health" use="required" type="xs:integer"/>
+      <xs:attribute name="delay" type="xs:NMTOKEN"/>
+      <xs:attribute name="health" type="xs:integer"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="unless">
@@ -1807,15 +1771,15 @@
       <xs:sequence>
         <xs:element ref="item"/>
       </xs:sequence>
-      <xs:attribute name="april-fools" use="required" type="xs:boolean"/>
-      <xs:attribute name="halloween" use="required" type="xs:boolean"/>
+      <xs:attribute name="april-fools" type="xs:boolean"/>
+      <xs:attribute name="halloween" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="walk-speed" type="xs:decimal"/>
   <xs:element name="author">
     <xs:complexType mixed="true">
+      <xs:attribute name="uuid" type="uuidType"/>
       <xs:attribute name="contribution"/>
-      <xs:attribute name="uuid"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="respawn">
@@ -1881,7 +1845,7 @@
         <xs:element ref="flag"/>
       </xs:choice>
       <xs:attribute name="carry-message"/>
-      <xs:attribute name="color" type="xs:string"/>
+      <xs:attribute name="color" type="textType"/>
       <xs:attribute name="drop-kit" type="xs:string"/>
       <xs:attribute name="drop-on-water" type="xs:boolean"/>
       <xs:attribute name="flag-proximity-metric"/>
@@ -1890,7 +1854,7 @@
       <xs:attribute name="pickup-filter" type="xs:string"/>
       <xs:attribute name="pickup-kit" type="xs:string"/>
       <xs:attribute name="points" type="xs:integer"/>
-      <xs:attribute name="recover-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="recover-time" type="timeType"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="flag">
@@ -1905,9 +1869,9 @@
       </xs:choice>
       <xs:attribute name="carry-kit" type="xs:string"/>
       <xs:attribute name="carry-message"/>
-      <xs:attribute name="color"/>
+      <xs:attribute name="color" type="textType"/>
       <xs:attribute name="drop-kit" type="xs:string"/>
-      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="name"/>
       <xs:attribute name="owner" type="xs:string"/>
       <xs:attribute name="pickup-filter" type="xs:string"/>
@@ -1916,7 +1880,7 @@
       <xs:attribute name="points-rate" type="xs:decimal"/>
       <xs:attribute name="post" type="xs:string"/>
       <xs:attribute name="required" type="xs:boolean"/>
-      <xs:attribute name="return-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="return-time" type="timeType"/>
       <xs:attribute name="shared" type="xs:boolean"/>
       <xs:attribute name="show" type="xs:boolean"/>
     </xs:complexType>
@@ -1934,7 +1898,7 @@
       <xs:sequence>
         <xs:element ref="potion"/>
       </xs:sequence>
-      <xs:attribute name="force" use="required" type="xs:boolean"/>
+      <xs:attribute name="force" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="pickup-kit">
@@ -1942,7 +1906,7 @@
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="potion"/>
       </xs:sequence>
-      <xs:attribute name="force" use="required" type="xs:boolean"/>
+      <xs:attribute name="force" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="spawns">
@@ -1980,11 +1944,11 @@
   </xs:element>
   <xs:element name="team">
     <xs:complexType mixed="true">
-      <xs:attribute name="color"/>
       <xs:attribute name="id"/>
+      <xs:attribute name="color" type="textType"/>
+      <xs:attribute name="min" type="xs:integer"/>
       <xs:attribute name="max" type="xs:integer"/>
       <xs:attribute name="max-overfill" type="xs:integer"/>
-      <xs:attribute name="min" type="xs:integer"/>
       <xs:attribute name="plural" type="xs:boolean"/>
       <xs:attribute name="show-name-tags" type="xs:string"/>
     </xs:complexType>
@@ -2026,7 +1990,7 @@
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="location"/>
       <xs:attribute name="offset"/>
-      <xs:attribute name="structure" use="required" type="xs:string"/>
+      <xs:attribute name="structure" type="xs:string"/>
       <xs:attribute name="trigger" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -2037,7 +2001,7 @@
       </xs:sequence>
       <xs:attribute name="air" type="xs:boolean"/>
       <xs:attribute name="clear" type="xs:boolean"/>
-      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="origin"/>
       <xs:attribute name="region" type="xs:string"/>
     </xs:complexType>
@@ -2062,7 +2026,7 @@
   <xs:element name="time">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="xs:NMTOKEN">
+        <xs:extension base="timeType">
           <xs:attribute name="id" type="xs:string"/>
           <xs:attribute name="result" type="xs:string"/>
           <xs:attribute name="results" type="xs:string"/>
@@ -2143,8 +2107,8 @@
           <xs:element ref="region"/>
           <xs:element ref="translate"/>
           <xs:element ref="union"/>
-          <xs:element ref="above"/>
           <xs:element ref="below"/>
+          <xs:element ref="above"/>
           <xs:element ref="negative"/>
           <xs:element ref="point"/>
           <xs:element ref="cylinder"/>
@@ -2177,15 +2141,15 @@
   </xs:element>
   <xs:element name="half">
     <xs:complexType>
-      <xs:attribute name="normal" use="required"/>
-      <xs:attribute name="origin" use="required"/>
+      <xs:attribute name="normal" type="xzType" use="required"/>
+      <xs:attribute name="origin" type="xzType" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="rectangle">
     <xs:complexType>
       <xs:attribute name="id" type="xs:string"/>
-      <xs:attribute name="max" use="required"/>
-      <xs:attribute name="min" use="required"/>
+      <xs:attribute name="min" type="xzType" use="required"/>
+      <xs:attribute name="max" type="xzType" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="carrying">
@@ -2229,15 +2193,12 @@
       <xs:attribute name="enter" type="xs:string"/>
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="force" type="xs:boolean"/>
-      <xs:attribute name="idregion" type="xs:string"/>
       <xs:attribute name="kit"/>
       <xs:attribute name="leave" type="xs:string"/>
       <xs:attribute name="lend-kit" type="xs:string"/>
       <xs:attribute name="message"/>
-      <xs:attribute name="messgae"/>
       <xs:attribute name="place" type="xs:string"/>
       <xs:attribute name="region" type="xs:string"/>
-      <xs:attribute name="reigon" type="xs:string"/>
       <xs:attribute name="sound" type="xs:boolean"/>
       <xs:attribute name="use" type="xs:string"/>
       <xs:attribute name="velocity"/>
@@ -2248,9 +2209,8 @@
   </xs:element>
   <xs:element name="contributor">
     <xs:complexType mixed="true">
+      <xs:attribute name="uuid" type="uuidType"/>
       <xs:attribute name="contribution"/>
-      <xs:attribute name="contributoin"/>
-      <xs:attribute name="uuid"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="game-mode" type="xs:string"/>
@@ -2258,7 +2218,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:string">
-          <xs:attribute name="amount" use="required" type="xs:decimal"/>
+          <xs:attribute name="amount" type="xs:decimal"/>
           <xs:attribute name="operation" type="xs:string"/>
           <xs:attribute name="slot" type="xs:string"/>
         </xs:extension>
@@ -2267,7 +2227,7 @@
   </xs:element>
   <xs:element name="enchantment">
     <xs:complexType mixed="true">
-      <xs:attribute name="level" use="required" type="xs:integer"/>
+      <xs:attribute name="level" type="xs:integer"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="can-destroy">
@@ -2304,9 +2264,9 @@
   </xs:element>
   <xs:element name="circle">
     <xs:complexType>
-      <xs:attribute name="center" use="required"/>
       <xs:attribute name="id" type="xs:string"/>
-      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+      <xs:attribute name="center" type="xzType" use="required"/>
+      <xs:attribute name="radius" type="xs:decimal" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="negative">
@@ -2334,11 +2294,10 @@
   </xs:element>
   <xs:element name="cylinder">
     <xs:complexType>
-      <xs:attribute name="base" use="required"/>
-      <xs:attribute name="height" use="required" type="xs:NMTOKEN"/>
       <xs:attribute name="id"/>
-      <xs:attribute name="name"/>
-      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+      <xs:attribute name="base" type="xyzType" use="required"/>
+      <xs:attribute name="height" type="xs:NMTOKEN" use="required"/>
+      <xs:attribute name="radius" type="xs:decimal" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="mirror">
@@ -2356,8 +2315,8 @@
   <xs:element name="sphere">
     <xs:complexType>
       <xs:attribute name="id" type="xs:string"/>
-      <xs:attribute name="origin" use="required"/>
-      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+      <xs:attribute name="origin" type="xyzType" use="required"/>
+      <xs:attribute name="radius" type="xs:decimal"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="block">
@@ -2400,12 +2359,12 @@
       </xs:sequence>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="owner" type="xs:string"/>
-      <xs:attribute name="pickup-filter" type="xs:string"/>
-      <xs:attribute name="recover-time" type="xs:NMTOKEN"/>
-      <xs:attribute name="respawn-speed" type="xs:integer"/>
-      <xs:attribute name="respawn-time" type="xs:NMTOKEN"/>
-      <xs:attribute name="return-time" type="xs:NMTOKEN"/>
       <xs:attribute name="yaw" type="xs:integer"/>
+      <xs:attribute name="pickup-filter" type="xs:string"/>
+      <xs:attribute name="respawn-speed" type="xs:integer"/>
+      <xs:attribute name="recover-time" type="timeType"/>
+      <xs:attribute name="respawn-time" type="timeType"/>
+      <xs:attribute name="return-time" type="timeType"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="net">
@@ -2428,4 +2387,215 @@
       <xs:attribute name="return" type="xs:string"/>
     </xs:complexType>
   </xs:element>
+  <xs:simpleType name="entityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="dropped item"/>
+      <xs:enumeration value="experience orb"/>
+      <xs:enumeration value="leash hitch"/>
+      <xs:enumeration value="painting"/>
+      <xs:enumeration value="arrow"/>
+      <xs:enumeration value="snowball"/>
+      <xs:enumeration value="fireball"/>
+      <xs:enumeration value="small fireball"/>
+      <xs:enumeration value="ender pearl"/>
+      <xs:enumeration value="ender signal"/>
+      <xs:enumeration value="thrown exp bottle"/>
+      <xs:enumeration value="item frame"/>
+      <xs:enumeration value="wither skull"/>
+      <xs:enumeration value="primed tnt"/>
+      <xs:enumeration value="falling block"/>
+      <xs:enumeration value="firework"/>
+      <xs:enumeration value="tipped arrow"/>
+      <xs:enumeration value="spectral arrow"/>
+      <xs:enumeration value="shulker bullet"/>
+      <xs:enumeration value="dragon fireball"/>
+      <xs:enumeration value="armor stand"/>
+      <xs:enumeration value="minecart command"/>
+      <xs:enumeration value="boat"/>
+      <xs:enumeration value="minecart"/>
+      <xs:enumeration value="minecart chest"/>
+      <xs:enumeration value="minecart furnace"/>
+      <xs:enumeration value="minecart tnt"/>
+      <xs:enumeration value="minecart hopper"/>
+      <xs:enumeration value="minecart mob spawner"/>
+      <xs:enumeration value="ender crystal"/>
+      <xs:enumeration value="splash potion"/>
+      <xs:enumeration value="lingering potion"/>
+      <xs:enumeration value="area effect cloud"/>
+      <xs:enumeration value="egg"/>
+      <xs:enumeration value="fishing hook"/>
+      <xs:enumeration value="lightning"/>
+      <xs:enumeration value="weather"/>
+      <xs:enumeration value="player"/>
+      <xs:enumeration value="complex part"/>
+      <xs:enumeration value="unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="creatureType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="creeper"/>
+      <xs:enumeration value="skeleton"/>
+      <xs:enumeration value="spider"/>
+      <xs:enumeration value="giant"/>
+      <xs:enumeration value="zombie"/>
+      <xs:enumeration value="slime"/>
+      <xs:enumeration value="ghast"/>
+      <xs:enumeration value="pig zombie"/>
+      <xs:enumeration value="enderman"/>
+      <xs:enumeration value="cave spider"/>
+      <xs:enumeration value="silverfish"/>
+      <xs:enumeration value="blaze"/>
+      <xs:enumeration value="magma cube"/>
+      <xs:enumeration value="ender dragon"/>
+      <xs:enumeration value="wither"/>
+      <xs:enumeration value="bat"/>
+      <xs:enumeration value="witch"/>
+      <xs:enumeration value="endermite"/>
+      <xs:enumeration value="guardian"/>
+      <xs:enumeration value="shulker"/>
+      <xs:enumeration value="pig"/>
+      <xs:enumeration value="sheep"/>
+      <xs:enumeration value="cow"/>
+      <xs:enumeration value="chicken"/>
+      <xs:enumeration value="squid"/>
+      <xs:enumeration value="wolf"/>
+      <xs:enumeration value="mushroom cow"/>
+      <xs:enumeration value="snowman"/>
+      <xs:enumeration value="ocelot"/>
+      <xs:enumeration value="iron golem"/>
+      <xs:enumeration value="horse"/>
+      <xs:enumeration value="rabbit"/>
+      <xs:enumeration value="villager"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="entityTypes">
+    <xs:union memberTypes="entityType creatureType"/>
+  </xs:simpleType>
+  <xs:simpleType name="enchantmentType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="protection environmental"/>
+        <xs:enumeration value="protection fire"/>
+        <xs:enumeration value="protection fall"/>
+        <xs:enumeration value="protection explosions"/>
+        <xs:enumeration value="protection projectile"/>
+        <xs:enumeration value="oxygen"/>
+        <xs:enumeration value="water worker"/>
+        <xs:enumeration value="thorns"/>
+        <xs:enumeration value="depth strider"/>
+        <xs:enumeration value="frost walker"/>
+        <xs:enumeration value="binding curse"/>
+        <xs:enumeration value="damage all"/>
+        <xs:enumeration value="damage undead"/>
+        <xs:enumeration value="damage arthropods"/>
+        <xs:enumeration value="knockback"/>
+        <xs:enumeration value="fire aspect"/>
+        <xs:enumeration value="loot bonus mobs"/>
+        <xs:enumeration value="dig speed"/>
+        <xs:enumeration value="silk touch"/>
+        <xs:enumeration value="durability"/>
+        <xs:enumeration value="loot bonus blocks"/>
+        <xs:enumeration value="arrow damage"/>
+        <xs:enumeration value="arrow knockback"/>
+        <xs:enumeration value="arrow fire"/>
+        <xs:enumeration value="arrow infinite"/>
+        <xs:enumeration value="luck"/>
+        <xs:enumeration value="lure"/>
+        <xs:enumeration value="mending"/>
+        <xs:enumeration value="vanishing curse"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="textType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="black"/>
+      <xs:enumeration value="dark blue"/>
+      <xs:enumeration value="dark green"/>
+      <xs:enumeration value="dark aqua"/>
+      <xs:enumeration value="dark red"/>
+      <xs:enumeration value="dark purple"/>
+      <xs:enumeration value="gold"/>
+      <xs:enumeration value="gray"/>
+      <xs:enumeration value="dark gray"/>
+      <xs:enumeration value="blue"/>
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="aqua"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="light purple"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="white"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dyeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="white"/>
+      <xs:enumeration value="orange"/>
+      <xs:enumeration value="magenta"/>
+      <xs:enumeration value="light blue"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="lime"/>
+      <xs:enumeration value="pink"/>
+      <xs:enumeration value="gray"/>
+      <xs:enumeration value="silver"/>
+      <xs:enumeration value="cyan"/>
+      <xs:enumeration value="purple"/>
+      <xs:enumeration value="blue"/>
+      <xs:enumeration value="brown"/>
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="black"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Test Items Incomplete -->
+  <xs:simpleType name="itemType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="diamond pickaxe"/>
+      <xs:enumeration value="iron spade"/>
+      <xs:enumeration value="stained clay"/>
+      <xs:enumeration value="wool"/>
+      <xs:enumeration value="bow"/>
+      <xs:enumeration value="stone sword"/>
+      <xs:enumeration value="glass"/>
+      <xs:enumeration value="log"/>
+      <xs:enumeration value="wood"/>
+      <xs:enumeration value="arrow"/>
+      <xs:enumeration value="steak"/>
+      <xs:enumeration value="cooked fish"/>
+      <xs:enumeration value="water lily"/>
+      <xs:enumeration value="water bucket"/>
+      <xs:enumeration value="iron axe"/>
+      <xs:enumeration value="golden apple"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="xyzType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="xzType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="hexType">
+    <xs:restriction base="xs:string">
+      <xs:length value="6" fixed="true" />
+      <xs:pattern value="[0-9a-fA-F]{6}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="uuidType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="32"/>
+      <xs:maxLength value="36"/>
+      <xs:pattern value="[0-9a-fA-F]{8}-?[0-9a-fA-F]{4}-?4[0-9a-fA-F]{3}-?[8-9a-bA-B][0-9a-fA-F]{3}-?[0-9a-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="timeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(\d+(\.\d?)?)[s,m,h,d]?|(\.[0-9])[s,m,h,d]?|oo"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="semanticType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+\.*[0-9]*\.*[0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>
