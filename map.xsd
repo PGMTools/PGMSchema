@@ -1,0 +1,2431 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="map">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="below"/>
+        <xs:element ref="cores"/>
+        <xs:element ref="damage"/>
+        <xs:element ref="destroyables"/>
+        <xs:element ref="flags"/>
+        <xs:element ref="game-mode"/>
+        <xs:element ref="gamemode"/>
+        <xs:element ref="if"/>
+        <xs:element ref="kill-reward"/>
+        <xs:element ref="objective"/>
+        <xs:element ref="portals"/>
+        <xs:element ref="regions"/>
+        <xs:element ref="respawn"/>
+        <xs:element ref="score"/>
+        <xs:element ref="spawns"/>
+        <xs:element ref="structures"/>
+        <xs:element ref="teams"/>
+        <xs:element ref="time"/>
+        <xs:element ref="wools"/>
+        <xs:element ref="armorkeep"/>
+        <xs:element ref="authors"/>
+        <xs:element ref="autorespawn"/>
+        <xs:element ref="blitz"/>
+        <xs:element ref="block-drops"/>
+        <xs:element ref="blockdrops"/>
+        <xs:element ref="broadcasts"/>
+        <xs:element ref="classes"/>
+        <xs:element ref="contributers"/>
+        <xs:element ref="contributors"/>
+        <xs:element ref="control-points"/>
+        <xs:element ref="crafting"/>
+        <xs:element ref="difficulty"/>
+        <xs:element ref="disabledamage"/>
+        <xs:element ref="edition"/>
+        <xs:element ref="falling-blocks"/>
+        <xs:element ref="filters"/>
+        <xs:element ref="friendlyfire"/>
+        <xs:element ref="gamerules"/>
+        <xs:element ref="genre"/>
+        <xs:element ref="hunger"/>
+        <xs:element ref="include"/>
+        <xs:element ref="item-mods"/>
+        <xs:element ref="itemkeep"/>
+        <xs:element ref="itemremove"/>
+        <xs:element ref="itemrepair"/>
+        <xs:element ref="keep-potion-bottles"/>
+        <xs:element ref="kill-rewards"/>
+        <xs:element ref="killreward"/>
+        <xs:element ref="killrewards"/>
+        <xs:element ref="king"/>
+        <xs:element ref="kits"/>
+        <xs:element ref="lootables"/>
+        <xs:element ref="maxbuildheight"/>
+        <xs:element ref="mobs"/>
+        <xs:element ref="modes"/>
+        <xs:element ref="multitrade"/>
+        <xs:element ref="mutations"/>
+        <xs:element ref="name"/>
+        <xs:element ref="phase"/>
+        <xs:element ref="pickups"/>
+        <xs:element ref="players"/>
+        <xs:element ref="projectiles"/>
+        <xs:element ref="proximity-alarms"/>
+        <xs:element ref="rage"/>
+        <xs:element ref="renewables"/>
+        <xs:element ref="respawns"/>
+        <xs:element ref="rules"/>
+        <xs:element ref="slug"/>
+        <xs:element ref="timelock"/>
+        <xs:element ref="tnt"/>
+        <xs:element ref="toolrepair"/>
+        <xs:element ref="tutorial"/>
+        <xs:element ref="version"/>
+        <xs:element ref="world-borders"/>
+      </xs:choice>
+      <xs:attribute name="game"/>
+      <xs:attribute name="internal" type="xs:boolean"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="proto" type="xs:NMTOKEN"/>
+      <xs:attribute name="title"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="armorkeep">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="authors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="author"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="autorespawn">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="blitz">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="lives"/>
+        <xs:element minOccurs="0" ref="broadcastLives"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="map"/>
+          <xs:element ref="life"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lives" type="xs:integer"/>
+  <xs:element name="broadcastLives" type="xs:boolean"/>
+  <xs:element name="life" type="xs:integer"/>
+  <xs:element name="block-drops">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="rule"/>
+      </xs:sequence>
+      <xs:attribute name="trample" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="blockdrops">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="rule"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="broadcasts">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="alert"/>
+        <xs:element ref="tip"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="alert">
+    <xs:complexType mixed="true">
+      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="count" type="xs:string"/>
+      <xs:attribute name="every" type="xs:NMTOKEN"/>
+      <xs:attribute name="filter" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tip">
+    <xs:complexType mixed="true">
+      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="count" type="xs:NMTOKEN"/>
+      <xs:attribute name="every" type="xs:NMTOKEN"/>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="repeat" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="classes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="class"/>
+      </xs:sequence>
+      <xs:attribute name="family" use="required" type="xs:string"/>
+      <xs:attribute name="restrict" type="xs:boolean"/>
+      <xs:attribute name="sticky" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="contributers">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="contributor"/>
+        <xs:element ref="contributer"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="contributer">
+    <xs:complexType>
+      <xs:attribute name="contribution"/>
+      <xs:attribute name="uuid" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="contributors">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="author"/>
+        <xs:element maxOccurs="unbounded" ref="contributor"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="control-points">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="control-point"/>
+      </xs:sequence>
+      <xs:attribute name="capture-filter" type="xs:string"/>
+      <xs:attribute name="capture-players" type="xs:string"/>
+      <xs:attribute name="capture-rule" type="xs:string"/>
+      <xs:attribute name="capture-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="decay" type="xs:decimal"/>
+      <xs:attribute name="incremental" type="xs:boolean"/>
+      <xs:attribute name="neutral-state" type="xs:boolean"/>
+      <xs:attribute name="owner-points" type="xs:integer"/>
+      <xs:attribute name="permanent" type="xs:boolean"/>
+      <xs:attribute name="points" type="xs:decimal"/>
+      <xs:attribute name="points-growth" type="xs:integer"/>
+      <xs:attribute name="required" type="xs:boolean"/>
+      <xs:attribute name="scaled-time" type="xs:boolean"/>
+      <xs:attribute name="show" type="xs:boolean"/>
+      <xs:attribute name="show-effects" type="xs:boolean"/>
+      <xs:attribute name="show-messages" type="xs:boolean"/>
+      <xs:attribute name="show-progress" type="xs:boolean"/>
+      <xs:attribute name="time-multiplier" type="xs:decimal"/>
+      <xs:attribute name="visual-materials" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="control-point">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="capture-region"/>
+        <xs:element minOccurs="0" ref="progress-display-region"/>
+        <xs:element minOccurs="0" ref="owner-display-region"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="capture"/>
+          <xs:element ref="capture-filter"/>
+          <xs:element ref="captured"/>
+          <xs:element ref="progress"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="player-filter"/>
+      </xs:sequence>
+      <xs:attribute name="capture" type="xs:string"/>
+      <xs:attribute name="capture-players" type="xs:string"/>
+      <xs:attribute name="capture-rule" type="xs:string"/>
+      <xs:attribute name="capture-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="captured" type="xs:string"/>
+      <xs:attribute name="decay" type="xs:decimal"/>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="incremental" type="xs:boolean"/>
+      <xs:attribute name="initial-owner" type="xs:string"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="neutral-state" type="xs:boolean"/>
+      <xs:attribute name="owner" type="xs:string"/>
+      <xs:attribute name="permanent" type="xs:boolean"/>
+      <xs:attribute name="player-filter" type="xs:string"/>
+      <xs:attribute name="points" type="xs:decimal"/>
+      <xs:attribute name="progress" type="xs:string"/>
+      <xs:attribute name="recovery" type="xs:decimal"/>
+      <xs:attribute name="required" type="xs:boolean"/>
+      <xs:attribute name="scaled-time" type="xs:boolean"/>
+      <xs:attribute name="show" type="xs:boolean"/>
+      <xs:attribute name="time-multiplier" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="capture-region">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cuboid"/>
+        <xs:element ref="everywhere"/>
+        <xs:element ref="translate"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="progress-display-region">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cuboid"/>
+        <xs:element ref="translate"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="owner-display-region">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="translate"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="player-filter">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="all"/>
+        <xs:element ref="any"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="crafting">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="disable"/>
+        <xs:choice>
+          <xs:element ref="disabled"/>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="shaped"/>
+            <xs:element ref="shapeless"/>
+          </xs:choice>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="disable" type="xs:string"/>
+  <xs:element name="disabled" type="xs:string"/>
+  <xs:element name="shaped">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="result"/>
+        <xs:element ref="shape"/>
+        <xs:element ref="ingredient"/>
+      </xs:sequence>
+      <xs:attribute name="override" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="shape">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="row"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="row" type="xs:string"/>
+  <xs:element name="shapeless">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="result"/>
+        <xs:element maxOccurs="unbounded" ref="ingredient"/>
+      </xs:sequence>
+      <xs:attribute name="override" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="difficulty" type="xs:string"/>
+  <xs:element name="disabledamage">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="damge"/>
+        <xs:element maxOccurs="unbounded" ref="damage"/>
+        <xs:element maxOccurs="unbounded" ref="cause"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="damge" type="xs:string"/>
+  <xs:element name="edition" type="xs:string"/>
+  <xs:element name="falling-blocks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="rule"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="filters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="completed"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="all"/>
+          <xs:element ref="allow"/>
+          <xs:element ref="any"/>
+          <xs:element ref="carrying"/>
+          <xs:element ref="carrying-flag"/>
+          <xs:element ref="cause"/>
+          <xs:element ref="complement"/>
+          <xs:element ref="cuboid"/>
+          <xs:element ref="deny"/>
+          <xs:element ref="holding"/>
+          <xs:element ref="intersect"/>
+          <xs:element ref="material"/>
+          <xs:element ref="not"/>
+          <xs:element ref="objective"/>
+          <xs:element ref="random"/>
+          <xs:element ref="rectangle"/>
+          <xs:element ref="team"/>
+          <xs:element ref="time"/>
+          <xs:element ref="union"/>
+          <xs:element ref="wearing"/>
+          <xs:element ref="countdown"/>
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="flying"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="score"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="apply"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="class"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="completed">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="id" use="required" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="countdown">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="all"/>
+      </xs:sequence>
+      <xs:attribute name="duration" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="message" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="flying">
+    <xs:complexType>
+      <xs:attribute name="id" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="friendlyfire" type="xs:string"/>
+  <xs:element name="gamerules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="doDaylightCycle"/>
+          <xs:element ref="doTileDrops"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="doDayLightCycle"/>
+          <xs:element ref="doFireTick"/>
+          <xs:element ref="doMobLoot"/>
+          <xs:element ref="naturalRegeneration"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="doDaylightCycle" type="xs:boolean"/>
+  <xs:element name="doTileDrops" type="xs:boolean"/>
+  <xs:element name="doDayLightCycle" type="xs:boolean"/>
+  <xs:element name="doFireTick" type="xs:boolean"/>
+  <xs:element name="doMobLoot" type="xs:boolean"/>
+  <xs:element name="naturalRegeneration" type="xs:boolean"/>
+  <xs:element name="genre" type="xs:string"/>
+  <xs:element name="hunger">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="depletion"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="depletion" type="xs:string"/>
+  <xs:element name="include">
+    <xs:complexType>
+      <xs:attribute name="src" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="item-mods">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="rule"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemkeep">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemremove">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="itemrepair">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="keep-potion-bottles">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="kill-rewards">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="kill-reward"/>
+        <xs:element minOccurs="0" ref="filter"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="killreward">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="kill-streak"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="filter"/>
+          <xs:element ref="item"/>
+          <xs:element ref="kit"/>
+          <xs:element ref="potion"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="effect"/>
+      </xs:sequence>
+      <xs:attribute name="kit" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="killrewards">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="kill-reward"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="king">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="hills"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hills">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="hill"/>
+      </xs:sequence>
+      <xs:attribute name="capture-rule" type="xs:string"/>
+      <xs:attribute name="capture-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="neutral-state" type="xs:boolean"/>
+      <xs:attribute name="permanent" type="xs:boolean"/>
+      <xs:attribute name="points" type="xs:integer"/>
+      <xs:attribute name="points-growth" type="xs:integer"/>
+      <xs:attribute name="required" type="xs:boolean"/>
+      <xs:attribute name="show" type="xs:boolean"/>
+      <xs:attribute name="visual-materials" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hill">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="capture"/>
+        <xs:element minOccurs="0" ref="progress"/>
+        <xs:element minOccurs="0" ref="captured"/>
+      </xs:sequence>
+      <xs:attribute name="capture" type="xs:string"/>
+      <xs:attribute name="capture-rule" type="xs:string"/>
+      <xs:attribute name="capture-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="id" type="xs:NMTOKEN"/>
+      <xs:attribute name="initial-owner" type="xs:string"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="neutral-state" type="xs:boolean"/>
+      <xs:attribute name="permanent" type="xs:boolean"/>
+      <xs:attribute name="player-filter" type="xs:NMTOKEN"/>
+      <xs:attribute name="points" type="xs:decimal"/>
+      <xs:attribute name="progress" type="xs:string"/>
+      <xs:attribute name="required" type="xs:boolean"/>
+      <xs:attribute name="show" type="xs:boolean"/>
+      <xs:attribute name="show-progress" type="xs:boolean"/>
+      <xs:attribute name="time-multiplier" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="kits">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="potion"/>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="kit"/>
+          <xs:element ref="give"/>
+          <xs:element ref="lend"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="give">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="kit"/>
+      </xs:sequence>
+      <xs:attribute name="filter" use="required" type="xs:string"/>
+      <xs:attribute name="kit" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lend">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="kit"/>
+      </xs:sequence>
+      <xs:attribute name="filter" use="required" type="xs:string"/>
+      <xs:attribute name="kit" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="lootables">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element ref="fill"/>
+        <xs:element ref="loot"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fill">
+    <xs:complexType>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="loot" use="required" type="xs:string"/>
+      <xs:attribute name="refill-clear" type="xs:boolean"/>
+      <xs:attribute name="refill-interval" type="xs:NMTOKEN"/>
+      <xs:attribute name="refill-trigger" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="loot">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="any"/>
+      </xs:sequence>
+      <xs:attribute name="id" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="maxbuildheight" type="xs:integer"/>
+  <xs:element name="mobs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="filter"/>
+      </xs:sequence>
+      <xs:attribute name="filter" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="modes">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="mode"/>
+      </xs:sequence>
+      <xs:attribute name="boss-bar" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mode">
+    <xs:complexType>
+      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="material" use="required"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="show-before" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="multitrade">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="mutations">
+    <xs:complexType>
+      <xs:attribute name="chance" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="phase" type="xs:string"/>
+  <xs:element name="pickups">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="pickup"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pickup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="region"/>
+      </xs:sequence>
+      <xs:attribute name="appearance" use="required"/>
+      <xs:attribute name="effects" use="required" type="xs:boolean"/>
+      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="kit" use="required" type="xs:string"/>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="pickup-filter" use="required" type="xs:string"/>
+      <xs:attribute name="pickup-time" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="respawn-time" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="sounds" use="required" type="xs:boolean"/>
+      <xs:attribute name="spawn-filter" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="players">
+    <xs:complexType>
+      <xs:attribute name="colors" type="xs:boolean"/>
+      <xs:attribute name="max" use="required" type="xs:integer"/>
+      <xs:attribute name="max-overfill" type="xs:integer"/>
+      <xs:attribute name="min" type="xs:integer"/>
+      <xs:attribute name="show-name-tags" type="xs:boolean"/>
+      <xs:attribute name="spread" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="projectiles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="projectile"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="projectile">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="effect"/>
+        <xs:element ref="destroy-filter"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="potion"/>
+      </xs:choice>
+      <xs:attribute name="click" type="xs:string"/>
+      <xs:attribute name="cooldown" type="xs:NMTOKEN"/>
+      <xs:attribute name="damage" type="xs:integer"/>
+      <xs:attribute name="destroy-filter" type="xs:string"/>
+      <xs:attribute name="effect" type="xs:NMTOKEN"/>
+      <xs:attribute name="effects" type="xs:anyURI"/>
+      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="potion" type="xs:anyURI"/>
+      <xs:attribute name="projectile" use="required" type="xs:string"/>
+      <xs:attribute name="throwable" type="xs:boolean"/>
+      <xs:attribute name="velocity" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="destroy-filter">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="filter"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="proximity-alarms">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="proximity-alarm"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="proximity-alarm">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="detect"/>
+      </xs:sequence>
+      <xs:attribute name="flare-radius" use="required" type="xs:integer"/>
+      <xs:attribute name="message"/>
+      <xs:attribute name="region" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="detect">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="any"/>
+        <xs:element ref="team"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rage">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="renewables">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="renewable"/>
+      </xs:sequence>
+      <xs:attribute name="interval" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="renewable">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="renew-filer"/>
+        <xs:element minOccurs="0" ref="region"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="renew"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="replace"/>
+        <xs:element minOccurs="0" ref="renew-filter"/>
+        <xs:element minOccurs="0" ref="replace-filter"/>
+      </xs:sequence>
+      <xs:attribute name="aviod-entities" type="xs:boolean"/>
+      <xs:attribute name="avoid-entites" type="xs:boolean"/>
+      <xs:attribute name="avoid-entities" type="xs:boolean"/>
+      <xs:attribute name="avoid-players" type="xs:integer"/>
+      <xs:attribute name="grow" type="xs:boolean"/>
+      <xs:attribute name="interval" type="xs:NMTOKEN"/>
+      <xs:attribute name="particles" type="xs:boolean"/>
+      <xs:attribute name="rate" type="xs:decimal"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="renew-filter" type="xs:string"/>
+      <xs:attribute name="sound" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="renew-filer">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="any"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="renew" type="xs:string"/>
+  <xs:element name="replace" type="xs:anyURI"/>
+  <xs:element name="renew-filter">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="any"/>
+        <xs:element ref="filter"/>
+        <xs:element ref="material"/>
+        <xs:element ref="not"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="replace-filter">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="any"/>
+        <xs:element ref="material"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="respawns">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="respawn"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rules">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="rule"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="slug" type="xs:NMTOKEN"/>
+  <xs:element name="timelock" type="xs:string"/>
+  <xs:element name="tnt">
+    <xs:complexType>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="dispenser-tnt-limit"/>
+          <xs:element ref="dispenser-tnt-multiplier"/>
+        </xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="blockdamage"/>
+          <xs:element ref="friendly-defuse"/>
+          <xs:element ref="fuse"/>
+          <xs:element ref="instantignite"/>
+          <xs:element ref="licensing"/>
+          <xs:element ref="power"/>
+          <xs:element ref="yield"/>
+        </xs:choice>
+      </xs:choice>
+      <xs:attribute name="friendly-defuse" type="xs:boolean"/>
+      <xs:attribute name="yield" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dispenser-tnt-limit" type="xs:integer"/>
+  <xs:element name="dispenser-tnt-multiplier" type="xs:decimal"/>
+  <xs:element name="blockdamage" type="xs:string"/>
+  <xs:element name="friendly-defuse" type="xs:string"/>
+  <xs:element name="fuse" type="xs:NMTOKEN"/>
+  <xs:element name="instantignite" type="xs:string"/>
+  <xs:element name="licensing" type="xs:string"/>
+  <xs:element name="power" type="xs:decimal"/>
+  <xs:element name="yield" type="xs:integer"/>
+  <xs:element name="toolrepair">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tool"/>
+        <xs:element minOccurs="0" ref="item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="tool" type="xs:string"/>
+  <xs:element name="tutorial">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="stage"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="stage">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="message"/>
+        <xs:element minOccurs="0" ref="teleport"/>
+      </xs:sequence>
+      <xs:attribute name="title" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="teleport">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="point"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="version" type="xs:NMTOKEN"/>
+  <xs:element name="world-borders">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="world-border"/>
+      </xs:sequence>
+      <xs:attribute name="buffer" type="xs:integer"/>
+      <xs:attribute name="center" use="required"/>
+      <xs:attribute name="damage" type="xs:integer"/>
+      <xs:attribute name="warning-distance" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="world-border">
+    <xs:complexType>
+      <xs:attribute name="after" type="xs:NMTOKEN"/>
+      <xs:attribute name="duration" type="xs:NMTOKEN"/>
+      <xs:attribute name="size" use="required" type="xs:integer"/>
+      <xs:attribute name="when" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rule">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="filter"/>
+        <xs:element ref="kit"/>
+        <xs:element ref="region"/>
+        <xs:element ref="drops"/>
+        <xs:element ref="fall-chance"/>
+        <xs:element ref="fall-speed"/>
+        <xs:element ref="land-chance"/>
+        <xs:element ref="match"/>
+        <xs:element ref="modify"/>
+        <xs:element ref="replacement"/>
+        <xs:element ref="sticky"/>
+        <xs:element ref="wrongtool"/>
+      </xs:choice>
+      <xs:attribute name="delay" type="xs:integer"/>
+      <xs:attribute name="fall-speed" type="xs:decimal"/>
+      <xs:attribute name="kit" type="xs:string"/>
+      <xs:attribute name="punch" type="xs:boolean"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="trample" type="xs:boolean"/>
+      <xs:attribute name="wrong-tool" type="xs:boolean"/>
+      <xs:attribute name="wrongtool" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="drops">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fall-chance" type="xs:decimal"/>
+  <xs:element name="fall-speed" type="xs:integer"/>
+  <xs:element name="land-chance" type="xs:decimal"/>
+  <xs:element name="match">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="all-blocks"/>
+        <xs:choice>
+          <xs:element maxOccurs="unbounded" ref="item"/>
+          <xs:element maxOccurs="unbounded" ref="material"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="modify">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="attribute"/>
+        <xs:element minOccurs="0" ref="enchantment"/>
+        <xs:element minOccurs="0" ref="can-destroy"/>
+        <xs:element minOccurs="0" ref="can-place-on"/>
+      </xs:sequence>
+      <xs:attribute name="name"/>
+      <xs:attribute name="show-attributes" type="xs:boolean"/>
+      <xs:attribute name="show-can-destroy" type="xs:boolean"/>
+      <xs:attribute name="show-can-place-on" type="xs:boolean"/>
+      <xs:attribute name="show-enchantments" type="xs:boolean"/>
+      <xs:attribute name="show-unbreakable" type="xs:boolean"/>
+      <xs:attribute name="unbreakable" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="replacement" type="xs:string"/>
+  <xs:element name="sticky">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="any"/>
+        <xs:element ref="material"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wrongtool" type="xs:boolean"/>
+  <xs:element name="damage">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="allow"/>
+        <xs:element ref="deny"/>
+      </xs:choice>
+      <xs:attribute name="ally" type="xs:boolean"/>
+      <xs:attribute name="enemy" type="xs:boolean"/>
+      <xs:attribute name="other" type="xs:boolean"/>
+      <xs:attribute name="self" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cause">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="id" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="any">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="flag-carried"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cause"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="deny"/>
+          <xs:element ref="always"/>
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="option"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="any"/>
+          <xs:element ref="item"/>
+        </xs:choice>
+        <xs:choice>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="entity"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="carrying-flag"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="time"/>
+        <xs:element minOccurs="0" ref="flag-returned"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="all"/>
+          <xs:element ref="filter"/>
+          <xs:element ref="material"/>
+          <xs:element ref="not"/>
+          <xs:element ref="objective"/>
+          <xs:element ref="team"/>
+          <xs:element ref="void"/>
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="region"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="wearing"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="holding"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="carrying"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="count" type="xs:NMTOKEN"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="parents" type="xs:string"/>
+      <xs:attribute name="unique" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="always">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="option">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="any"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="weight" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="entity" type="xs:string"/>
+  <xs:element name="region">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0">
+          <xs:element ref="above"/>
+          <xs:element ref="everywhere"/>
+          <xs:element ref="intersect"/>
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="circle"/>
+        <xs:choice>
+          <xs:element ref="point"/>
+          <xs:element ref="region"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="complement"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="below"/>
+          <xs:element ref="negative"/>
+        </xs:choice>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="cuboid"/>
+          <xs:element ref="cylinder"/>
+          <xs:element ref="rectangle"/>
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="mirror"/>
+          <xs:element ref="union"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="sphere"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="translate"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="block"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="yaw" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="filter">
+    <xs:complexType>
+      <xs:choice minOccurs="0">
+        <xs:element ref="all"/>
+        <xs:element ref="allow"/>
+        <xs:element ref="any"/>
+        <xs:element ref="class"/>
+        <xs:element ref="filter"/>
+        <xs:element ref="kill-streak"/>
+        <xs:element ref="material"/>
+        <xs:element ref="not"/>
+        <xs:element ref="objective"/>
+        <xs:element ref="spawn"/>
+        <xs:element ref="team"/>
+        <xs:element ref="time"/>
+      </xs:choice>
+      <xs:attribute name="id" type="xs:NMTOKEN"/>
+      <xs:attribute name="parents" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="material">
+    <xs:complexType mixed="true">
+      <xs:attribute name="damage" type="xs:integer"/>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="not">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="region"/>
+        <xs:element minOccurs="0" ref="all"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="team"/>
+          <xs:element ref="wearing"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="not"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="carrying"/>
+          <xs:element ref="carrying-flag"/>
+          <xs:element ref="cause"/>
+          <xs:element ref="class"/>
+          <xs:element ref="filter"/>
+          <xs:element ref="flag-carried"/>
+          <xs:element ref="material"/>
+          <xs:element ref="time"/>
+          <xs:element ref="void"/>
+          <xs:element ref="gliding"/>
+          <xs:element ref="same-team"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="any"/>
+        <xs:element minOccurs="0" ref="objective"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gliding">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="same-team">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="any"/>
+        <xs:element ref="carrying-flag"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="gamemode" type="xs:string"/>
+  <xs:element name="objective">
+    <xs:complexType mixed="true">
+      <xs:attribute name="any" type="xs:boolean"/>
+      <xs:attribute name="id" type="xs:NMTOKEN"/>
+      <xs:attribute name="team" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="score">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="box"/>
+        <xs:element ref="deaths"/>
+        <xs:element ref="kills"/>
+        <xs:element ref="limit"/>
+      </xs:choice>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="box">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="region"/>
+        <xs:element minOccurs="0" ref="redeemables"/>
+      </xs:sequence>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="kit" type="xs:string"/>
+      <xs:attribute name="points" type="xs:integer"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="silent" type="xs:boolean"/>
+      <xs:attribute name="value" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="redeemables">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="region" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="deaths" type="xs:integer"/>
+  <xs:element name="kills" type="xs:integer"/>
+  <xs:element name="limit" type="xs:integer"/>
+  <xs:element name="cores">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="cores"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="core"/>
+      </xs:sequence>
+      <xs:attribute name="leak" type="xs:integer"/>
+      <xs:attribute name="material"/>
+      <xs:attribute name="mode-changes" type="xs:boolean"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="team" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="core">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="region"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="team" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="everywhere">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="translate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="region"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="offset" use="required"/>
+      <xs:attribute name="region" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cuboid">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="max"/>
+      <xs:attribute name="min" use="required"/>
+      <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="size"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="capture-filter">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="all"/>
+        <xs:element ref="not"/>
+        <xs:element ref="team"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="capture">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cuboid"/>
+        <xs:element ref="cylinder"/>
+        <xs:element ref="everywhere"/>
+        <xs:element ref="region"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="progress">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cuboid"/>
+        <xs:element ref="cylinder"/>
+        <xs:element ref="nowhere"/>
+        <xs:element ref="region"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="captured">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cuboid"/>
+        <xs:element ref="cylinder"/>
+        <xs:element ref="nowhere"/>
+        <xs:element ref="region"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="all">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0">
+          <xs:element ref="all"/>
+          <xs:element ref="walking"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="match-finished"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="above"/>
+          <xs:element ref="flag-carried"/>
+        </xs:choice>
+        <xs:sequence minOccurs="0">
+          <xs:element ref="attacker"/>
+          <xs:element ref="victim"/>
+        </xs:sequence>
+        <xs:element minOccurs="0" ref="cuboid"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="any"/>
+          <xs:element ref="carrying"/>
+          <xs:element ref="cause"/>
+          <xs:element ref="class"/>
+          <xs:element ref="filter"/>
+          <xs:element ref="material"/>
+          <xs:element ref="not"/>
+          <xs:element ref="objective"/>
+          <xs:element ref="random"/>
+          <xs:element ref="region"/>
+          <xs:element ref="spawn"/>
+          <xs:element ref="team"/>
+          <xs:element ref="time"/>
+          <xs:element ref="wearing"/>
+          <xs:element ref="can-fly"/>
+          <xs:element ref="crouching"/>
+          <xs:element ref="match-running"/>
+          <xs:element ref="mob"/>
+          <xs:element ref="participating"/>
+          <xs:element ref="sprinting"/>
+        </xs:choice>
+        <xs:choice minOccurs="0">
+          <xs:element ref="carrying-flag"/>
+          <xs:element ref="flag-returned"/>
+          <xs:element ref="holding"/>
+          <xs:element ref="kill-streak"/>
+          <xs:element ref="never"/>
+          <xs:element ref="structural-load"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="walking">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="match-finished">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="attacker">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cause"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="victim">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="cause"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="can-fly">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="crouching">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="match-running">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="mob" type="xs:string"/>
+  <xs:element name="participating">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="sprinting">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="never">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="structural-load" type="xs:integer"/>
+  <xs:element name="item">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="attribute"/>
+        <xs:element ref="can-destroy"/>
+        <xs:element ref="can-place-on"/>
+        <xs:element ref="effect"/>
+        <xs:element ref="enchantment"/>
+        <xs:element ref="potion"/>
+        <xs:element ref="skin"/>
+      </xs:choice>
+      <xs:attribute name="amont" type="xs:integer"/>
+      <xs:attribute name="amount" type="xs:integer"/>
+      <xs:attribute name="amout" type="xs:integer"/>
+      <xs:attribute name="attributes" type="xs:anyURI"/>
+      <xs:attribute name="chance" type="xs:decimal"/>
+      <xs:attribute name="damage" type="xs:integer"/>
+      <xs:attribute name="enchantment"/>
+      <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
+      <xs:attribute name="force" type="xs:boolean"/>
+      <xs:attribute name="grenade" type="xs:boolean"/>
+      <xs:attribute name="grenade-destroy" type="xs:boolean"/>
+      <xs:attribute name="grenade-fire" type="xs:boolean"/>
+      <xs:attribute name="grenade-power" type="xs:decimal"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="locked" type="xs:boolean"/>
+      <xs:attribute name="lore"/>
+      <xs:attribute name="material"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="point" type="xs:integer"/>
+      <xs:attribute name="points" type="xs:integer"/>
+      <xs:attribute name="potions" type="xs:NMTOKEN"/>
+      <xs:attribute name="prevent-sharing" type="xs:boolean"/>
+      <xs:attribute name="projectile" type="xs:string"/>
+      <xs:attribute name="show-attributes" type="xs:boolean"/>
+      <xs:attribute name="show-can-destroy" type="xs:boolean"/>
+      <xs:attribute name="show-can-place-on" type="xs:boolean"/>
+      <xs:attribute name="show-enchantments" type="xs:boolean"/>
+      <xs:attribute name="show-unbreakable" type="xs:boolean"/>
+      <xs:attribute name="slot" type="xs:NMTOKEN"/>
+      <xs:attribute name="unbreakable" type="xs:boolean"/>
+      <xs:attribute name="uuid"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="skin" type="xs:base64Binary"/>
+  <xs:element name="if">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="item"/>
+        <xs:element ref="teams"/>
+      </xs:choice>
+      <xs:attribute name="april-fools" type="xs:boolean"/>
+      <xs:attribute name="halloween" type="xs:boolean"/>
+      <xs:attribute name="ranked" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wools">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="wools"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="wool"/>
+      </xs:sequence>
+      <xs:attribute name="craftable" type="xs:boolean"/>
+      <xs:attribute name="location"/>
+      <xs:attribute name="team" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wool">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="monument"/>
+      </xs:sequence>
+      <xs:attribute name="color" use="required"/>
+      <xs:attribute name="craftable" type="xs:boolean"/>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="location"/>
+      <xs:attribute name="monument" type="xs:string"/>
+      <xs:attribute name="team" type="xs:string"/>
+      <xs:attribute name="woolproximity-horizontal" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="monument">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="block"/>
+        <xs:element ref="region"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="kill-reward">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="effect"/>
+        <xs:element ref="filter"/>
+        <xs:element ref="item"/>
+        <xs:element ref="kill-reward"/>
+        <xs:element ref="kit"/>
+        <xs:element ref="potion"/>
+      </xs:choice>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="kit" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="teams">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="team"/>
+      </xs:sequence>
+      <xs:attribute name="show-name-tags" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="below">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="x" type="xs:integer"/>
+      <xs:attribute name="y" type="xs:decimal"/>
+      <xs:attribute name="z" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="portals">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="portals"/>
+        <xs:element ref="portal"/>
+      </xs:choice>
+      <xs:attribute name="bidirectional" type="xs:boolean"/>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="observers" type="xs:string"/>
+      <xs:attribute name="pitch"/>
+      <xs:attribute name="smooth" type="xs:boolean"/>
+      <xs:attribute name="sound" type="xs:boolean"/>
+      <xs:attribute name="y" type="xs:integer"/>
+      <xs:attribute name="yaw"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="portal">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="region"/>
+        <xs:element ref="destination"/>
+      </xs:choice>
+      <xs:attribute name="bidirectional" type="xs:boolean"/>
+      <xs:attribute name="destination" type="xs:string"/>
+      <xs:attribute name="filter"/>
+      <xs:attribute name="forward" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="observers" type="xs:string"/>
+      <xs:attribute name="pitch"/>
+      <xs:attribute name="protect" type="xs:boolean"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="smooth" type="xs:boolean"/>
+      <xs:attribute name="sound" type="xs:boolean"/>
+      <xs:attribute name="x"/>
+      <xs:attribute name="y"/>
+      <xs:attribute name="yaw"/>
+      <xs:attribute name="z"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="destination">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="cuboid"/>
+        <xs:element ref="point"/>
+        <xs:element ref="region"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="destroyables">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="destroyables"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="destroyable"/>
+      </xs:sequence>
+      <xs:attribute name="completion"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="materials"/>
+      <xs:attribute name="mode-changes" type="xs:boolean"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="owner" type="xs:string"/>
+      <xs:attribute name="repairable" type="xs:boolean"/>
+      <xs:attribute name="required" type="xs:boolean"/>
+      <xs:attribute name="show" type="xs:boolean"/>
+      <xs:attribute name="show-progress" type="xs:boolean"/>
+      <xs:attribute name="sparks" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="destroyable">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="region"/>
+      </xs:sequence>
+      <xs:attribute name="completion"/>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="material"/>
+      <xs:attribute name="materials"/>
+      <xs:attribute name="mode-changes" type="xs:boolean"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="owner" type="xs:string"/>
+      <xs:attribute name="proximity-horizontal" type="xs:boolean"/>
+      <xs:attribute name="proximity-metric"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="repairable" type="xs:boolean"/>
+      <xs:attribute name="required" type="xs:boolean"/>
+      <xs:attribute name="show" type="xs:boolean"/>
+      <xs:attribute name="show-progress" type="xs:boolean"/>
+      <xs:attribute name="sparks" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="effect">
+    <xs:complexType mixed="true">
+      <xs:attribute name="amplifier" type="xs:integer"/>
+      <xs:attribute name="amplifire" type="xs:integer"/>
+      <xs:attribute name="duration" type="xs:NMTOKEN"/>
+      <xs:attribute name="level" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="potion">
+    <xs:complexType mixed="true">
+      <xs:attribute name="ambient" type="xs:boolean"/>
+      <xs:attribute name="amplfier" type="xs:integer"/>
+      <xs:attribute name="amplifer" type="xs:integer"/>
+      <xs:attribute name="amplifier" type="xs:integer"/>
+      <xs:attribute name="duration" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="result">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="enchantment"/>
+      </xs:sequence>
+      <xs:attribute name="amount" type="xs:integer"/>
+      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
+      <xs:attribute name="material"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="show-enchantments" type="xs:boolean"/>
+      <xs:attribute name="unbreakable" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ingredient">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:NMTOKEN">
+          <xs:attribute name="amount" type="xs:integer"/>
+          <xs:attribute name="symbol" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="kill-streak">
+    <xs:complexType>
+      <xs:attribute name="count" use="required" type="xs:integer"/>
+      <xs:attribute name="repeat" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="kit">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="effect"/>
+        <xs:element ref="game-mode"/>
+        <xs:element ref="gamemode"/>
+        <xs:element ref="if"/>
+        <xs:element ref="item"/>
+        <xs:element ref="kit"/>
+        <xs:element ref="potion"/>
+        <xs:element ref="boots"/>
+        <xs:element ref="chestplate"/>
+        <xs:element ref="clear"/>
+        <xs:element ref="clear-items"/>
+        <xs:element ref="double-jump"/>
+        <xs:element ref="fly"/>
+        <xs:element ref="foodlevel"/>
+        <xs:element ref="force"/>
+        <xs:element ref="head"/>
+        <xs:element ref="health"/>
+        <xs:element ref="helmet"/>
+        <xs:element ref="impulse"/>
+        <xs:element ref="knockback-reduction"/>
+        <xs:element ref="leggings"/>
+        <xs:element ref="saturation"/>
+        <xs:element ref="shield"/>
+        <xs:element ref="unless"/>
+        <xs:element ref="walk-speed"/>
+      </xs:choice>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="force" type="xs:boolean"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="lend-kit" type="xs:boolean"/>
+      <xs:attribute name="locked" type="xs:boolean"/>
+      <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="parent" type="xs:string"/>
+      <xs:attribute name="parents"/>
+      <xs:attribute name="potion-particles" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="boots">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="attribute"/>
+        <xs:element ref="enchantment"/>
+      </xs:choice>
+      <xs:attribute name="attributes" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="damage" type="xs:integer"/>
+      <xs:attribute name="durability" type="xs:integer"/>
+      <xs:attribute name="enchantment"/>
+      <xs:attribute name="lock" type="xs:boolean"/>
+      <xs:attribute name="locked" type="xs:boolean"/>
+      <xs:attribute name="lore"/>
+      <xs:attribute name="material"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="prevent-sharing" type="xs:boolean"/>
+      <xs:attribute name="show-attributes" type="xs:boolean"/>
+      <xs:attribute name="unbreakable" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="chestplate">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="attribute"/>
+        <xs:element ref="enchantment"/>
+      </xs:choice>
+      <xs:attribute name="attributes" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="damage" type="xs:integer"/>
+      <xs:attribute name="damamge" type="xs:integer"/>
+      <xs:attribute name="enchantment"/>
+      <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
+      <xs:attribute name="locked" type="xs:boolean"/>
+      <xs:attribute name="lore"/>
+      <xs:attribute name="material"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="prevent-sharing" type="xs:boolean"/>
+      <xs:attribute name="show-attributes" type="xs:boolean"/>
+      <xs:attribute name="unbreable" type="xs:boolean"/>
+      <xs:attribute name="unbreakable" type="xs:boolean"/>
+      <xs:attribute name="unbrekable" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="clear">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="clear-items">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="double-jump">
+    <xs:complexType>
+      <xs:attribute name="enabled" type="xs:boolean"/>
+      <xs:attribute name="power" type="xs:decimal"/>
+      <xs:attribute name="recharge-before-landing" type="xs:boolean"/>
+      <xs:attribute name="recharge-time" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fly">
+    <xs:complexType>
+      <xs:attribute name="can-fly" type="xs:boolean"/>
+      <xs:attribute name="fly-speed" type="xs:decimal"/>
+      <xs:attribute name="flying" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="foodlevel" type="xs:integer"/>
+  <xs:element name="force">
+    <xs:complexType mixed="true">
+      <xs:attribute name="pitch" use="required" type="xs:boolean"/>
+      <xs:attribute name="yaw" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="head">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="can-destroy"/>
+        <xs:element ref="can-place-on"/>
+      </xs:sequence>
+      <xs:attribute name="amount" use="required" type="xs:integer"/>
+      <xs:attribute name="lore" use="required"/>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="show-can-destroy" use="required" type="xs:boolean"/>
+      <xs:attribute name="show-can-place-on" use="required" type="xs:boolean"/>
+      <xs:attribute name="skin" use="required" type="xs:base64Binary"/>
+      <xs:attribute name="slot" use="required" type="xs:integer"/>
+      <xs:attribute name="uuid" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="health" type="xs:integer"/>
+  <xs:element name="helmet">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="enchantment"/>
+      </xs:sequence>
+      <xs:attribute name="attributes" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="damage" type="xs:integer"/>
+      <xs:attribute name="enchantment"/>
+      <xs:attribute name="lock" type="xs:boolean"/>
+      <xs:attribute name="locked" type="xs:boolean"/>
+      <xs:attribute name="lore"/>
+      <xs:attribute name="material"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="prevent-sharing" type="xs:boolean"/>
+      <xs:attribute name="show-attributes" type="xs:boolean"/>
+      <xs:attribute name="unbreakable" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="impulse">
+    <xs:complexType mixed="true">
+      <xs:attribute name="pitch" use="required" type="xs:boolean"/>
+      <xs:attribute name="yaw" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="knockback-reduction" type="xs:decimal"/>
+  <xs:element name="leggings">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="attribute"/>
+        <xs:element ref="enchantment"/>
+      </xs:choice>
+      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="damage" type="xs:integer"/>
+      <xs:attribute name="enchantment"/>
+      <xs:attribute name="lock" type="xs:boolean"/>
+      <xs:attribute name="locked" type="xs:boolean"/>
+      <xs:attribute name="material"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="prevent-sharing" type="xs:boolean"/>
+      <xs:attribute name="show-attributes" type="xs:boolean"/>
+      <xs:attribute name="unbreakable" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="saturation" type="xs:integer"/>
+  <xs:element name="shield">
+    <xs:complexType>
+      <xs:attribute name="delay" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="health" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="unless">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="april-fools" use="required" type="xs:boolean"/>
+      <xs:attribute name="halloween" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="walk-speed" type="xs:decimal"/>
+  <xs:element name="author">
+    <xs:complexType mixed="true">
+      <xs:attribute name="contribution"/>
+      <xs:attribute name="uuid"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="respawn">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="message"/>
+      </xs:sequence>
+      <xs:attribute name="auto" type="xs:boolean"/>
+      <xs:attribute name="blackout" type="xs:boolean"/>
+      <xs:attribute name="delay" type="xs:NMTOKEN"/>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="freeze" type="xs:NMTOKEN"/>
+      <xs:attribute name="message"/>
+      <xs:attribute name="spectate" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="regions">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="above"/>
+        <xs:element ref="apply"/>
+        <xs:element ref="below"/>
+        <xs:element ref="block"/>
+        <xs:element ref="circle"/>
+        <xs:element ref="complement"/>
+        <xs:element ref="cuboid"/>
+        <xs:element ref="cylinder"/>
+        <xs:element ref="intersect"/>
+        <xs:element ref="mirror"/>
+        <xs:element ref="negative"/>
+        <xs:element ref="point"/>
+        <xs:element ref="rectangle"/>
+        <xs:element ref="region"/>
+        <xs:element ref="sphere"/>
+        <xs:element ref="translate"/>
+        <xs:element ref="union"/>
+      </xs:choice>
+      <xs:attribute name="angle"/>
+      <xs:attribute name="kit" type="xs:string"/>
+      <xs:attribute name="pitch" type="xs:integer"/>
+      <xs:attribute name="yaw" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="class">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="kit"/>
+      </xs:sequence>
+      <xs:attribute name="default" type="xs:boolean"/>
+      <xs:attribute name="description"/>
+      <xs:attribute name="icon"/>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="longdescription"/>
+      <xs:attribute name="name"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="flags">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="flags"/>
+        <xs:element ref="net"/>
+        <xs:element ref="post"/>
+        <xs:element ref="flag"/>
+      </xs:choice>
+      <xs:attribute name="carry-message"/>
+      <xs:attribute name="color" type="xs:string"/>
+      <xs:attribute name="drop-kit" type="xs:string"/>
+      <xs:attribute name="drop-on-water" type="xs:boolean"/>
+      <xs:attribute name="flag-proximity-metric"/>
+      <xs:attribute name="owner" type="xs:string"/>
+      <xs:attribute name="permanent" type="xs:boolean"/>
+      <xs:attribute name="pickup-filter" type="xs:string"/>
+      <xs:attribute name="pickup-kit" type="xs:string"/>
+      <xs:attribute name="points" type="xs:integer"/>
+      <xs:attribute name="recover-time" type="xs:NMTOKEN"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="flag">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="net"/>
+        <xs:element ref="post"/>
+        <xs:element ref="carry-kit"/>
+        <xs:element ref="carry-message"/>
+        <xs:element ref="drop-kit"/>
+        <xs:element ref="pickup-kit"/>
+      </xs:choice>
+      <xs:attribute name="carry-kit" type="xs:string"/>
+      <xs:attribute name="carry-message"/>
+      <xs:attribute name="color"/>
+      <xs:attribute name="drop-kit" type="xs:string"/>
+      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="owner" type="xs:string"/>
+      <xs:attribute name="pickup-filter" type="xs:string"/>
+      <xs:attribute name="pickup-kit" type="xs:string"/>
+      <xs:attribute name="points" type="xs:integer"/>
+      <xs:attribute name="points-rate" type="xs:decimal"/>
+      <xs:attribute name="post" type="xs:string"/>
+      <xs:attribute name="required" type="xs:boolean"/>
+      <xs:attribute name="return-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="shared" type="xs:boolean"/>
+      <xs:attribute name="show" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="carry-kit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="effect"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="carry-message" type="xs:string"/>
+  <xs:element name="drop-kit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="potion"/>
+      </xs:sequence>
+      <xs:attribute name="force" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="pickup-kit">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="potion"/>
+      </xs:sequence>
+      <xs:attribute name="force" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="spawns">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="spawn"/>
+          <xs:element ref="spawns"/>
+          <xs:element ref="default"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="filter"/>
+      </xs:sequence>
+      <xs:attribute name="angle"/>
+      <xs:attribute name="exclusive" type="xs:boolean"/>
+      <xs:attribute name="kit" type="xs:string"/>
+      <xs:attribute name="pitch" type="xs:integer"/>
+      <xs:attribute name="safe" type="xs:boolean"/>
+      <xs:attribute name="spread" type="xs:boolean"/>
+      <xs:attribute name="team" type="xs:string"/>
+      <xs:attribute name="unique" type="xs:boolean"/>
+      <xs:attribute name="yaw" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="default">
+    <xs:complexType>
+      <xs:choice minOccurs="0">
+        <xs:element ref="region"/>
+        <xs:element ref="regions"/>
+      </xs:choice>
+      <xs:attribute name="kit" type="xs:string"/>
+      <xs:attribute name="pitch" type="xs:integer"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="yaw" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="team">
+    <xs:complexType mixed="true">
+      <xs:attribute name="color"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="max" type="xs:integer"/>
+      <xs:attribute name="max-overfill" type="xs:integer"/>
+      <xs:attribute name="min" type="xs:integer"/>
+      <xs:attribute name="plural" type="xs:boolean"/>
+      <xs:attribute name="show-name-tags" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="message">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="line"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="line" type="xs:string"/>
+  <xs:element name="point">
+    <xs:complexType mixed="true">
+      <xs:attribute name="angle"/>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="pitch" type="xs:integer"/>
+      <xs:attribute name="yaw" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="structures">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="structures"/>
+        <xs:element ref="dynamic"/>
+        <xs:element ref="structure"/>
+      </xs:choice>
+      <xs:attribute name="air" type="xs:boolean"/>
+      <xs:attribute name="location"/>
+      <xs:attribute name="offset"/>
+      <xs:attribute name="trigger" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="dynamic">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="filter"/>
+      </xs:sequence>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="location"/>
+      <xs:attribute name="offset"/>
+      <xs:attribute name="structure" use="required" type="xs:string"/>
+      <xs:attribute name="trigger" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="structure">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="region"/>
+      </xs:sequence>
+      <xs:attribute name="air" type="xs:boolean"/>
+      <xs:attribute name="clear" type="xs:boolean"/>
+      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="origin"/>
+      <xs:attribute name="region" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="wearing">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="carrying-flag">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="id" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="time">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:NMTOKEN">
+          <xs:attribute name="id" type="xs:string"/>
+          <xs:attribute name="result" type="xs:string"/>
+          <xs:attribute name="results" type="xs:string"/>
+          <xs:attribute name="show" type="xs:boolean"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="random">
+    <xs:complexType mixed="true">
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="allow">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="any"/>
+        <xs:element ref="holding"/>
+        <xs:element ref="material"/>
+        <xs:element ref="spawn"/>
+      </xs:choice>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="deny">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="all"/>
+        <xs:element ref="any"/>
+        <xs:element ref="carrying-flag"/>
+        <xs:element ref="cause"/>
+        <xs:element ref="filter"/>
+        <xs:element ref="material"/>
+        <xs:element ref="not"/>
+        <xs:element ref="region"/>
+        <xs:element ref="team"/>
+        <xs:element ref="void"/>
+      </xs:choice>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="complement">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="complement"/>
+        <xs:choice>
+          <xs:element ref="everywhere"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="cylinder"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="negative"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="union"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="region"/>
+        <xs:element minOccurs="0" ref="above"/>
+        <xs:element minOccurs="0" ref="below"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="circle"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="rectangle"/>
+        <xs:choice>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="block"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="cuboid"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="union">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="sphere"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="block"/>
+          <xs:element ref="circle"/>
+          <xs:element ref="complement"/>
+          <xs:element ref="cuboid"/>
+          <xs:element ref="intersect"/>
+          <xs:element ref="mirror"/>
+          <xs:element ref="rectangle"/>
+          <xs:element ref="region"/>
+          <xs:element ref="translate"/>
+          <xs:element ref="union"/>
+          <xs:element ref="above"/>
+          <xs:element ref="below"/>
+          <xs:element ref="negative"/>
+          <xs:element ref="point"/>
+          <xs:element ref="cylinder"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id"/>
+      <xs:attribute name="message"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="intersect">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="region"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="above"/>
+          <xs:element ref="cuboid"/>
+        </xs:choice>
+        <xs:choice>
+          <xs:element ref="negative"/>
+          <xs:element ref="rectangle"/>
+          <xs:element ref="half"/>
+          <xs:choice maxOccurs="unbounded">
+            <xs:element ref="below"/>
+            <xs:element ref="union"/>
+          </xs:choice>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="half">
+    <xs:complexType>
+      <xs:attribute name="normal" use="required"/>
+      <xs:attribute name="origin" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="rectangle">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="max" use="required"/>
+      <xs:attribute name="min" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="carrying">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="holding">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="item"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="apply">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="cylinder"/>
+          <xs:element ref="everywhere"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="cuboid"/>
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="region"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="block"/>
+          <xs:element ref="filter"/>
+          <xs:element ref="kit"/>
+          <xs:element ref="negative"/>
+          <xs:element ref="rectangle"/>
+          <xs:element ref="anywhere"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="block" type="xs:string"/>
+      <xs:attribute name="block-break" type="xs:string"/>
+      <xs:attribute name="block-physics" type="xs:string"/>
+      <xs:attribute name="block-place" type="xs:string"/>
+      <xs:attribute name="enter" type="xs:string"/>
+      <xs:attribute name="filter" type="xs:string"/>
+      <xs:attribute name="force" type="xs:boolean"/>
+      <xs:attribute name="idregion" type="xs:string"/>
+      <xs:attribute name="kit"/>
+      <xs:attribute name="leave" type="xs:string"/>
+      <xs:attribute name="lend-kit" type="xs:string"/>
+      <xs:attribute name="message"/>
+      <xs:attribute name="messgae"/>
+      <xs:attribute name="place" type="xs:string"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="reigon" type="xs:string"/>
+      <xs:attribute name="sound" type="xs:boolean"/>
+      <xs:attribute name="use" type="xs:string"/>
+      <xs:attribute name="velocity"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="anywhere">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="contributor">
+    <xs:complexType mixed="true">
+      <xs:attribute name="contribution"/>
+      <xs:attribute name="contributoin"/>
+      <xs:attribute name="uuid"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="game-mode" type="xs:string"/>
+  <xs:element name="attribute">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="amount" use="required" type="xs:decimal"/>
+          <xs:attribute name="operation" type="xs:string"/>
+          <xs:attribute name="slot" type="xs:string"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="enchantment">
+    <xs:complexType mixed="true">
+      <xs:attribute name="level" use="required" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="can-destroy">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="all-blocks"/>
+        <xs:element maxOccurs="unbounded" ref="material"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="can-place-on">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element ref="all-blocks"/>
+        <xs:element maxOccurs="unbounded" ref="material"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="all-blocks">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="flag-carried" type="xs:string"/>
+  <xs:element name="flag-returned" type="xs:string"/>
+  <xs:element name="void">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="above">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="x" type="xs:integer"/>
+      <xs:attribute name="y" type="xs:integer"/>
+      <xs:attribute name="z" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="circle">
+    <xs:complexType>
+      <xs:attribute name="center" use="required"/>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="negative">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cuboid"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="complement"/>
+        <xs:choice minOccurs="0">
+          <xs:element ref="cylinder"/>
+          <xs:element ref="intersect"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="union"/>
+        <xs:choice>
+          <xs:element ref="circle"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="region"/>
+          <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="mirror"/>
+            <xs:element ref="rectangle"/>
+          </xs:choice>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="name" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="cylinder">
+    <xs:complexType>
+      <xs:attribute name="base" use="required"/>
+      <xs:attribute name="height" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="mirror">
+    <xs:complexType>
+      <xs:choice minOccurs="0">
+        <xs:element ref="rectangle"/>
+        <xs:element ref="region"/>
+      </xs:choice>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="normal" use="required"/>
+      <xs:attribute name="origin"/>
+      <xs:attribute name="region" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="sphere">
+    <xs:complexType>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="origin" use="required"/>
+      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="block">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="all"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="location"/>
+      <xs:attribute name="yaw" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="spawn">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="cuboid"/>
+        <xs:element ref="region"/>
+        <xs:element ref="regions"/>
+      </xs:choice>
+      <xs:attribute name="angle"/>
+      <xs:attribute name="filter" type="xs:NMTOKEN"/>
+      <xs:attribute name="force" type="xs:boolean"/>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="kit" type="xs:string"/>
+      <xs:attribute name="outside" type="xs:boolean"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="safe" type="xs:boolean"/>
+      <xs:attribute name="spread" type="xs:boolean"/>
+      <xs:attribute name="team"/>
+      <xs:attribute name="yaw" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="nowhere">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="post">
+    <xs:complexType mixed="true">
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="block"/>
+      </xs:sequence>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="owner" type="xs:string"/>
+      <xs:attribute name="pickup-filter" type="xs:string"/>
+      <xs:attribute name="recover-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="respawn-speed" type="xs:integer"/>
+      <xs:attribute name="respawn-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="return-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="yaw" type="xs:integer"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="net">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="region"/>
+        <xs:element minOccurs="0" ref="capture-filter"/>
+      </xs:sequence>
+      <xs:attribute name="capture-filter" type="xs:string"/>
+      <xs:attribute name="deny-message"/>
+      <xs:attribute name="flag"/>
+      <xs:attribute name="flags"/>
+      <xs:attribute name="owner" type="xs:string"/>
+      <xs:attribute name="points" type="xs:integer"/>
+      <xs:attribute name="post" type="xs:string"/>
+      <xs:attribute name="region" type="xs:string"/>
+      <xs:attribute name="rescue" type="xs:string"/>
+      <xs:attribute name="respawn-filter" type="xs:string"/>
+      <xs:attribute name="respawn-together" type="xs:boolean"/>
+      <xs:attribute name="return" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
