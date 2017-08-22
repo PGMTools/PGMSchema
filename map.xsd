@@ -1355,7 +1355,7 @@
       <xs:attribute name="name"/>
       <xs:attribute name="lore"/>
       <xs:attribute name="amount" type="xs:integer"/>
-      <xs:attribute name="material" type="itemType"/>
+      <xs:attribute name="material" type="xs:string"/>
       <xs:attribute name="attributes" type="xs:anyURI"/>
       <xs:attribute name="chance" type="xs:decimal"/>
       <xs:attribute name="damage" type="xs:integer"/>
