@@ -525,6 +525,8 @@
       <xs:attribute name="show" type="xs:boolean"/>
       <xs:attribute name="show-progress" type="xs:boolean"/>
       <xs:attribute name="time-multiplier" type="xs:decimal"/>
+      <xs:attribute name="decay"/>
+      <xs:attribute name="recovery"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="kits">
@@ -1644,7 +1646,7 @@
       <xs:attribute name="lock" type="xs:boolean"/>
       <xs:attribute name="locked" type="xs:boolean"/>
       <xs:attribute name="lore"/>
-      <xs:attribute name="material"/>
+      <xs:attribute name="material" type="itemType"/>
       <xs:attribute name="name"/>
       <xs:attribute name="prevent-sharing" type="xs:boolean"/>
       <xs:attribute name="show-attributes" type="xs:boolean"/>
@@ -1664,7 +1666,7 @@
       <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
       <xs:attribute name="locked" type="xs:boolean"/>
       <xs:attribute name="lore"/>
-      <xs:attribute name="material"/>
+      <xs:attribute name="material" type="itemType"/>
       <xs:attribute name="name"/>
       <xs:attribute name="prevent-sharing" type="xs:boolean"/>
       <xs:attribute name="show-attributes" type="xs:boolean"/>
@@ -1728,7 +1730,7 @@
       <xs:attribute name="lock" type="xs:boolean"/>
       <xs:attribute name="locked" type="xs:boolean"/>
       <xs:attribute name="lore"/>
-      <xs:attribute name="material"/>
+      <xs:attribute name="material" type="itemType"/>
       <xs:attribute name="name"/>
       <xs:attribute name="prevent-sharing" type="xs:boolean"/>
       <xs:attribute name="show-attributes" type="xs:boolean"/>
@@ -1753,7 +1755,7 @@
       <xs:attribute name="enchantment"/>
       <xs:attribute name="lock" type="xs:boolean"/>
       <xs:attribute name="locked" type="xs:boolean"/>
-      <xs:attribute name="material"/>
+      <xs:attribute name="material" type="itemType"/>
       <xs:attribute name="name"/>
       <xs:attribute name="prevent-sharing" type="xs:boolean"/>
       <xs:attribute name="show-attributes" type="xs:boolean"/>
