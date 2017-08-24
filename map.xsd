@@ -3,7 +3,6 @@
   <xs:element name="map">
     <xs:complexType mixed="true">
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element ref="below"/>
         <xs:element ref="cores"/>
         <xs:element ref="damage"/>
         <xs:element ref="destroyables"/>
@@ -30,7 +29,6 @@
         <xs:element ref="blockdrops"/>
         <xs:element ref="broadcasts"/>
         <xs:element ref="classes"/>
-        <xs:element ref="contributers"/>
         <xs:element ref="contributors"/>
         <xs:element ref="control-points"/>
         <xs:element ref="crafting"/>
@@ -81,7 +79,7 @@
       <xs:attribute name="game"/>
       <xs:attribute name="internal" type="xs:boolean"/>
       <xs:attribute name="name"/>
-      <xs:attribute name="proto" type="xs:NMTOKEN"/>
+      <xs:attribute name="proto" type="xs:NMTOKEN" use="required"/>
       <xs:attribute name="title"/>
     </xs:complexType>
   </xs:element>
@@ -95,7 +93,7 @@
   <xs:element name="authors">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="author"/>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="author"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -107,16 +105,11 @@
       <xs:sequence>
         <xs:element minOccurs="0" ref="lives"/>
         <xs:element minOccurs="0" ref="broadcastLives"/>
-        <xs:choice minOccurs="0">
-          <xs:element ref="map"/>
-          <xs:element ref="life"/>
-        </xs:choice>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="lives" type="xs:integer"/>
   <xs:element name="broadcastLives" type="xs:boolean"/>
-  <xs:element name="life" type="xs:integer"/>
   <xs:element name="block-drops">
     <xs:complexType>
       <xs:sequence>
@@ -142,19 +135,18 @@
   </xs:element>
   <xs:element name="alert">
     <xs:complexType mixed="true">
-      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="count" type="xs:string"/>
-      <xs:attribute name="every" type="xs:NMTOKEN"/>
+      <xs:attribute name="after" type="timeType" use="required"/>
+      <xs:attribute name="every" type="timeType"/>
+      <xs:attribute name="count" type="xs:NMTOKEN"/>
       <xs:attribute name="filter" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="tip">
     <xs:complexType mixed="true">
-      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="after" type="timeType" use="required"/>
+      <xs:attribute name="every" type="timeType"/>
       <xs:attribute name="count" type="xs:NMTOKEN"/>
-      <xs:attribute name="every" type="xs:NMTOKEN"/>
       <xs:attribute name="filter" type="xs:string"/>
-      <xs:attribute name="repeat" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="classes">
@@ -162,31 +154,16 @@
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="class"/>
       </xs:sequence>
-      <xs:attribute name="family" use="required" type="xs:string"/>
+      <xs:attribute name="family" type="xs:string"/>
       <xs:attribute name="restrict" type="xs:boolean"/>
       <xs:attribute name="sticky" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="contributers">
-    <xs:complexType>
-      <xs:choice>
-        <xs:element ref="contributor"/>
-        <xs:element ref="contributer"/>
-      </xs:choice>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="contributer">
-    <xs:complexType>
-      <xs:attribute name="contribution"/>
-      <xs:attribute name="uuid" use="required"/>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="contributors">
     <xs:complexType>
-      <xs:choice>
-        <xs:element ref="author"/>
-        <xs:element maxOccurs="unbounded" ref="contributor"/>
-      </xs:choice>
+      <xs:sequence>
+        <xs:element minOccurs="1" maxOccurs="unbounded" ref="contributor"/>
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="control-points">
@@ -308,7 +285,7 @@
         <xs:element ref="shape"/>
         <xs:element ref="ingredient"/>
       </xs:sequence>
-      <xs:attribute name="override" use="required" type="xs:boolean"/>
+      <xs:attribute name="override" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="shape">
@@ -332,13 +309,11 @@
   <xs:element name="disabledamage">
     <xs:complexType>
       <xs:choice>
-        <xs:element ref="damge"/>
         <xs:element maxOccurs="unbounded" ref="damage"/>
         <xs:element maxOccurs="unbounded" ref="cause"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
-  <xs:element name="damge" type="xs:string"/>
   <xs:element name="edition" type="xs:string"/>
   <xs:element name="falling-blocks">
     <xs:complexType>
@@ -387,7 +362,7 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:string">
-          <xs:attribute name="id" use="required" type="xs:string"/>
+          <xs:attribute name="id" type="xs:string"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -397,13 +372,13 @@
       <xs:sequence>
         <xs:element ref="all"/>
       </xs:sequence>
-      <xs:attribute name="duration" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="message" use="required" type="xs:string"/>
+      <xs:attribute name="duration" type="xs:NMTOKEN"/>
+      <xs:attribute name="message" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="flying">
     <xs:complexType>
-      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="friendlyfire" type="xs:string"/>
@@ -440,7 +415,7 @@
   <xs:element name="depletion" type="xs:string"/>
   <xs:element name="include">
     <xs:complexType>
-      <xs:attribute name="src" use="required" type="xs:string"/>
+      <xs:attribute name="src" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="item-mods">
@@ -555,7 +530,6 @@
   <xs:element name="kits">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="potion"/>
         <xs:choice maxOccurs="unbounded">
           <xs:element ref="kit"/>
           <xs:element ref="give"/>
@@ -569,7 +543,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" ref="kit"/>
       </xs:sequence>
-      <xs:attribute name="filter" use="required" type="xs:string"/>
+      <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="kit" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -578,7 +552,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" ref="kit"/>
       </xs:sequence>
-      <xs:attribute name="filter" use="required" type="xs:string"/>
+      <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="kit" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -593,10 +567,10 @@
   <xs:element name="fill">
     <xs:complexType>
       <xs:attribute name="filter" type="xs:string"/>
-      <xs:attribute name="loot" use="required" type="xs:string"/>
+      <xs:attribute name="loot" type="xs:string"/>
       <xs:attribute name="refill-clear" type="xs:boolean"/>
       <xs:attribute name="refill-interval" type="xs:NMTOKEN"/>
-      <xs:attribute name="refill-trigger" use="required" type="xs:string"/>
+      <xs:attribute name="refill-trigger" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="loot">
@@ -604,7 +578,7 @@
       <xs:sequence>
         <xs:element ref="any"/>
       </xs:sequence>
-      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="maxbuildheight" type="xs:integer"/>
@@ -626,7 +600,7 @@
   </xs:element>
   <xs:element name="mode">
     <xs:complexType>
-      <xs:attribute name="after" use="required" type="xs:NMTOKEN"/>
+      <xs:attribute name="after" type="xs:NMTOKEN" use="required"/>
       <xs:attribute name="material" use="required"/>
       <xs:attribute name="name"/>
       <xs:attribute name="show-before" type="xs:NMTOKEN"/>
@@ -637,7 +611,7 @@
   </xs:element>
   <xs:element name="mutations">
     <xs:complexType>
-      <xs:attribute name="chance" use="required" type="xs:decimal"/>
+      <xs:attribute name="chance" type="xs:decimal"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="name" type="xs:string"/>
@@ -654,24 +628,24 @@
       <xs:sequence>
         <xs:element ref="region"/>
       </xs:sequence>
-      <xs:attribute name="appearance" use="required"/>
-      <xs:attribute name="effects" use="required" type="xs:boolean"/>
-      <xs:attribute name="id" use="required" type="xs:string"/>
-      <xs:attribute name="kit" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="name" use="required"/>
-      <xs:attribute name="pickup-filter" use="required" type="xs:string"/>
-      <xs:attribute name="pickup-time" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="respawn-time" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="sounds" use="required" type="xs:boolean"/>
-      <xs:attribute name="spawn-filter" use="required" type="xs:string"/>
+      <xs:attribute name="appearance" use="required"/>
+      <xs:attribute name="effects" type="xs:boolean"/>
+      <xs:attribute name="kit" type="xs:string"/>
+      <xs:attribute name="pickup-filter" type="xs:string"/>
+      <xs:attribute name="pickup-time" type="timeType"/>
+      <xs:attribute name="respawn-time" type="timeType"/>
+      <xs:attribute name="sounds" type="xs:boolean"/>
+      <xs:attribute name="spawn-filter" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="players">
     <xs:complexType>
-      <xs:attribute name="colors" type="xs:boolean"/>
-      <xs:attribute name="max" use="required" type="xs:integer"/>
-      <xs:attribute name="max-overfill" type="xs:integer"/>
       <xs:attribute name="min" type="xs:integer"/>
+      <xs:attribute name="max" type="xs:integer"/>
+      <xs:attribute name="max-overfill" type="xs:integer"/>
+      <xs:attribute name="colors" type="xs:boolean"/>
       <xs:attribute name="show-name-tags" type="xs:boolean"/>
       <xs:attribute name="spread" type="xs:boolean"/>
     </xs:complexType>
@@ -690,16 +664,16 @@
         <xs:element ref="destroy-filter"/>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="potion"/>
       </xs:choice>
+      <xs:attribute name="id" type="xs:string"/>
+      <xs:attribute name="name"/>
       <xs:attribute name="click" type="xs:string"/>
       <xs:attribute name="cooldown" type="xs:NMTOKEN"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="destroy-filter" type="xs:string"/>
       <xs:attribute name="effect" type="xs:NMTOKEN"/>
       <xs:attribute name="effects" type="xs:anyURI"/>
-      <xs:attribute name="id" use="required" type="xs:string"/>
-      <xs:attribute name="name"/>
       <xs:attribute name="potion" type="xs:anyURI"/>
-      <xs:attribute name="projectile" use="required" type="xs:string"/>
+      <xs:attribute name="projectile" type="entityTypes"/>
       <xs:attribute name="throwable" type="xs:boolean"/>
       <xs:attribute name="velocity" type="xs:decimal"/>
     </xs:complexType>
@@ -723,9 +697,9 @@
       <xs:sequence>
         <xs:element ref="detect"/>
       </xs:sequence>
-      <xs:attribute name="flare-radius" use="required" type="xs:integer"/>
+      <xs:attribute name="flare-radius" type="xs:integer"/>
       <xs:attribute name="message"/>
-      <xs:attribute name="region" use="required" type="xs:string"/>
+      <xs:attribute name="region" type="xs:string"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="detect">
@@ -757,8 +731,6 @@
         <xs:element minOccurs="0" ref="renew-filter"/>
         <xs:element minOccurs="0" ref="replace-filter"/>
       </xs:sequence>
-      <xs:attribute name="aviod-entities" type="xs:boolean"/>
-      <xs:attribute name="avoid-entites" type="xs:boolean"/>
       <xs:attribute name="avoid-entities" type="xs:boolean"/>
       <xs:attribute name="avoid-players" type="xs:integer"/>
       <xs:attribute name="grow" type="xs:boolean"/>
@@ -836,11 +808,11 @@
   </xs:element>
   <xs:element name="dispenser-tnt-limit" type="xs:integer"/>
   <xs:element name="dispenser-tnt-multiplier" type="xs:decimal"/>
-  <xs:element name="blockdamage" type="xs:string"/>
+  <xs:element name="blockdamage" type="xs:boolean"/>
   <xs:element name="friendly-defuse" type="xs:string"/>
   <xs:element name="fuse" type="xs:NMTOKEN"/>
-  <xs:element name="instantignite" type="xs:string"/>
-  <xs:element name="licensing" type="xs:string"/>
+  <xs:element name="instantignite" type="xs:boolean"/>
+  <xs:element name="licensing" type="xs:boolean"/>
   <xs:element name="power" type="xs:decimal"/>
   <xs:element name="yield" type="xs:integer"/>
   <xs:element name="toolrepair">
@@ -851,7 +823,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="tool" type="xs:string"/>
+  <xs:element name="tool" type="itemType"/>
   <xs:element name="tutorial">
     <xs:complexType>
       <xs:sequence>
@@ -875,23 +847,24 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="version" type="xs:NMTOKEN"/>
+  <xs:element name="version" type="semanticType"/>
   <xs:element name="world-borders">
     <xs:complexType>
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="world-border"/>
       </xs:sequence>
       <xs:attribute name="buffer" type="xs:integer"/>
-      <xs:attribute name="center" use="required"/>
+      <xs:attribute name="center"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="warning-distance" type="xs:integer"/>
+      <xs:attribute name="warning-time" type="timeType"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="world-border">
     <xs:complexType>
-      <xs:attribute name="after" type="xs:NMTOKEN"/>
-      <xs:attribute name="duration" type="xs:NMTOKEN"/>
-      <xs:attribute name="size" use="required" type="xs:integer"/>
+      <xs:attribute name="after" type="timeType"/>
+      <xs:attribute name="duration" type="timeType"/>
+      <xs:attribute name="size" type="xs:integer"/>
       <xs:attribute name="when" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -905,7 +878,7 @@
         <xs:element ref="fall-chance"/>
         <xs:element ref="fall-speed"/>
         <xs:element ref="land-chance"/>
-        <xs:element ref="match"/>
+         <xs:element ref="match"/> <!-- Error? -->
         <xs:element ref="modify"/>
         <xs:element ref="replacement"/>
         <xs:element ref="sticky"/>
@@ -1041,10 +1014,10 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="any"/>
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
       </xs:sequence>
-      <xs:attribute name="weight" use="required" type="xs:integer"/>
+      <xs:attribute name="weight" type="xs:integer"/>
     </xs:complexType>
   </xs:element>
-  <xs:element name="entity" type="xs:string"/>
+  <xs:element name="entity" type="entityType"/>
   <xs:element name="region">
     <xs:complexType>
       <xs:sequence>
@@ -1231,9 +1204,9 @@
   <xs:element name="cuboid">
     <xs:complexType>
       <xs:attribute name="id" type="xs:string"/>
-      <xs:attribute name="max"/>
-      <xs:attribute name="min" use="required"/>
       <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="min" type="xyzType" use="required"/>
+      <xs:attribute name="max" type="xyzType" use="required"/>
       <xs:attribute name="size"/>
     </xs:complexType>
   </xs:element>
@@ -1356,7 +1329,7 @@
   <xs:element name="match-running">
     <xs:complexType/>
   </xs:element>
-  <xs:element name="mob" type="xs:string"/>
+  <xs:element name="mob" type="creatureType"/>
   <xs:element name="participating">
     <xs:complexType/>
   </xs:element>
@@ -1378,9 +1351,11 @@
         <xs:element ref="potion"/>
         <xs:element ref="skin"/>
       </xs:choice>
-      <xs:attribute name="amont" type="xs:integer"/>
+      <xs:attribute name="id"/>
+      <xs:attribute name="name"/>
+      <xs:attribute name="lore"/>
       <xs:attribute name="amount" type="xs:integer"/>
-      <xs:attribute name="amout" type="xs:integer"/>
+      <xs:attribute name="material" type="itemType"/>
       <xs:attribute name="attributes" type="xs:anyURI"/>
       <xs:attribute name="chance" type="xs:decimal"/>
       <xs:attribute name="damage" type="xs:integer"/>
@@ -1391,12 +1366,7 @@
       <xs:attribute name="grenade-destroy" type="xs:boolean"/>
       <xs:attribute name="grenade-fire" type="xs:boolean"/>
       <xs:attribute name="grenade-power" type="xs:decimal"/>
-      <xs:attribute name="id"/>
       <xs:attribute name="locked" type="xs:boolean"/>
-      <xs:attribute name="lore"/>
-      <xs:attribute name="material"/>
-      <xs:attribute name="name"/>
-      <xs:attribute name="point" type="xs:integer"/>
       <xs:attribute name="points" type="xs:integer"/>
       <xs:attribute name="potions" type="xs:NMTOKEN"/>
       <xs:attribute name="prevent-sharing" type="xs:boolean"/>
@@ -1406,7 +1376,7 @@
       <xs:attribute name="show-can-place-on" type="xs:boolean"/>
       <xs:attribute name="show-enchantments" type="xs:boolean"/>
       <xs:attribute name="show-unbreakable" type="xs:boolean"/>
-      <xs:attribute name="slot" type="xs:NMTOKEN"/>
+      <xs:attribute name="slot" type="inventorySlot"/>
       <xs:attribute name="unbreakable" type="xs:boolean"/>
       <xs:attribute name="uuid"/>
     </xs:complexType>
@@ -1439,12 +1409,12 @@
       <xs:sequence>
         <xs:element minOccurs="0" ref="monument"/>
       </xs:sequence>
-      <xs:attribute name="color" use="required"/>
+      <xs:attribute name="color" type="dyeType" use="required"/>
       <xs:attribute name="craftable" type="xs:boolean"/>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="location"/>
       <xs:attribute name="monument" type="xs:string"/>
-      <xs:attribute name="team" type="xs:string"/>
+      <xs:attribute name="team" type="xs:string" use="required"/>
       <xs:attribute name="woolproximity-horizontal" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
@@ -1578,7 +1548,6 @@
   <xs:element name="effect">
     <xs:complexType mixed="true">
       <xs:attribute name="amplifier" type="xs:integer"/>
-      <xs:attribute name="amplifire" type="xs:integer"/>
       <xs:attribute name="duration" type="xs:NMTOKEN"/>
       <xs:attribute name="level" type="xs:integer"/>
     </xs:complexType>
@@ -1586,8 +1555,6 @@
   <xs:element name="potion">
     <xs:complexType mixed="true">
       <xs:attribute name="ambient" type="xs:boolean"/>
-      <xs:attribute name="amplfier" type="xs:integer"/>
-      <xs:attribute name="amplifer" type="xs:integer"/>
       <xs:attribute name="amplifier" type="xs:integer"/>
       <xs:attribute name="duration" type="xs:NMTOKEN"/>
     </xs:complexType>
@@ -1598,7 +1565,7 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="enchantment"/>
       </xs:sequence>
       <xs:attribute name="amount" type="xs:integer"/>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
       <xs:attribute name="material"/>
       <xs:attribute name="name"/>
@@ -1618,7 +1585,7 @@
   </xs:element>
   <xs:element name="kill-streak">
     <xs:complexType>
-      <xs:attribute name="count" use="required" type="xs:integer"/>
+      <xs:attribute name="count" type="xs:integer"/>
       <xs:attribute name="repeat" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
@@ -1669,7 +1636,7 @@
         <xs:element ref="enchantment"/>
       </xs:choice>
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="durability" type="xs:integer"/>
       <xs:attribute name="enchantment"/>
@@ -1690,9 +1657,8 @@
         <xs:element ref="enchantment"/>
       </xs:choice>
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
-      <xs:attribute name="damamge" type="xs:integer"/>
       <xs:attribute name="enchantment"/>
       <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
       <xs:attribute name="locked" type="xs:boolean"/>
@@ -1701,9 +1667,7 @@
       <xs:attribute name="name"/>
       <xs:attribute name="prevent-sharing" type="xs:boolean"/>
       <xs:attribute name="show-attributes" type="xs:boolean"/>
-      <xs:attribute name="unbreable" type="xs:boolean"/>
       <xs:attribute name="unbreakable" type="xs:boolean"/>
-      <xs:attribute name="unbrekable" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="clear">
@@ -1717,21 +1681,21 @@
       <xs:attribute name="enabled" type="xs:boolean"/>
       <xs:attribute name="power" type="xs:decimal"/>
       <xs:attribute name="recharge-before-landing" type="xs:boolean"/>
-      <xs:attribute name="recharge-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="recharge-time" type="timeType"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="fly">
     <xs:complexType>
       <xs:attribute name="can-fly" type="xs:boolean"/>
       <xs:attribute name="fly-speed" type="xs:decimal"/>
-      <xs:attribute name="flying" use="required" type="xs:boolean"/>
+      <xs:attribute name="flying" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="foodlevel" type="xs:integer"/>
   <xs:element name="force">
     <xs:complexType mixed="true">
-      <xs:attribute name="pitch" use="required" type="xs:boolean"/>
-      <xs:attribute name="yaw" use="required" type="xs:boolean"/>
+      <xs:attribute name="pitch" type="xs:boolean"/>
+      <xs:attribute name="yaw" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="head">
@@ -1740,14 +1704,14 @@
         <xs:element ref="can-destroy"/>
         <xs:element ref="can-place-on"/>
       </xs:sequence>
-      <xs:attribute name="amount" use="required" type="xs:integer"/>
+      <xs:attribute name="amount" type="xs:integer"/>
       <xs:attribute name="lore" use="required"/>
       <xs:attribute name="name" use="required"/>
-      <xs:attribute name="show-can-destroy" use="required" type="xs:boolean"/>
-      <xs:attribute name="show-can-place-on" use="required" type="xs:boolean"/>
-      <xs:attribute name="skin" use="required" type="xs:base64Binary"/>
-      <xs:attribute name="slot" use="required" type="xs:integer"/>
-      <xs:attribute name="uuid" use="required"/>
+      <xs:attribute name="show-can-destroy" type="xs:boolean"/>
+      <xs:attribute name="show-can-place-on" type="xs:boolean"/>
+      <xs:attribute name="skin" type="xs:base64Binary"/>
+      <xs:attribute name="slot" type="inventorySlot"/>
+      <xs:attribute name="uuid" type="uuidType" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="health" type="xs:integer"/>
@@ -1757,7 +1721,7 @@
         <xs:element minOccurs="0" maxOccurs="unbounded" ref="enchantment"/>
       </xs:sequence>
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="enchantment"/>
       <xs:attribute name="lock" type="xs:boolean"/>
@@ -1772,8 +1736,8 @@
   </xs:element>
   <xs:element name="impulse">
     <xs:complexType mixed="true">
-      <xs:attribute name="pitch" use="required" type="xs:boolean"/>
-      <xs:attribute name="yaw" use="required" type="xs:boolean"/>
+      <xs:attribute name="pitch" type="xs:boolean"/>
+      <xs:attribute name="yaw" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="knockback-reduction" type="xs:decimal"/>
@@ -1783,7 +1747,7 @@
         <xs:element ref="attribute"/>
         <xs:element ref="enchantment"/>
       </xs:choice>
-      <xs:attribute name="color" type="xs:NMTOKEN"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="enchantment"/>
       <xs:attribute name="lock" type="xs:boolean"/>
@@ -1798,8 +1762,8 @@
   <xs:element name="saturation" type="xs:integer"/>
   <xs:element name="shield">
     <xs:complexType>
-      <xs:attribute name="delay" use="required" type="xs:NMTOKEN"/>
-      <xs:attribute name="health" use="required" type="xs:integer"/>
+      <xs:attribute name="delay" type="xs:NMTOKEN"/>
+      <xs:attribute name="health" type="xs:integer"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="unless">
@@ -1807,15 +1771,15 @@
       <xs:sequence>
         <xs:element ref="item"/>
       </xs:sequence>
-      <xs:attribute name="april-fools" use="required" type="xs:boolean"/>
-      <xs:attribute name="halloween" use="required" type="xs:boolean"/>
+      <xs:attribute name="april-fools" type="xs:boolean"/>
+      <xs:attribute name="halloween" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="walk-speed" type="xs:decimal"/>
   <xs:element name="author">
     <xs:complexType mixed="true">
+      <xs:attribute name="uuid" type="uuidType"/>
       <xs:attribute name="contribution"/>
-      <xs:attribute name="uuid"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="respawn">
@@ -1881,7 +1845,7 @@
         <xs:element ref="flag"/>
       </xs:choice>
       <xs:attribute name="carry-message"/>
-      <xs:attribute name="color" type="xs:string"/>
+      <xs:attribute name="color" type="textType"/>
       <xs:attribute name="drop-kit" type="xs:string"/>
       <xs:attribute name="drop-on-water" type="xs:boolean"/>
       <xs:attribute name="flag-proximity-metric"/>
@@ -1890,7 +1854,7 @@
       <xs:attribute name="pickup-filter" type="xs:string"/>
       <xs:attribute name="pickup-kit" type="xs:string"/>
       <xs:attribute name="points" type="xs:integer"/>
-      <xs:attribute name="recover-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="recover-time" type="timeType"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="flag">
@@ -1905,9 +1869,9 @@
       </xs:choice>
       <xs:attribute name="carry-kit" type="xs:string"/>
       <xs:attribute name="carry-message"/>
-      <xs:attribute name="color"/>
+      <xs:attribute name="color" type="textType"/>
       <xs:attribute name="drop-kit" type="xs:string"/>
-      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="name"/>
       <xs:attribute name="owner" type="xs:string"/>
       <xs:attribute name="pickup-filter" type="xs:string"/>
@@ -1916,7 +1880,7 @@
       <xs:attribute name="points-rate" type="xs:decimal"/>
       <xs:attribute name="post" type="xs:string"/>
       <xs:attribute name="required" type="xs:boolean"/>
-      <xs:attribute name="return-time" type="xs:NMTOKEN"/>
+      <xs:attribute name="return-time" type="timeType"/>
       <xs:attribute name="shared" type="xs:boolean"/>
       <xs:attribute name="show" type="xs:boolean"/>
     </xs:complexType>
@@ -1934,7 +1898,7 @@
       <xs:sequence>
         <xs:element ref="potion"/>
       </xs:sequence>
-      <xs:attribute name="force" use="required" type="xs:boolean"/>
+      <xs:attribute name="force" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="pickup-kit">
@@ -1942,7 +1906,7 @@
       <xs:sequence>
         <xs:element maxOccurs="unbounded" ref="potion"/>
       </xs:sequence>
-      <xs:attribute name="force" use="required" type="xs:boolean"/>
+      <xs:attribute name="force" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="spawns">
@@ -1980,11 +1944,11 @@
   </xs:element>
   <xs:element name="team">
     <xs:complexType mixed="true">
-      <xs:attribute name="color"/>
       <xs:attribute name="id"/>
+      <xs:attribute name="color" type="textType"/>
+      <xs:attribute name="min" type="xs:integer"/>
       <xs:attribute name="max" type="xs:integer"/>
       <xs:attribute name="max-overfill" type="xs:integer"/>
-      <xs:attribute name="min" type="xs:integer"/>
       <xs:attribute name="plural" type="xs:boolean"/>
       <xs:attribute name="show-name-tags" type="xs:string"/>
     </xs:complexType>
@@ -2026,7 +1990,7 @@
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="location"/>
       <xs:attribute name="offset"/>
-      <xs:attribute name="structure" use="required" type="xs:string"/>
+      <xs:attribute name="structure" type="xs:string"/>
       <xs:attribute name="trigger" type="xs:string"/>
     </xs:complexType>
   </xs:element>
@@ -2037,7 +2001,7 @@
       </xs:sequence>
       <xs:attribute name="air" type="xs:boolean"/>
       <xs:attribute name="clear" type="xs:boolean"/>
-      <xs:attribute name="id" use="required" type="xs:string"/>
+      <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="origin"/>
       <xs:attribute name="region" type="xs:string"/>
     </xs:complexType>
@@ -2062,7 +2026,7 @@
   <xs:element name="time">
     <xs:complexType>
       <xs:simpleContent>
-        <xs:extension base="xs:NMTOKEN">
+        <xs:extension base="timeType">
           <xs:attribute name="id" type="xs:string"/>
           <xs:attribute name="result" type="xs:string"/>
           <xs:attribute name="results" type="xs:string"/>
@@ -2143,8 +2107,8 @@
           <xs:element ref="region"/>
           <xs:element ref="translate"/>
           <xs:element ref="union"/>
-          <xs:element ref="above"/>
           <xs:element ref="below"/>
+          <xs:element ref="above"/>
           <xs:element ref="negative"/>
           <xs:element ref="point"/>
           <xs:element ref="cylinder"/>
@@ -2177,15 +2141,15 @@
   </xs:element>
   <xs:element name="half">
     <xs:complexType>
-      <xs:attribute name="normal" use="required"/>
-      <xs:attribute name="origin" use="required"/>
+      <xs:attribute name="normal" type="xzType" use="required"/>
+      <xs:attribute name="origin" type="xzType" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="rectangle">
     <xs:complexType>
       <xs:attribute name="id" type="xs:string"/>
-      <xs:attribute name="max" use="required"/>
-      <xs:attribute name="min" use="required"/>
+      <xs:attribute name="min" type="xzType" use="required"/>
+      <xs:attribute name="max" type="xzType" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="carrying">
@@ -2229,15 +2193,12 @@
       <xs:attribute name="enter" type="xs:string"/>
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="force" type="xs:boolean"/>
-      <xs:attribute name="idregion" type="xs:string"/>
       <xs:attribute name="kit"/>
       <xs:attribute name="leave" type="xs:string"/>
       <xs:attribute name="lend-kit" type="xs:string"/>
       <xs:attribute name="message"/>
-      <xs:attribute name="messgae"/>
       <xs:attribute name="place" type="xs:string"/>
       <xs:attribute name="region" type="xs:string"/>
-      <xs:attribute name="reigon" type="xs:string"/>
       <xs:attribute name="sound" type="xs:boolean"/>
       <xs:attribute name="use" type="xs:string"/>
       <xs:attribute name="velocity"/>
@@ -2248,9 +2209,8 @@
   </xs:element>
   <xs:element name="contributor">
     <xs:complexType mixed="true">
+      <xs:attribute name="uuid" type="uuidType"/>
       <xs:attribute name="contribution"/>
-      <xs:attribute name="contributoin"/>
-      <xs:attribute name="uuid"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="game-mode" type="xs:string"/>
@@ -2258,16 +2218,21 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:string">
-          <xs:attribute name="amount" use="required" type="xs:decimal"/>
+          <xs:attribute name="amount" type="xs:decimal"/>
           <xs:attribute name="operation" type="xs:string"/>
-          <xs:attribute name="slot" type="xs:string"/>
+          <!--<xs:attribute name="slot" type="xs:string"/>-->
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
   </xs:element>
+  <!--enchantmentType-->
   <xs:element name="enchantment">
     <xs:complexType mixed="true">
-      <xs:attribute name="level" use="required" type="xs:integer"/>
+    	<xs:simpleContent>
+		  <xs:extension base="enchantmentType">
+		  	<xs:attribute name="level" type="xs:integer"/>
+		  </xs:extension>
+		</xs:simpleContent>
     </xs:complexType>
   </xs:element>
   <xs:element name="can-destroy">
@@ -2304,9 +2269,9 @@
   </xs:element>
   <xs:element name="circle">
     <xs:complexType>
-      <xs:attribute name="center" use="required"/>
       <xs:attribute name="id" type="xs:string"/>
-      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+      <xs:attribute name="center" type="xzType" use="required"/>
+      <xs:attribute name="radius" type="xs:decimal" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="negative">
@@ -2334,11 +2299,10 @@
   </xs:element>
   <xs:element name="cylinder">
     <xs:complexType>
-      <xs:attribute name="base" use="required"/>
-      <xs:attribute name="height" use="required" type="xs:NMTOKEN"/>
       <xs:attribute name="id"/>
-      <xs:attribute name="name"/>
-      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+      <xs:attribute name="base" type="xyzType" use="required"/>
+      <xs:attribute name="height" type="xs:NMTOKEN" use="required"/>
+      <xs:attribute name="radius" type="xs:decimal" use="required"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="mirror">
@@ -2356,8 +2320,8 @@
   <xs:element name="sphere">
     <xs:complexType>
       <xs:attribute name="id" type="xs:string"/>
-      <xs:attribute name="origin" use="required"/>
-      <xs:attribute name="radius" use="required" type="xs:decimal"/>
+      <xs:attribute name="origin" type="xyzType" use="required"/>
+      <xs:attribute name="radius" type="xs:decimal"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="block">
@@ -2400,12 +2364,12 @@
       </xs:sequence>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="owner" type="xs:string"/>
-      <xs:attribute name="pickup-filter" type="xs:string"/>
-      <xs:attribute name="recover-time" type="xs:NMTOKEN"/>
-      <xs:attribute name="respawn-speed" type="xs:integer"/>
-      <xs:attribute name="respawn-time" type="xs:NMTOKEN"/>
-      <xs:attribute name="return-time" type="xs:NMTOKEN"/>
       <xs:attribute name="yaw" type="xs:integer"/>
+      <xs:attribute name="pickup-filter" type="xs:string"/>
+      <xs:attribute name="respawn-speed" type="xs:integer"/>
+      <xs:attribute name="recover-time" type="timeType"/>
+      <xs:attribute name="respawn-time" type="timeType"/>
+      <xs:attribute name="return-time" type="timeType"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="net">
@@ -2428,4 +2392,686 @@
       <xs:attribute name="return" type="xs:string"/>
     </xs:complexType>
   </xs:element>
+  <xs:simpleType name="entityType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="dropped item"/>
+      <xs:enumeration value="experience orb"/>
+      <xs:enumeration value="leash hitch"/>
+      <xs:enumeration value="painting"/>
+      <xs:enumeration value="arrow"/>
+      <xs:enumeration value="snowball"/>
+      <xs:enumeration value="fireball"/>
+      <xs:enumeration value="small fireball"/>
+      <xs:enumeration value="ender pearl"/>
+      <xs:enumeration value="ender signal"/>
+      <xs:enumeration value="thrown exp bottle"/>
+      <xs:enumeration value="item frame"/>
+      <xs:enumeration value="wither skull"/>
+      <xs:enumeration value="primed tnt"/>
+      <xs:enumeration value="falling block"/>
+      <xs:enumeration value="firework"/>
+      <xs:enumeration value="tipped arrow"/>
+      <xs:enumeration value="spectral arrow"/>
+      <xs:enumeration value="shulker bullet"/>
+      <xs:enumeration value="dragon fireball"/>
+      <xs:enumeration value="armor stand"/>
+      <xs:enumeration value="minecart command"/>
+      <xs:enumeration value="boat"/>
+      <xs:enumeration value="minecart"/>
+      <xs:enumeration value="minecart chest"/>
+      <xs:enumeration value="minecart furnace"/>
+      <xs:enumeration value="minecart tnt"/>
+      <xs:enumeration value="minecart hopper"/>
+      <xs:enumeration value="minecart mob spawner"/>
+      <xs:enumeration value="ender crystal"/>
+      <xs:enumeration value="splash potion"/>
+      <xs:enumeration value="lingering potion"/>
+      <xs:enumeration value="area effect cloud"/>
+      <xs:enumeration value="egg"/>
+      <xs:enumeration value="fishing hook"/>
+      <xs:enumeration value="lightning"/>
+      <xs:enumeration value="weather"/>
+      <xs:enumeration value="player"/>
+      <xs:enumeration value="complex part"/>
+      <xs:enumeration value="unknown"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="creatureType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="creeper"/>
+      <xs:enumeration value="skeleton"/>
+      <xs:enumeration value="spider"/>
+      <xs:enumeration value="giant"/>
+      <xs:enumeration value="zombie"/>
+      <xs:enumeration value="slime"/>
+      <xs:enumeration value="ghast"/>
+      <xs:enumeration value="pig zombie"/>
+      <xs:enumeration value="enderman"/>
+      <xs:enumeration value="cave spider"/>
+      <xs:enumeration value="silverfish"/>
+      <xs:enumeration value="blaze"/>
+      <xs:enumeration value="magma cube"/>
+      <xs:enumeration value="ender dragon"/>
+      <xs:enumeration value="wither"/>
+      <xs:enumeration value="bat"/>
+      <xs:enumeration value="witch"/>
+      <xs:enumeration value="endermite"/>
+      <xs:enumeration value="guardian"/>
+      <xs:enumeration value="shulker"/>
+      <xs:enumeration value="pig"/>
+      <xs:enumeration value="sheep"/>
+      <xs:enumeration value="cow"/>
+      <xs:enumeration value="chicken"/>
+      <xs:enumeration value="squid"/>
+      <xs:enumeration value="wolf"/>
+      <xs:enumeration value="mushroom cow"/>
+      <xs:enumeration value="snowman"/>
+      <xs:enumeration value="ocelot"/>
+      <xs:enumeration value="iron golem"/>
+      <xs:enumeration value="horse"/>
+      <xs:enumeration value="rabbit"/>
+      <xs:enumeration value="villager"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="entityTypes">
+    <xs:union memberTypes="entityType creatureType"/>
+  </xs:simpleType>
+  <xs:simpleType name="enchantmentType">
+  	<xs:union memberTypes="enchantmentPattern enchantmentEnum"/>
+  </xs:simpleType>
+  <!--enchantment types-->
+  <xs:simpleType name="enchantmentPattern">
+  	<xs:restriction base="xs:string">
+  		<xs:pattern value="([pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][nN][vV][iI][rR][oO][nN][mM][eE][nN][tT][aA][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][iI][rR][eE]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][aA][lL][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][xX][pP][lL][oO][sS][iI][oO][nN][sS]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][pP][rR][oO][jJ][eE][cC][tT][iI][lL][eE]|[oO][xX][yY][gG][eE][nN]|[wW][aA][tT][eE][rR][ _][wW][oO][rR][kK][eE][rR]|[tT][hH][oO][rR][nN][sS]|[dD][eE][pP][tT][hH][ _][sS][tT][rR][iI][dD][eE][rR]|[fF][rR][oO][sS][tT][ _][wW][aA][lL][kK][eE][rR]|[dD][aA][mM][aA][gG][eE][ _][aA][lL][lL]|[dD][aA][mM][aA][gG][eE][ _][uU][nN][dD][eE][aA][dD]|[dD][aA][mM][aA][gG][eE][ _][aA][rR][tT][hH][rR][oO][pP][oO][dD][sS]|[kK][nN][oO][cC][kK][bB][aA][cC][kK]|[fF][iI][rR][eE][ _][aA][sS][pP][eE][cC][tT]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][mM][oO][bB][sS]|[dD][iI][gG][ _][sS][pP][eE][eE][dD]|[sS][iI][lL][kK][ _][tT][oO][uU][cC][hH]|[dD][uU][rR][aA][bB][iI][lL][iI][tT][yY]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][bB][lL][oO][cC][kK][sS]|[aA][rR][rR][oO][wW][ _][dD][aA][mM][aA][gG][eE]|[aA][rR][rR][oO][wW][ _][kK][nN][oO][cC][kK][bB][aA][cC][kK]|[aA][rR][rR][oO][wW][ _][fF][iI][rR][eE]|[aA][rR][rR][oO][wW][ _][iI][nN][fF][iI][nN][iI][tT][eE]|[lL][uU][cC][kK]|[lL][uU][rR][eE]|[mM][eE][nN][dD][iI][nN][gG]|[vV][aA][nN][iI][sS][hH][iI][nN][gG][ _][cC][uU][rR][sS][eE])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enchantmentEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="protection"/>
+        <xs:enumeration value="protection fire"/>
+        <xs:enumeration value="protection fall"/>
+        <xs:enumeration value="feather_falling"/>
+        <xs:enumeration value="blast_protection"/>
+        <xs:enumeration value="projectile_protection"/>
+        <xs:enumeration value="respiration"/>
+        <xs:enumeration value="aqua_affinity"/>
+        <xs:enumeration value="thorns"/>
+        <xs:enumeration value="depth_strider"/>
+        <xs:enumeration value="frost_walker"/>
+        <xs:enumeration value="curse_of_binding"/>
+        <xs:enumeration value="sharpness"/>
+        <xs:enumeration value="smite"/>
+        <xs:enumeration value="bane_of_arthropods"/>
+        <xs:enumeration value="knockback"/>
+        <xs:enumeration value="fire_aspect"/>
+        <xs:enumeration value="looting"/>
+        <xs:enumeration value="efficiency"/>
+        <xs:enumeration value="silk_touch"/>
+        <xs:enumeration value="unbreaking"/>
+        <xs:enumeration value="fortune"/>
+        <xs:enumeration value="power"/>
+        <xs:enumeration value="punch"/>
+        <xs:enumeration value="flame"/>
+        <xs:enumeration value="infinity"/>
+        <xs:enumeration value="luck_of_the_sea"/>
+        <xs:enumeration value="lure"/>
+        <xs:enumeration value="mending"/>
+        <xs:enumeration value="curse_of_vanishing"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="textType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="black"/>
+      <xs:enumeration value="dark blue"/>
+      <xs:enumeration value="dark green"/>
+      <xs:enumeration value="dark aqua"/>
+      <xs:enumeration value="dark red"/>
+      <xs:enumeration value="dark purple"/>
+      <xs:enumeration value="gold"/>
+      <xs:enumeration value="gray"/>
+      <xs:enumeration value="dark gray"/>
+      <xs:enumeration value="blue"/>
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="aqua"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="light purple"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="white"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dyeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="white"/>
+      <xs:enumeration value="orange"/>
+      <xs:enumeration value="magenta"/>
+      <xs:enumeration value="light blue"/>
+      <xs:enumeration value="yellow"/>
+      <xs:enumeration value="lime"/>
+      <xs:enumeration value="pink"/>
+      <xs:enumeration value="gray"/>
+      <xs:enumeration value="silver"/>
+      <xs:enumeration value="cyan"/>
+      <xs:enumeration value="purple"/>
+      <xs:enumeration value="blue"/>
+      <xs:enumeration value="brown"/>
+      <xs:enumeration value="green"/>
+      <xs:enumeration value="red"/>
+      <xs:enumeration value="black"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <!-- Test Items Incomplete -->
+  <xs:simpleType name="itemType">
+    <xs:union memberTypes="itemStatic itemPattern"/>
+  </xs:simpleType>
+  <xs:simpleType name="itemStatic">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="air"/>
+      <xs:enumeration value="stone"/>
+      <xs:enumeration value="grass"/>
+      <xs:enumeration value="dirt"/>
+      <xs:enumeration value="cobblestone"/>
+      <xs:enumeration value="wood"/>
+      <xs:enumeration value="sapling"/>
+      <xs:enumeration value="bedrock"/>
+      <xs:enumeration value="water"/>
+      <xs:enumeration value="stationary water"/>
+      <xs:enumeration value="lava"/>
+      <xs:enumeration value="stationary lava"/>
+      <xs:enumeration value="sand"/>
+      <xs:enumeration value="gravel"/>
+      <xs:enumeration value="gold ore"/>
+      <xs:enumeration value="iron ore"/>
+      <xs:enumeration value="coal ore"/>
+      <xs:enumeration value="log"/>
+      <xs:enumeration value="leaves"/>
+      <xs:enumeration value="sponge"/>
+      <xs:enumeration value="glass"/>
+      <xs:enumeration value="lapis ore"/>
+      <xs:enumeration value="lapis block"/>
+      <xs:enumeration value="dispenser"/>
+      <xs:enumeration value="sandstone"/>
+      <xs:enumeration value="note block"/>
+      <xs:enumeration value="bed block"/>
+      <xs:enumeration value="powered rail"/>
+      <xs:enumeration value="detector rail"/>
+      <xs:enumeration value="piston sticky base"/>
+      <xs:enumeration value="web"/>
+      <xs:enumeration value="long grass"/>
+      <xs:enumeration value="dead bush"/>
+      <xs:enumeration value="piston base"/>
+      <xs:enumeration value="piston extension"/>
+      <xs:enumeration value="wool"/>
+      <xs:enumeration value="piston moving piece"/>
+      <xs:enumeration value="yellow flower"/>
+      <xs:enumeration value="red rose"/>
+      <xs:enumeration value="brown mushroom"/>
+      <xs:enumeration value="red mushroom"/>
+      <xs:enumeration value="gold block"/>
+      <xs:enumeration value="iron block"/>
+      <xs:enumeration value="double step"/>
+      <xs:enumeration value="step"/>
+      <xs:enumeration value="brick"/>
+      <xs:enumeration value="tnt"/>
+      <xs:enumeration value="bookshelf"/>
+      <xs:enumeration value="mossy cobblestone"/>
+      <xs:enumeration value="obsidian"/>
+      <xs:enumeration value="torch"/>
+      <xs:enumeration value="fire"/>
+      <xs:enumeration value="mob spawner"/>
+      <xs:enumeration value="wood stairs"/>
+      <xs:enumeration value="chest"/>
+      <xs:enumeration value="redstone wire"/>
+      <xs:enumeration value="diamond ore"/>
+      <xs:enumeration value="diamond block"/>
+      <xs:enumeration value="workbench"/>
+      <xs:enumeration value="crops"/>
+      <xs:enumeration value="soil"/>
+      <xs:enumeration value="furnace"/>
+      <xs:enumeration value="burning furnace"/>
+      <xs:enumeration value="sign post"/>
+      <xs:enumeration value="wooden door"/>
+      <xs:enumeration value="ladder"/>
+      <xs:enumeration value="rails"/>
+      <xs:enumeration value="cobblestone stairs"/>
+      <xs:enumeration value="wall sign"/>
+      <xs:enumeration value="lever"/>
+      <xs:enumeration value="stone plate"/>
+      <xs:enumeration value="iron door block"/>
+      <xs:enumeration value="wood plate"/>
+      <xs:enumeration value="redstone ore"/>
+      <xs:enumeration value="glowing redstone ore"/>
+      <xs:enumeration value="redstone torch off"/>
+      <xs:enumeration value="redstone torch on"/>
+      <xs:enumeration value="stone button"/>
+      <xs:enumeration value="snow"/>
+      <xs:enumeration value="ice"/>
+      <xs:enumeration value="snow block"/>
+      <xs:enumeration value="cactus"/>
+      <xs:enumeration value="clay"/>
+      <xs:enumeration value="sugar cane block"/>
+      <xs:enumeration value="jukebox"/>
+      <xs:enumeration value="fence"/>
+      <xs:enumeration value="pumpkin"/>
+      <xs:enumeration value="netherrack"/>
+      <xs:enumeration value="soul sand"/>
+      <xs:enumeration value="glowstone"/>
+      <xs:enumeration value="portal"/>
+      <xs:enumeration value="jack o lantern"/>
+      <xs:enumeration value="cake block"/>
+      <xs:enumeration value="diode block off"/>
+      <xs:enumeration value="diode block on"/>
+      <xs:enumeration value="stained glass"/>
+      <xs:enumeration value="trap door"/>
+      <xs:enumeration value="monster eggs"/>
+      <xs:enumeration value="smooth brick"/>
+      <xs:enumeration value="huge mushroom 1"/>
+      <xs:enumeration value="huge mushroom 2"/>
+      <xs:enumeration value="iron fence"/>
+      <xs:enumeration value="thin glass"/>
+      <xs:enumeration value="melon block"/>
+      <xs:enumeration value="pumpkin stem"/>
+      <xs:enumeration value="melon stem"/>
+      <xs:enumeration value="vine"/>
+      <xs:enumeration value="fence gate"/>
+      <xs:enumeration value="brick stairs"/>
+      <xs:enumeration value="smooth stairs"/>
+      <xs:enumeration value="mycel"/>
+      <xs:enumeration value="water lily"/>
+      <xs:enumeration value="nether brick"/>
+      <xs:enumeration value="nether fence"/>
+      <xs:enumeration value="nether brick stairs"/>
+      <xs:enumeration value="nether warts"/>
+      <xs:enumeration value="enchantment table"/>
+      <xs:enumeration value="brewing stand"/>
+      <xs:enumeration value="cauldron"/>
+      <xs:enumeration value="ender portal"/>
+      <xs:enumeration value="ender portal frame"/>
+      <xs:enumeration value="ender stone"/>
+      <xs:enumeration value="dragon egg"/>
+      <xs:enumeration value="redstone lamp off"/>
+      <xs:enumeration value="redstone lamp on"/>
+      <xs:enumeration value="wood double step"/>
+      <xs:enumeration value="wood step"/>
+      <xs:enumeration value="cocoa"/>
+      <xs:enumeration value="sandstone stairs"/>
+      <xs:enumeration value="emerald ore"/>
+      <xs:enumeration value="ender chest"/>
+      <xs:enumeration value="tripwire hook"/>
+      <xs:enumeration value="tripwire"/>
+      <xs:enumeration value="emerald block"/>
+      <xs:enumeration value="spruce wood stairs"/>
+      <xs:enumeration value="birch wood stairs"/>
+      <xs:enumeration value="jungle wood stairs"/>
+      <xs:enumeration value="command"/>
+      <xs:enumeration value="beacon"/>
+      <xs:enumeration value="cobble wall"/>
+      <xs:enumeration value="flower pot"/>
+      <xs:enumeration value="carrot"/>
+      <xs:enumeration value="potato"/>
+      <xs:enumeration value="wood button"/>
+      <xs:enumeration value="skull"/>
+      <xs:enumeration value="anvil"/>
+      <xs:enumeration value="trapped chest"/>
+      <xs:enumeration value="gold plate"/>
+      <xs:enumeration value="iron plate"/>
+      <xs:enumeration value="redstone comparator off"/>
+      <xs:enumeration value="redstone comparator on"/>
+      <xs:enumeration value="daylight detector"/>
+      <xs:enumeration value="redstone block"/>
+      <xs:enumeration value="quartz ore"/>
+      <xs:enumeration value="hopper"/>
+      <xs:enumeration value="quartz block"/>
+      <xs:enumeration value="quartz stairs"/>
+      <xs:enumeration value="activator rail"/>
+      <xs:enumeration value="dropper"/>
+      <xs:enumeration value="stained clay"/>
+      <xs:enumeration value="stained glass pane"/>
+      <xs:enumeration value="leaves 2"/>
+      <xs:enumeration value="log 2"/>
+      <xs:enumeration value="acacia stairs"/>
+      <xs:enumeration value="dark oak stairs"/>
+      <xs:enumeration value="slime block"/>
+      <xs:enumeration value="barrier"/>
+      <xs:enumeration value="iron trapdoor"/>
+      <xs:enumeration value="prismarine"/>
+      <xs:enumeration value="sea lantern"/>
+      <xs:enumeration value="hay block"/>
+      <xs:enumeration value="carpet"/>
+      <xs:enumeration value="hard clay"/>
+      <xs:enumeration value="coal block"/>
+      <xs:enumeration value="packed ice"/>
+      <xs:enumeration value="double plant"/>
+      <xs:enumeration value="standing banner"/>
+      <xs:enumeration value="wall banner"/>
+      <xs:enumeration value="daylight detector inverted"/>
+      <xs:enumeration value="red sandstone"/>
+      <xs:enumeration value="red sandstone stairs"/>
+      <xs:enumeration value="double stone slab2"/>
+      <xs:enumeration value="stone slab2"/>
+      <xs:enumeration value="spruce fence gate"/>
+      <xs:enumeration value="birch fence gate"/>
+      <xs:enumeration value="jungle fence gate"/>
+      <xs:enumeration value="dark oak fence gate"/>
+      <xs:enumeration value="acacia fence gate"/>
+      <xs:enumeration value="spruce fence"/>
+      <xs:enumeration value="birch fence"/>
+      <xs:enumeration value="jungle fence"/>
+      <xs:enumeration value="dark oak fence"/>
+      <xs:enumeration value="acacia fence"/>
+      <xs:enumeration value="spruce door"/>
+      <xs:enumeration value="birch door"/>
+      <xs:enumeration value="jungle door"/>
+      <xs:enumeration value="acacia door"/>
+      <xs:enumeration value="dark oak door"/>
+      <xs:enumeration value="end rod"/>
+      <xs:enumeration value="chorus plant"/>
+      <xs:enumeration value="chorus flower"/>
+      <xs:enumeration value="purpur block"/>
+      <xs:enumeration value="purpur pillar"/>
+      <xs:enumeration value="purpur stairs"/>
+      <xs:enumeration value="purpur double slab"/>
+      <xs:enumeration value="purpur slab"/>
+      <xs:enumeration value="end bricks"/>
+      <xs:enumeration value="beetroot block"/>
+      <xs:enumeration value="grass path"/>
+      <xs:enumeration value="end gateway"/>
+      <xs:enumeration value="command repeating"/>
+      <xs:enumeration value="command chain"/>
+      <xs:enumeration value="frosted ice"/>
+      <xs:enumeration value="magma"/>
+      <xs:enumeration value="nether wart block"/>
+      <xs:enumeration value="red nether brick"/>
+      <xs:enumeration value="bone block"/>
+      <xs:enumeration value="structure void"/>
+      <xs:enumeration value="observer"/>
+      <xs:enumeration value="white shulker box"/>
+      <xs:enumeration value="orange shulker box"/>
+      <xs:enumeration value="magenta shulker box"/>
+      <xs:enumeration value="light blue shulker box"/>
+      <xs:enumeration value="yellow shulker box"/>
+      <xs:enumeration value="lime shulker box"/>
+      <xs:enumeration value="pink shulker box"/>
+      <xs:enumeration value="gray shulker box"/>
+      <xs:enumeration value="silver shulker box"/>
+      <xs:enumeration value="cyan shulker box"/>
+      <xs:enumeration value="purple shulker box"/>
+      <xs:enumeration value="blue shulker box"/>
+      <xs:enumeration value="brown shulker box"/>
+      <xs:enumeration value="green shulker box"/>
+      <xs:enumeration value="red shulker box"/>
+      <xs:enumeration value="black shulker box"/>
+      <xs:enumeration value="white glazed terracotta"/>
+      <xs:enumeration value="orange glazed terracotta"/>
+      <xs:enumeration value="magenta glazed terracotta"/>
+      <xs:enumeration value="light blue glazed terracotta"/>
+      <xs:enumeration value="yellow glazed terracotta"/>
+      <xs:enumeration value="lime glazed terracotta"/>
+      <xs:enumeration value="pink glazed terracotta"/>
+      <xs:enumeration value="gray glazed terracotta"/>
+      <xs:enumeration value="silver glazed terracotta"/>
+      <xs:enumeration value="cyan glazed terracotta"/>
+      <xs:enumeration value="purple glazed terracotta"/>
+      <xs:enumeration value="blue glazed terracotta"/>
+      <xs:enumeration value="brown glazed terracotta"/>
+      <xs:enumeration value="green glazed terracotta"/>
+      <xs:enumeration value="red glazed terracotta"/>
+      <xs:enumeration value="black glazed terracotta"/>
+      <xs:enumeration value="concrete"/>
+      <xs:enumeration value="concrete powder"/>
+      <xs:enumeration value="structure block"/>
+      <xs:enumeration value="iron spade"/>
+      <xs:enumeration value="iron pickaxe"/>
+      <xs:enumeration value="iron axe"/>
+      <xs:enumeration value="flint and steel"/>
+      <xs:enumeration value="apple"/>
+      <xs:enumeration value="bow"/>
+      <xs:enumeration value="arrow"/>
+      <xs:enumeration value="coal"/>
+      <xs:enumeration value="diamond"/>
+      <xs:enumeration value="iron ingot"/>
+      <xs:enumeration value="gold ingot"/>
+      <xs:enumeration value="iron sword"/>
+      <xs:enumeration value="wood sword"/>
+      <xs:enumeration value="wood spade"/>
+      <xs:enumeration value="wood pickaxe"/>
+      <xs:enumeration value="wood axe"/>
+      <xs:enumeration value="stone sword"/>
+      <xs:enumeration value="stone spade"/>
+      <xs:enumeration value="stone pickaxe"/>
+      <xs:enumeration value="stone axe"/>
+      <xs:enumeration value="diamond sword"/>
+      <xs:enumeration value="diamond spade"/>
+      <xs:enumeration value="diamond pickaxe"/>
+      <xs:enumeration value="diamond axe"/>
+      <xs:enumeration value="stick"/>
+      <xs:enumeration value="bowl"/>
+      <xs:enumeration value="mushroom soup"/>
+      <xs:enumeration value="gold sword"/>
+      <xs:enumeration value="gold spade"/>
+      <xs:enumeration value="gold pickaxe"/>
+      <xs:enumeration value="gold axe"/>
+      <xs:enumeration value="string"/>
+      <xs:enumeration value="feather"/>
+      <xs:enumeration value="sulphur"/>
+      <xs:enumeration value="wood hoe"/>
+      <xs:enumeration value="stone hoe"/>
+      <xs:enumeration value="iron hoe"/>
+      <xs:enumeration value="diamond hoe"/>
+      <xs:enumeration value="gold hoe"/>
+      <xs:enumeration value="seeds"/>
+      <xs:enumeration value="wheat"/>
+      <xs:enumeration value="bread"/>
+      <xs:enumeration value="leather helmet"/>
+      <xs:enumeration value="leather chestplate"/>
+      <xs:enumeration value="leather leggings"/>
+      <xs:enumeration value="leather boots"/>
+      <xs:enumeration value="chainmail helmet"/>
+      <xs:enumeration value="chainmail chestplate"/>
+      <xs:enumeration value="chainmail leggings"/>
+      <xs:enumeration value="chainmail boots"/>
+      <xs:enumeration value="iron helmet"/>
+      <xs:enumeration value="iron chestplate"/>
+      <xs:enumeration value="iron leggings"/>
+      <xs:enumeration value="iron boots"/>
+      <xs:enumeration value="diamond helmet"/>
+      <xs:enumeration value="diamond chestplate"/>
+      <xs:enumeration value="diamond leggings"/>
+      <xs:enumeration value="diamond boots"/>
+      <xs:enumeration value="gold helmet"/>
+      <xs:enumeration value="gold chestplate"/>
+      <xs:enumeration value="gold leggings"/>
+      <xs:enumeration value="gold boots"/>
+      <xs:enumeration value="flint"/>
+      <xs:enumeration value="pork"/>
+      <xs:enumeration value="grilled pork"/>
+      <xs:enumeration value="painting"/>
+      <xs:enumeration value="golden apple"/>
+      <xs:enumeration value="sign"/>
+      <xs:enumeration value="wood door"/>
+      <xs:enumeration value="bucket"/>
+      <xs:enumeration value="water bucket"/>
+      <xs:enumeration value="lava bucket"/>
+      <xs:enumeration value="minecart"/>
+      <xs:enumeration value="saddle"/>
+      <xs:enumeration value="iron door"/>
+      <xs:enumeration value="redstone"/>
+      <xs:enumeration value="snow ball"/>
+      <xs:enumeration value="boat"/>
+      <xs:enumeration value="leather"/>
+      <xs:enumeration value="milk bucket"/>
+      <xs:enumeration value="clay brick"/>
+      <xs:enumeration value="clay ball"/>
+      <xs:enumeration value="sugar cane"/>
+      <xs:enumeration value="paper"/>
+      <xs:enumeration value="book"/>
+      <xs:enumeration value="slime ball"/>
+      <xs:enumeration value="storage minecart"/>
+      <xs:enumeration value="powered minecart"/>
+      <xs:enumeration value="egg"/>
+      <xs:enumeration value="compass"/>
+      <xs:enumeration value="fishing rod"/>
+      <xs:enumeration value="watch"/>
+      <xs:enumeration value="glowstone dust"/>
+      <xs:enumeration value="raw fish"/>
+      <xs:enumeration value="cooked fish"/>
+      <xs:enumeration value="ink sack"/>
+      <xs:enumeration value="bone"/>
+      <xs:enumeration value="sugar"/>
+      <xs:enumeration value="cake"/>
+      <xs:enumeration value="bed"/>
+      <xs:enumeration value="diode"/>
+      <xs:enumeration value="cookie"/>
+      <xs:enumeration value="map"/>
+      <xs:enumeration value="shears"/>
+      <xs:enumeration value="melon"/>
+      <xs:enumeration value="pumpkin seeds"/>
+      <xs:enumeration value="melon seeds"/>
+      <xs:enumeration value="raw beef"/>
+      <xs:enumeration value="cooked beef"/>
+      <xs:enumeration value="raw chicken"/>
+      <xs:enumeration value="cooked chicken"/>
+      <xs:enumeration value="rotten flesh"/>
+      <xs:enumeration value="ender pearl"/>
+      <xs:enumeration value="blaze rod"/>
+      <xs:enumeration value="ghast tear"/>
+      <xs:enumeration value="gold nugget"/>
+      <xs:enumeration value="nether stalk"/>
+      <xs:enumeration value="potion"/>
+      <xs:enumeration value="glass bottle"/>
+      <xs:enumeration value="spider eye"/>
+      <xs:enumeration value="fermented spider eye"/>
+      <xs:enumeration value="blaze powder"/>
+      <xs:enumeration value="magma cream"/>
+      <xs:enumeration value="brewing stand item"/>
+      <xs:enumeration value="cauldron item"/>
+      <xs:enumeration value="eye of ender"/>
+      <xs:enumeration value="speckled melon"/>
+      <xs:enumeration value="monster egg"/>
+      <xs:enumeration value="exp bottle"/>
+      <xs:enumeration value="fireball"/>
+      <xs:enumeration value="book and quill"/>
+      <xs:enumeration value="written book"/>
+      <xs:enumeration value="emerald"/>
+      <xs:enumeration value="item frame"/>
+      <xs:enumeration value="flower pot item"/>
+      <xs:enumeration value="carrot item"/>
+      <xs:enumeration value="potato item"/>
+      <xs:enumeration value="baked potato"/>
+      <xs:enumeration value="poisonous potato"/>
+      <xs:enumeration value="empty map"/>
+      <xs:enumeration value="golden carrot"/>
+      <xs:enumeration value="skull item"/>
+      <xs:enumeration value="carrot stick"/>
+      <xs:enumeration value="nether star"/>
+      <xs:enumeration value="pumpkin pie"/>
+      <xs:enumeration value="firework"/>
+      <xs:enumeration value="firework charge"/>
+      <xs:enumeration value="enchanted book"/>
+      <xs:enumeration value="redstone comparator"/>
+      <xs:enumeration value="nether brick item"/>
+      <xs:enumeration value="quartz"/>
+      <xs:enumeration value="explosive minecart"/>
+      <xs:enumeration value="hopper minecart"/>
+      <xs:enumeration value="prismarine shard"/>
+      <xs:enumeration value="prismarine crystals"/>
+      <xs:enumeration value="rabbit"/>
+      <xs:enumeration value="cooked rabbit"/>
+      <xs:enumeration value="rabbit stew"/>
+      <xs:enumeration value="rabbit foot"/>
+      <xs:enumeration value="rabbit hide"/>
+      <xs:enumeration value="armor stand"/>
+      <xs:enumeration value="iron barding"/>
+      <xs:enumeration value="gold barding"/>
+      <xs:enumeration value="diamond barding"/>
+      <xs:enumeration value="leash"/>
+      <xs:enumeration value="name tag"/>
+      <xs:enumeration value="command minecart"/>
+      <xs:enumeration value="mutton"/>
+      <xs:enumeration value="cooked mutton"/>
+      <xs:enumeration value="banner"/>
+      <xs:enumeration value="end crystal"/>
+      <xs:enumeration value="spruce door item"/>
+      <xs:enumeration value="birch door item"/>
+      <xs:enumeration value="jungle door item"/>
+      <xs:enumeration value="acacia door item"/>
+      <xs:enumeration value="dark oak door item"/>
+      <xs:enumeration value="chorus fruit"/>
+      <xs:enumeration value="chorus fruit popped"/>
+      <xs:enumeration value="beetroot"/>
+      <xs:enumeration value="beetroot seeds"/>
+      <xs:enumeration value="beetroot soup"/>
+      <xs:enumeration value="dragons breath"/>
+      <xs:enumeration value="splash potion"/>
+      <xs:enumeration value="spectral arrow"/>
+      <xs:enumeration value="tipped arrow"/>
+      <xs:enumeration value="lingering potion"/>
+      <xs:enumeration value="shield"/>
+      <xs:enumeration value="elytra"/>
+      <xs:enumeration value="boat spruce"/>
+      <xs:enumeration value="boat birch"/>
+      <xs:enumeration value="boat jungle"/>
+      <xs:enumeration value="boat acacia"/>
+      <xs:enumeration value="boat dark oak"/>
+      <xs:enumeration value="totem"/>
+      <xs:enumeration value="shulker shell"/>
+      <xs:enumeration value="iron nugget"/>
+      <xs:enumeration value="knowledge book"/>
+      <xs:enumeration value="gold record"/>
+      <xs:enumeration value="green record"/>
+      <xs:enumeration value="record 3"/>
+      <xs:enumeration value="record 4"/>
+      <xs:enumeration value="record 5"/>
+      <xs:enumeration value="record 6"/>
+      <xs:enumeration value="record 7"/>
+      <xs:enumeration value="record 8"/>
+      <xs:enumeration value="record 9"/>
+      <xs:enumeration value="record 10"/>
+      <xs:enumeration value="record 11"/>
+      <xs:enumeration value="record 12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="inventorySlot">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([0-9]|[1-2][0-9]|3[1-5]|slot.weapon.(mainhand|offhand)|slot.hotbar.[0-8]|slot.inventory.([0-9]|1[0-9]|2[0-6])|slot.armor.(chest|feet|head|legs))"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="itemPattern">
+    <xs:restriction base="xs:string">
+      <!--all possible ways to name an item-->
+      <xs:pattern value="([aA][iI][rR]|[sS][tT][oO][nN][eE]|[gG][rR][aA][sS][sS]|[dD][iI][rR][tT]|[cC][oO][bB][bB][lL][eE][sS][tT][oO][nN][eE]|[wW][oO][oO][dD]|[sS][aA][pP][lL][iI][nN][gG]|[bB][eE][dD][rR][oO][cC][kK]|[wW][aA][tT][eE][rR]|[sS][tT][aA][tT][iI][oO][nN][aA][rR][yY][ _][wW][aA][tT][eE][rR]|[lL][aA][vV][aA]|[sS][tT][aA][tT][iI][oO][nN][aA][rR][yY][ _][lL][aA][vV][aA]|[sS][aA][nN][dD]|[gG][rR][aA][vV][eE][lL]|[gG][oO][lL][dD][ _][oO][rR][eE]|[iI][rR][oO][nN][ _][oO][rR][eE]|[cC][oO][aA][lL][ _][oO][rR][eE]|[lL][oO][gG]|[lL][eE][aA][vV][eE][sS]|[sS][pP][oO][nN][gG][eE]|[gG][lL][aA][sS][sS]|[lL][aA][pP][iI][sS][ _][oO][rR][eE]|[lL][aA][pP][iI][sS][ _][bB][lL][oO][cC][kK]|[dD][iI][sS][pP][eE][nN][sS][eE][rR]|[sS][aA][nN][dD][sS][tT][oO][nN][eE]|[nN][oO][tT][eE][ _][bB][lL][oO][cC][kK]|[bB][eE][dD][ _][bB][lL][oO][cC][kK]|[pP][oO][wW][eE][rR][eE][dD][ _][rR][aA][iI][lL]|[dD][eE][tT][eE][cC][tT][oO][rR][ _][rR][aA][iI][lL]|[pP][iI][sS][tT][oO][nN][ _][sS][tT][iI][cC][kK][yY][ _][bB][aA][sS][eE]|[wW][eE][bB]|[lL][oO][nN][gG][ _][gG][rR][aA][sS][sS]|[dD][eE][aA][dD][ _][bB][uU][sS][hH]|[pP][iI][sS][tT][oO][nN][ _][bB][aA][sS][eE]|[pP][iI][sS][tT][oO][nN][ _][eE][xX][tT][eE][nN][sS][iI][oO][nN]|[wW][oO][oO][lL]|[pP][iI][sS][tT][oO][nN][ _][mM][oO][vV][iI][nN][gG][ _][pP][iI][eE][cC][eE]|[yY][eE][lL][lL][oO][wW][ _][fF][lL][oO][wW][eE][rR]|[rR][eE][dD][ _][rR][oO][sS][eE]|[bB][rR][oO][wW][nN][ _][mM][uU][sS][hH][rR][oO][oO][mM]|[rR][eE][dD][ _][mM][uU][sS][hH][rR][oO][oO][mM]|[gG][oO][lL][dD][ _][bB][lL][oO][cC][kK]|[iI][rR][oO][nN][ _][bB][lL][oO][cC][kK]|[dD][oO][uU][bB][lL][eE][ _][sS][tT][eE][pP]|[sS][tT][eE][pP]|[bB][rR][iI][cC][kK]|[tT][nN][tT]|[bB][oO][oO][kK][sS][hH][eE][lL][fF]|[mM][oO][sS][sS][yY][ _][cC][oO][bB][bB][lL][eE][sS][tT][oO][nN][eE]|[oO][bB][sS][iI][dD][iI][aA][nN]|[tT][oO][rR][cC][hH]|[fF][iI][rR][eE]|[mM][oO][bB][ _][sS][pP][aA][wW][nN][eE][rR]|[wW][oO][oO][dD][ _][sS][tT][aA][iI][rR][sS]|[cC][hH][eE][sS][tT]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][wW][iI][rR][eE]|[dD][iI][aA][mM][oO][nN][dD][ _][oO][rR][eE]|[dD][iI][aA][mM][oO][nN][dD][ _][bB][lL][oO][cC][kK]|[wW][oO][rR][kK][bB][eE][nN][cC][hH]|[cC][rR][oO][pP][sS]|[sS][oO][iI][lL]|[fF][uU][rR][nN][aA][cC][eE]|[bB][uU][rR][nN][iI][nN][gG][ _][fF][uU][rR][nN][aA][cC][eE]|[sS][iI][gG][nN][ _][pP][oO][sS][tT]|[wW][oO][oO][dD][eE][nN][ _][dD][oO][oO][rR]|[lL][aA][dD][dD][eE][rR]|[rR][aA][iI][lL][sS]|[cC][oO][bB][bB][lL][eE][sS][tT][oO][nN][eE][ _][sS][tT][aA][iI][rR][sS]|[wW][aA][lL][lL][ _][sS][iI][gG][nN]|[lL][eE][vV][eE][rR]|[sS][tT][oO][nN][eE][ _][pP][lL][aA][tT][eE]|[iI][rR][oO][nN][ _][dD][oO][oO][rR][ _][bB][lL][oO][cC][kK]|[wW][oO][oO][dD][ _][pP][lL][aA][tT][eE]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][oO][rR][eE]|[gG][lL][oO][wW][iI][nN][gG][ _][rR][eE][dD][sS][tT][oO][nN][eE][ _][oO][rR][eE]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][tT][oO][rR][cC][hH][ _][oO][fF][fF]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][tT][oO][rR][cC][hH][ _][oO][nN]|[sS][tT][oO][nN][eE][ _][bB][uU][tT][tT][oO][nN]|[sS][nN][oO][wW]|[iI][cC][eE]|[sS][nN][oO][wW][ _][bB][lL][oO][cC][kK]|[cC][aA][cC][tT][uU][sS]|[cC][lL][aA][yY]|[sS][uU][gG][aA][rR][ _][cC][aA][nN][eE][ _][bB][lL][oO][cC][kK]|[jJ][uU][kK][eE][bB][oO][xX]|[fF][eE][nN][cC][eE]|[pP][uU][mM][pP][kK][iI][nN]|[nN][eE][tT][hH][eE][rR][rR][aA][cC][kK]|[sS][oO][uU][lL][ _][sS][aA][nN][dD]|[gG][lL][oO][wW][sS][tT][oO][nN][eE]|[pP][oO][rR][tT][aA][lL]|[jJ][aA][cC][kK][ _][oO][ _][lL][aA][nN][tT][eE][rR][nN]|[cC][aA][kK][eE][ _][bB][lL][oO][cC][kK]|[dD][iI][oO][dD][eE][ _][bB][lL][oO][cC][kK][ _][oO][fF][fF]|[dD][iI][oO][dD][eE][ _][bB][lL][oO][cC][kK][ _][oO][nN]|[sS][tT][aA][iI][nN][eE][dD][ _][gG][lL][aA][sS][sS]|[tT][rR][aA][pP][ _][dD][oO][oO][rR]|[mM][oO][nN][sS][tT][eE][rR][ _][eE][gG][gG][sS]|[sS][mM][oO][oO][tT][hH][ _][bB][rR][iI][cC][kK]|[hH][uU][gG][eE][ _][mM][uU][sS][hH][rR][oO][oO][mM][ _][11]|[hH][uU][gG][eE][ _][mM][uU][sS][hH][rR][oO][oO][mM][ _][22]|[iI][rR][oO][nN][ _][fF][eE][nN][cC][eE]|[tT][hH][iI][nN][ _][gG][lL][aA][sS][sS]|[mM][eE][lL][oO][nN][ _][bB][lL][oO][cC][kK]|[pP][uU][mM][pP][kK][iI][nN][ _][sS][tT][eE][mM]|[mM][eE][lL][oO][nN][ _][sS][tT][eE][mM]|[vV][iI][nN][eE]|[fF][eE][nN][cC][eE][ _][gG][aA][tT][eE]|[bB][rR][iI][cC][kK][ _][sS][tT][aA][iI][rR][sS]|[sS][mM][oO][oO][tT][hH][ _][sS][tT][aA][iI][rR][sS]|[mM][yY][cC][eE][lL]|[wW][aA][tT][eE][rR][ _][lL][iI][lL][yY]|[nN][eE][tT][hH][eE][rR][ _][bB][rR][iI][cC][kK]|[nN][eE][tT][hH][eE][rR][ _][fF][eE][nN][cC][eE]|[nN][eE][tT][hH][eE][rR][ _][bB][rR][iI][cC][kK][ _][sS][tT][aA][iI][rR][sS]|[nN][eE][tT][hH][eE][rR][ _][wW][aA][rR][tT][sS]|[eE][nN][cC][hH][aA][nN][tT][mM][eE][nN][tT][ _][tT][aA][bB][lL][eE]|[bB][rR][eE][wW][iI][nN][gG][ _][sS][tT][aA][nN][dD]|[cC][aA][uU][lL][dD][rR][oO][nN]|[eE][nN][dD][eE][rR][ _][pP][oO][rR][tT][aA][lL]|[eE][nN][dD][eE][rR][ _][pP][oO][rR][tT][aA][lL][ _][fF][rR][aA][mM][eE]|[eE][nN][dD][eE][rR][ _][sS][tT][oO][nN][eE]|[dD][rR][aA][gG][oO][nN][ _][eE][gG][gG]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][lL][aA][mM][pP][ _][oO][fF][fF]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][lL][aA][mM][pP][ _][oO][nN]|[wW][oO][oO][dD][ _][dD][oO][uU][bB][lL][eE][ _][sS][tT][eE][pP]|[wW][oO][oO][dD][ _][sS][tT][eE][pP]|[cC][oO][cC][oO][aA]|[sS][aA][nN][dD][sS][tT][oO][nN][eE][ _][sS][tT][aA][iI][rR][sS]|[eE][mM][eE][rR][aA][lL][dD][ _][oO][rR][eE]|[eE][nN][dD][eE][rR][ _][cC][hH][eE][sS][tT]|[tT][rR][iI][pP][wW][iI][rR][eE][ _][hH][oO][oO][kK]|[tT][rR][iI][pP][wW][iI][rR][eE]|[eE][mM][eE][rR][aA][lL][dD][ _][bB][lL][oO][cC][kK]|[sS][pP][rR][uU][cC][eE][ _][wW][oO][oO][dD][ _][sS][tT][aA][iI][rR][sS]|[bB][iI][rR][cC][hH][ _][wW][oO][oO][dD][ _][sS][tT][aA][iI][rR][sS]|[jJ][uU][nN][gG][lL][eE][ _][wW][oO][oO][dD][ _][sS][tT][aA][iI][rR][sS]|[cC][oO][mM][mM][aA][nN][dD]|[bB][eE][aA][cC][oO][nN]|[cC][oO][bB][bB][lL][eE][ _][wW][aA][lL][lL]|[fF][lL][oO][wW][eE][rR][ _][pP][oO][tT]|[cC][aA][rR][rR][oO][tT]|[pP][oO][tT][aA][tT][oO]|[wW][oO][oO][dD][ _][bB][uU][tT][tT][oO][nN]|[sS][kK][uU][lL][lL]|[aA][nN][vV][iI][lL]|[tT][rR][aA][pP][pP][eE][dD][ _][cC][hH][eE][sS][tT]|[gG][oO][lL][dD][ _][pP][lL][aA][tT][eE]|[iI][rR][oO][nN][ _][pP][lL][aA][tT][eE]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][cC][oO][mM][pP][aA][rR][aA][tT][oO][rR][ _][oO][fF][fF]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][cC][oO][mM][pP][aA][rR][aA][tT][oO][rR][ _][oO][nN]|[dD][aA][yY][lL][iI][gG][hH][tT][ _][dD][eE][tT][eE][cC][tT][oO][rR]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][bB][lL][oO][cC][kK]|[qQ][uU][aA][rR][tT][zZ][ _][oO][rR][eE]|[hH][oO][pP][pP][eE][rR]|[qQ][uU][aA][rR][tT][zZ][ _][bB][lL][oO][cC][kK]|[qQ][uU][aA][rR][tT][zZ][ _][sS][tT][aA][iI][rR][sS]|[aA][cC][tT][iI][vV][aA][tT][oO][rR][ _][rR][aA][iI][lL]|[dD][rR][oO][pP][pP][eE][rR]|[sS][tT][aA][iI][nN][eE][dD][ _][cC][lL][aA][yY]|[sS][tT][aA][iI][nN][eE][dD][ _][gG][lL][aA][sS][sS][ _][pP][aA][nN][eE]|[lL][eE][aA][vV][eE][sS][ _][22]|[lL][oO][gG][ _][22]|[aA][cC][aA][cC][iI][aA][ _][sS][tT][aA][iI][rR][sS]|[dD][aA][rR][kK][ _][oO][aA][kK][ _][sS][tT][aA][iI][rR][sS]|[sS][lL][iI][mM][eE][ _][bB][lL][oO][cC][kK]|[bB][aA][rR][rR][iI][eE][rR]|[iI][rR][oO][nN][ _][tT][rR][aA][pP][dD][oO][oO][rR]|[pP][rR][iI][sS][mM][aA][rR][iI][nN][eE]|[sS][eE][aA][ _][lL][aA][nN][tT][eE][rR][nN]|[hH][aA][yY][ _][bB][lL][oO][cC][kK]|[cC][aA][rR][pP][eE][tT]|[hH][aA][rR][dD][ _][cC][lL][aA][yY]|[cC][oO][aA][lL][ _][bB][lL][oO][cC][kK]|[pP][aA][cC][kK][eE][dD][ _][iI][cC][eE]|[dD][oO][uU][bB][lL][eE][ _][pP][lL][aA][nN][tT]|[sS][tT][aA][nN][dD][iI][nN][gG][ _][bB][aA][nN][nN][eE][rR]|[wW][aA][lL][lL][ _][bB][aA][nN][nN][eE][rR]|[dD][aA][yY][lL][iI][gG][hH][tT][ _][dD][eE][tT][eE][cC][tT][oO][rR][ _][iI][nN][vV][eE][rR][tT][eE][dD]|[rR][eE][dD][ _][sS][aA][nN][dD][sS][tT][oO][nN][eE]|[rR][eE][dD][ _][sS][aA][nN][dD][sS][tT][oO][nN][eE][ _][sS][tT][aA][iI][rR][sS]|[dD][oO][uU][bB][lL][eE][ _][sS][tT][oO][nN][eE][ _][sS][lL][aA][bB][22]|[sS][tT][oO][nN][eE][ _][sS][lL][aA][bB][22]|[sS][pP][rR][uU][cC][eE][ _][fF][eE][nN][cC][eE][ _][gG][aA][tT][eE]|[bB][iI][rR][cC][hH][ _][fF][eE][nN][cC][eE][ _][gG][aA][tT][eE]|[jJ][uU][nN][gG][lL][eE][ _][fF][eE][nN][cC][eE][ _][gG][aA][tT][eE]|[dD][aA][rR][kK][ _][oO][aA][kK][ _][fF][eE][nN][cC][eE][ _][gG][aA][tT][eE]|[aA][cC][aA][cC][iI][aA][ _][fF][eE][nN][cC][eE][ _][gG][aA][tT][eE]|[sS][pP][rR][uU][cC][eE][ _][fF][eE][nN][cC][eE]|[bB][iI][rR][cC][hH][ _][fF][eE][nN][cC][eE]|[jJ][uU][nN][gG][lL][eE][ _][fF][eE][nN][cC][eE]|[dD][aA][rR][kK][ _][oO][aA][kK][ _][fF][eE][nN][cC][eE]|[aA][cC][aA][cC][iI][aA][ _][fF][eE][nN][cC][eE]|[sS][pP][rR][uU][cC][eE][ _][dD][oO][oO][rR]|[bB][iI][rR][cC][hH][ _][dD][oO][oO][rR]|[jJ][uU][nN][gG][lL][eE][ _][dD][oO][oO][rR]|[aA][cC][aA][cC][iI][aA][ _][dD][oO][oO][rR]|[dD][aA][rR][kK][ _][oO][aA][kK][ _][dD][oO][oO][rR]|[eE][nN][dD][ _][rR][oO][dD]|[cC][hH][oO][rR][uU][sS][ _][pP][lL][aA][nN][tT]|[cC][hH][oO][rR][uU][sS][ _][fF][lL][oO][wW][eE][rR]|[pP][uU][rR][pP][uU][rR][ _][bB][lL][oO][cC][kK]|[pP][uU][rR][pP][uU][rR][ _][pP][iI][lL][lL][aA][rR]|[pP][uU][rR][pP][uU][rR][ _][sS][tT][aA][iI][rR][sS]|[pP][uU][rR][pP][uU][rR][ _][dD][oO][uU][bB][lL][eE][ _][sS][lL][aA][bB]|[pP][uU][rR][pP][uU][rR][ _][sS][lL][aA][bB]|[eE][nN][dD][ _][bB][rR][iI][cC][kK][sS]|[bB][eE][eE][tT][rR][oO][oO][tT][ _][bB][lL][oO][cC][kK]|[gG][rR][aA][sS][sS][ _][pP][aA][tT][hH]|[eE][nN][dD][ _][gG][aA][tT][eE][wW][aA][yY]|[cC][oO][mM][mM][aA][nN][dD][ _][rR][eE][pP][eE][aA][tT][iI][nN][gG]|[cC][oO][mM][mM][aA][nN][dD][ _][cC][hH][aA][iI][nN]|[fF][rR][oO][sS][tT][eE][dD][ _][iI][cC][eE]|[mM][aA][gG][mM][aA]|[nN][eE][tT][hH][eE][rR][ _][wW][aA][rR][tT][ _][bB][lL][oO][cC][kK]|[rR][eE][dD][ _][nN][eE][tT][hH][eE][rR][ _][bB][rR][iI][cC][kK]|[bB][oO][nN][eE][ _][bB][lL][oO][cC][kK]|[sS][tT][rR][uU][cC][tT][uU][rR][eE][ _][vV][oO][iI][dD]|[oO][bB][sS][eE][rR][vV][eE][rR]|[wW][hH][iI][tT][eE][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[oO][rR][aA][nN][gG][eE][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[mM][aA][gG][eE][nN][tT][aA][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[lL][iI][gG][hH][tT][ _][bB][lL][uU][eE][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[yY][eE][lL][lL][oO][wW][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[lL][iI][mM][eE][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[pP][iI][nN][kK][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[gG][rR][aA][yY][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[sS][iI][lL][vV][eE][rR][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[cC][yY][aA][nN][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[pP][uU][rR][pP][lL][eE][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[bB][lL][uU][eE][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[bB][rR][oO][wW][nN][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[gG][rR][eE][eE][nN][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[rR][eE][dD][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[bB][lL][aA][cC][kK][ _][sS][hH][uU][lL][kK][eE][rR][ _][bB][oO][xX]|[wW][hH][iI][tT][eE][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[oO][rR][aA][nN][gG][eE][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[mM][aA][gG][eE][nN][tT][aA][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[lL][iI][gG][hH][tT][ _][bB][lL][uU][eE][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[yY][eE][lL][lL][oO][wW][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[lL][iI][mM][eE][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[pP][iI][nN][kK][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[gG][rR][aA][yY][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[sS][iI][lL][vV][eE][rR][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[cC][yY][aA][nN][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[pP][uU][rR][pP][lL][eE][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[bB][lL][uU][eE][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[bB][rR][oO][wW][nN][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[gG][rR][eE][eE][nN][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[rR][eE][dD][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[bB][lL][aA][cC][kK][ _][gG][lL][aA][zZ][eE][dD][ _][tT][eE][rR][rR][aA][cC][oO][tT][tT][aA]|[cC][oO][nN][cC][rR][eE][tT][eE]|[cC][oO][nN][cC][rR][eE][tT][eE][ _][pP][oO][wW][dD][eE][rR]|[sS][tT][rR][uU][cC][tT][uU][rR][eE][ _][bB][lL][oO][cC][kK]|[iI][rR][oO][nN][ _][sS][pP][aA][dD][eE]|[iI][rR][oO][nN][ _][pP][iI][cC][kK][aA][xX][eE]|[iI][rR][oO][nN][ _][aA][xX][eE]|[fF][lL][iI][nN][tT][ _][aA][nN][dD][ _][sS][tT][eE][eE][lL]|[aA][pP][pP][lL][eE]|[bB][oO][wW]|[aA][rR][rR][oO][wW]|[cC][oO][aA][lL]|[dD][iI][aA][mM][oO][nN][dD]|[iI][rR][oO][nN][ _][iI][nN][gG][oO][tT]|[gG][oO][lL][dD][ _][iI][nN][gG][oO][tT]|[iI][rR][oO][nN][ _][sS][wW][oO][rR][dD]|[wW][oO][oO][dD][ _][sS][wW][oO][rR][dD]|[wW][oO][oO][dD][ _][sS][pP][aA][dD][eE]|[wW][oO][oO][dD][ _][pP][iI][cC][kK][aA][xX][eE]|[wW][oO][oO][dD][ _][aA][xX][eE]|[sS][tT][oO][nN][eE][ _][sS][wW][oO][rR][dD]|[sS][tT][oO][nN][eE][ _][sS][pP][aA][dD][eE]|[sS][tT][oO][nN][eE][ _][pP][iI][cC][kK][aA][xX][eE]|[sS][tT][oO][nN][eE][ _][aA][xX][eE]|[dD][iI][aA][mM][oO][nN][dD][ _][sS][wW][oO][rR][dD]|[dD][iI][aA][mM][oO][nN][dD][ _][sS][pP][aA][dD][eE]|[dD][iI][aA][mM][oO][nN][dD][ _][pP][iI][cC][kK][aA][xX][eE]|[dD][iI][aA][mM][oO][nN][dD][ _][aA][xX][eE]|[sS][tT][iI][cC][kK]|[bB][oO][wW][lL]|[mM][uU][sS][hH][rR][oO][oO][mM][ _][sS][oO][uU][pP]|[gG][oO][lL][dD][ _][sS][wW][oO][rR][dD]|[gG][oO][lL][dD][ _][sS][pP][aA][dD][eE]|[gG][oO][lL][dD][ _][pP][iI][cC][kK][aA][xX][eE]|[gG][oO][lL][dD][ _][aA][xX][eE]|[sS][tT][rR][iI][nN][gG]|[fF][eE][aA][tT][hH][eE][rR]|[sS][uU][lL][pP][hH][uU][rR]|[wW][oO][oO][dD][ _][hH][oO][eE]|[sS][tT][oO][nN][eE][ _][hH][oO][eE]|[iI][rR][oO][nN][ _][hH][oO][eE]|[dD][iI][aA][mM][oO][nN][dD][ _][hH][oO][eE]|[gG][oO][lL][dD][ _][hH][oO][eE]|[sS][eE][eE][dD][sS]|[wW][hH][eE][aA][tT]|[bB][rR][eE][aA][dD]|[lL][eE][aA][tT][hH][eE][rR][ _][hH][eE][lL][mM][eE][tT]|[lL][eE][aA][tT][hH][eE][rR][ _][cC][hH][eE][sS][tT][pP][lL][aA][tT][eE]|[lL][eE][aA][tT][hH][eE][rR][ _][lL][eE][gG][gG][iI][nN][gG][sS]|[lL][eE][aA][tT][hH][eE][rR][ _][bB][oO][oO][tT][sS]|[cC][hH][aA][iI][nN][mM][aA][iI][lL][ _][hH][eE][lL][mM][eE][tT]|[cC][hH][aA][iI][nN][mM][aA][iI][lL][ _][cC][hH][eE][sS][tT][pP][lL][aA][tT][eE]|[cC][hH][aA][iI][nN][mM][aA][iI][lL][ _][lL][eE][gG][gG][iI][nN][gG][sS]|[cC][hH][aA][iI][nN][mM][aA][iI][lL][ _][bB][oO][oO][tT][sS]|[iI][rR][oO][nN][ _][hH][eE][lL][mM][eE][tT]|[iI][rR][oO][nN][ _][cC][hH][eE][sS][tT][pP][lL][aA][tT][eE]|[iI][rR][oO][nN][ _][lL][eE][gG][gG][iI][nN][gG][sS]|[iI][rR][oO][nN][ _][bB][oO][oO][tT][sS]|[dD][iI][aA][mM][oO][nN][dD][ _][hH][eE][lL][mM][eE][tT]|[dD][iI][aA][mM][oO][nN][dD][ _][cC][hH][eE][sS][tT][pP][lL][aA][tT][eE]|[dD][iI][aA][mM][oO][nN][dD][ _][lL][eE][gG][gG][iI][nN][gG][sS]|[dD][iI][aA][mM][oO][nN][dD][ _][bB][oO][oO][tT][sS]|[gG][oO][lL][dD][ _][hH][eE][lL][mM][eE][tT]|[gG][oO][lL][dD][ _][cC][hH][eE][sS][tT][pP][lL][aA][tT][eE]|[gG][oO][lL][dD][ _][lL][eE][gG][gG][iI][nN][gG][sS]|[gG][oO][lL][dD][ _][bB][oO][oO][tT][sS]|[fF][lL][iI][nN][tT]|[pP][oO][rR][kK]|[gG][rR][iI][lL][lL][eE][dD][ _][pP][oO][rR][kK]|[pP][aA][iI][nN][tT][iI][nN][gG]|[gG][oO][lL][dD][eE][nN][ _][aA][pP][pP][lL][eE]|[sS][iI][gG][nN]|[wW][oO][oO][dD][ _][dD][oO][oO][rR]|[bB][uU][cC][kK][eE][tT]|[wW][aA][tT][eE][rR][ _][bB][uU][cC][kK][eE][tT]|[lL][aA][vV][aA][ _][bB][uU][cC][kK][eE][tT]|[mM][iI][nN][eE][cC][aA][rR][tT]|[sS][aA][dD][dD][lL][eE]|[iI][rR][oO][nN][ _][dD][oO][oO][rR]|[rR][eE][dD][sS][tT][oO][nN][eE]|[sS][nN][oO][wW][ _][bB][aA][lL][lL]|[bB][oO][aA][tT]|[lL][eE][aA][tT][hH][eE][rR]|[mM][iI][lL][kK][ _][bB][uU][cC][kK][eE][tT]|[cC][lL][aA][yY][ _][bB][rR][iI][cC][kK]|[cC][lL][aA][yY][ _][bB][aA][lL][lL]|[sS][uU][gG][aA][rR][ _][cC][aA][nN][eE]|[pP][aA][pP][eE][rR]|[bB][oO][oO][kK]|[sS][lL][iI][mM][eE][ _][bB][aA][lL][lL]|[sS][tT][oO][rR][aA][gG][eE][ _][mM][iI][nN][eE][cC][aA][rR][tT]|[pP][oO][wW][eE][rR][eE][dD][ _][mM][iI][nN][eE][cC][aA][rR][tT]|[eE][gG][gG]|[cC][oO][mM][pP][aA][sS][sS]|[fF][iI][sS][hH][iI][nN][gG][ _][rR][oO][dD]|[wW][aA][tT][cC][hH]|[gG][lL][oO][wW][sS][tT][oO][nN][eE][ _][dD][uU][sS][tT]|[rR][aA][wW][ _][fF][iI][sS][hH]|[cC][oO][oO][kK][eE][dD][ _][fF][iI][sS][hH]|[iI][nN][kK][ _][sS][aA][cC][kK]|[bB][oO][nN][eE]|[sS][uU][gG][aA][rR]|[cC][aA][kK][eE]|[bB][eE][dD]|[dD][iI][oO][dD][eE]|[cC][oO][oO][kK][iI][eE]|[mM][aA][pP]|[sS][hH][eE][aA][rR][sS]|[mM][eE][lL][oO][nN]|[pP][uU][mM][pP][kK][iI][nN][ _][sS][eE][eE][dD][sS]|[mM][eE][lL][oO][nN][ _][sS][eE][eE][dD][sS]|[rR][aA][wW][ _][bB][eE][eE][fF]|[cC][oO][oO][kK][eE][dD][ _][bB][eE][eE][fF]|[rR][aA][wW][ _][cC][hH][iI][cC][kK][eE][nN]|[cC][oO][oO][kK][eE][dD][ _][cC][hH][iI][cC][kK][eE][nN]|[rR][oO][tT][tT][eE][nN][ _][fF][lL][eE][sS][hH]|[eE][nN][dD][eE][rR][ _][pP][eE][aA][rR][lL]|[bB][lL][aA][zZ][eE][ _][rR][oO][dD]|[gG][hH][aA][sS][tT][ _][tT][eE][aA][rR]|[gG][oO][lL][dD][ _][nN][uU][gG][gG][eE][tT]|[nN][eE][tT][hH][eE][rR][ _][sS][tT][aA][lL][kK]|[pP][oO][tT][iI][oO][nN]|[gG][lL][aA][sS][sS][ _][bB][oO][tT][tT][lL][eE]|[sS][pP][iI][dD][eE][rR][ _][eE][yY][eE]|[fF][eE][rR][mM][eE][nN][tT][eE][dD][ _][sS][pP][iI][dD][eE][rR][ _][eE][yY][eE]|[bB][lL][aA][zZ][eE][ _][pP][oO][wW][dD][eE][rR]|[mM][aA][gG][mM][aA][ _][cC][rR][eE][aA][mM]|[bB][rR][eE][wW][iI][nN][gG][ _][sS][tT][aA][nN][dD][ _][iI][tT][eE][mM]|[cC][aA][uU][lL][dD][rR][oO][nN][ _][iI][tT][eE][mM]|[eE][yY][eE][ _][oO][fF][ _][eE][nN][dD][eE][rR]|[sS][pP][eE][cC][kK][lL][eE][dD][ _][mM][eE][lL][oO][nN]|[mM][oO][nN][sS][tT][eE][rR][ _][eE][gG][gG]|[eE][xX][pP][ _][bB][oO][tT][tT][lL][eE]|[fF][iI][rR][eE][bB][aA][lL][lL]|[bB][oO][oO][kK][ _][aA][nN][dD][ _][qQ][uU][iI][lL][lL]|[wW][rR][iI][tT][tT][eE][nN][ _][bB][oO][oO][kK]|[eE][mM][eE][rR][aA][lL][dD]|[iI][tT][eE][mM][ _][fF][rR][aA][mM][eE]|[fF][lL][oO][wW][eE][rR][ _][pP][oO][tT][ _][iI][tT][eE][mM]|[cC][aA][rR][rR][oO][tT][ _][iI][tT][eE][mM]|[pP][oO][tT][aA][tT][oO][ _][iI][tT][eE][mM]|[bB][aA][kK][eE][dD][ _][pP][oO][tT][aA][tT][oO]|[pP][oO][iI][sS][oO][nN][oO][uU][sS][ _][pP][oO][tT][aA][tT][oO]|[eE][mM][pP][tT][yY][ _][mM][aA][pP]|[gG][oO][lL][dD][eE][nN][ _][cC][aA][rR][rR][oO][tT]|[sS][kK][uU][lL][lL][ _][iI][tT][eE][mM]|[cC][aA][rR][rR][oO][tT][ _][sS][tT][iI][cC][kK]|[nN][eE][tT][hH][eE][rR][ _][sS][tT][aA][rR]|[pP][uU][mM][pP][kK][iI][nN][ _][pP][iI][eE]|[fF][iI][rR][eE][wW][oO][rR][kK]|[fF][iI][rR][eE][wW][oO][rR][kK][ _][cC][hH][aA][rR][gG][eE]|[eE][nN][cC][hH][aA][nN][tT][eE][dD][ _][bB][oO][oO][kK]|[rR][eE][dD][sS][tT][oO][nN][eE][ _][cC][oO][mM][pP][aA][rR][aA][tT][oO][rR]|[nN][eE][tT][hH][eE][rR][ _][bB][rR][iI][cC][kK][ _][iI][tT][eE][mM]|[qQ][uU][aA][rR][tT][zZ]|[eE][xX][pP][lL][oO][sS][iI][vV][eE][ _][mM][iI][nN][eE][cC][aA][rR][tT]|[hH][oO][pP][pP][eE][rR][ _][mM][iI][nN][eE][cC][aA][rR][tT]|[pP][rR][iI][sS][mM][aA][rR][iI][nN][eE][ _][sS][hH][aA][rR][dD]|[pP][rR][iI][sS][mM][aA][rR][iI][nN][eE][ _][cC][rR][yY][sS][tT][aA][lL][sS]|[rR][aA][bB][bB][iI][tT]|[cC][oO][oO][kK][eE][dD][ _][rR][aA][bB][bB][iI][tT]|[rR][aA][bB][bB][iI][tT][ _][sS][tT][eE][wW]|[rR][aA][bB][bB][iI][tT][ _][fF][oO][oO][tT]|[rR][aA][bB][bB][iI][tT][ _][hH][iI][dD][eE]|[aA][rR][mM][oO][rR][ _][sS][tT][aA][nN][dD]|[iI][rR][oO][nN][ _][bB][aA][rR][dD][iI][nN][gG]|[gG][oO][lL][dD][ _][bB][aA][rR][dD][iI][nN][gG]|[dD][iI][aA][mM][oO][nN][dD][ _][bB][aA][rR][dD][iI][nN][gG]|[lL][eE][aA][sS][hH]|[nN][aA][mM][eE][ _][tT][aA][gG]|[cC][oO][mM][mM][aA][nN][dD][ _][mM][iI][nN][eE][cC][aA][rR][tT]|[mM][uU][tT][tT][oO][nN]|[cC][oO][oO][kK][eE][dD][ _][mM][uU][tT][tT][oO][nN]|[bB][aA][nN][nN][eE][rR]|[eE][nN][dD][ _][cC][rR][yY][sS][tT][aA][lL]|[sS][pP][rR][uU][cC][eE][ _][dD][oO][oO][rR][ _][iI][tT][eE][mM]|[bB][iI][rR][cC][hH][ _][dD][oO][oO][rR][ _][iI][tT][eE][mM]|[jJ][uU][nN][gG][lL][eE][ _][dD][oO][oO][rR][ _][iI][tT][eE][mM]|[aA][cC][aA][cC][iI][aA][ _][dD][oO][oO][rR][ _][iI][tT][eE][mM]|[dD][aA][rR][kK][ _][oO][aA][kK][ _][dD][oO][oO][rR][ _][iI][tT][eE][mM]|[cC][hH][oO][rR][uU][sS][ _][fF][rR][uU][iI][tT]|[cC][hH][oO][rR][uU][sS][ _][fF][rR][uU][iI][tT][ _][pP][oO][pP][pP][eE][dD]|[bB][eE][eE][tT][rR][oO][oO][tT]|[bB][eE][eE][tT][rR][oO][oO][tT][ _][sS][eE][eE][dD][sS]|[bB][eE][eE][tT][rR][oO][oO][tT][ _][sS][oO][uU][pP]|[dD][rR][aA][gG][oO][nN][sS][ _][bB][rR][eE][aA][tT][hH]|[sS][pP][lL][aA][sS][hH][ _][pP][oO][tT][iI][oO][nN]|[sS][pP][eE][cC][tT][rR][aA][lL][ _][aA][rR][rR][oO][wW]|[tT][iI][pP][pP][eE][dD][ _][aA][rR][rR][oO][wW]|[lL][iI][nN][gG][eE][rR][iI][nN][gG][ _][pP][oO][tT][iI][oO][nN]|[sS][hH][iI][eE][lL][dD]|[eE][lL][yY][tT][rR][aA]|[bB][oO][aA][tT][ _][sS][pP][rR][uU][cC][eE]|[bB][oO][aA][tT][ _][bB][iI][rR][cC][hH]|[bB][oO][aA][tT][ _][jJ][uU][nN][gG][lL][eE]|[bB][oO][aA][tT][ _][aA][cC][aA][cC][iI][aA]|[bB][oO][aA][tT][ _][dD][aA][rR][kK][ _][oO][aA][kK]|[tT][oO][tT][eE][mM]|[sS][hH][uU][lL][kK][eE][rR][ _][sS][hH][eE][lL][lL]|[iI][rR][oO][nN][ _][nN][uU][gG][gG][eE][tT]|[kK][nN][oO][wW][lL][eE][dD][gG][eE][ _][bB][oO][oO][kK]|[gG][oO][lL][dD][ _][rR][eE][cC][oO][rR][dD]|[gG][rR][eE][eE][nN][ _][rR][eE][cC][oO][rR][dD]|[rR][eE][cC][oO][rR][dD][ _][33]|[rR][eE][cC][oO][rR][dD][ _][44]|[rR][eE][cC][oO][rR][dD][ _][55]|[rR][eE][cC][oO][rR][dD][ _][66]|[rR][eE][cC][oO][rR][dD][ _][77]|[rR][eE][cC][oO][rR][dD][ _][88]|[rR][eE][cC][oO][rR][dD][ _][99]|[rR][eE][cC][oO][rR][dD][ _][11][00]|[rR][eE][cC][oO][rR][dD][ _][11][11]|[rR][eE][cC][oO][rR][dD][ _][11][22])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="xyzType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="xzType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="hexType">
+    <xs:restriction base="xs:string">
+      <xs:length value="6" fixed="true" />
+      <xs:pattern value="[0-9a-fA-F]{6}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="uuidType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="32"/>
+      <xs:maxLength value="36"/>
+      <xs:pattern value="[0-9a-fA-F]{8}-?[0-9a-fA-F]{4}-?4[0-9a-fA-F]{3}-?[8-9a-bA-B][0-9a-fA-F]{3}-?[0-9a-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="timeType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(\d+(\.\d?)?)[s,m,h,d]?|(\.[0-9])[s,m,h,d]?|oo"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="semanticType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]+\.*[0-9]*\.*[0-9]*"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>
