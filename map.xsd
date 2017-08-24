@@ -1354,12 +1354,13 @@
       <xs:attribute name="id"/>
       <xs:attribute name="name"/>
       <xs:attribute name="lore"/>
+      <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="amount" type="xs:integer"/>
       <xs:attribute name="material" type="itemType"/>
       <xs:attribute name="attributes" type="xs:anyURI"/>
       <xs:attribute name="chance" type="xs:decimal"/>
       <xs:attribute name="damage" type="xs:integer"/>
-      <xs:attribute name="enchantment"/>
+      <xs:attribute name="enchantment" type="enchantmentType"/>
       <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
       <xs:attribute name="force" type="xs:boolean"/>
       <xs:attribute name="grenade" type="xs:boolean"/>
@@ -3043,12 +3044,12 @@
   </xs:simpleType>
   <xs:simpleType name="xyzType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?"/>
+      <xs:pattern value="(-?[0-9]+(\.[0-9][0-9]?)?|-?oo),(-?[0-9]+(\.[0-9][0-9]?)?|-?oo),(-?[0-9]+(\.[0-9][0-9]?)?|-?oo)"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="xzType">
     <xs:restriction base="xs:string">
-      <xs:pattern value="-?[0-9]+(\.[0-9][0-9]?)?,-?[0-9]+(\.[0-9][0-9]?)?"/>
+      <xs:pattern value="(-?[0-9]+(\.[0-9][0-9]?)?|-?oo),(-?[0-9]+(\.[0-9][0-9]?)?|-?oo)"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="hexType">
