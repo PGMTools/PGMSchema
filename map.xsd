@@ -1362,7 +1362,7 @@
       <xs:attribute name="attributes" type="xs:anyURI"/>
       <xs:attribute name="chance" type="xs:decimal"/>
       <xs:attribute name="damage" type="xs:integer"/>
-      <xs:attribute name="enchantment" type="enchantmentType"/>
+      <xs:attribute name="enchantment" type="enchantmentLevelType"/>
       <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
       <xs:attribute name="force" type="xs:boolean"/>
       <xs:attribute name="grenade" type="xs:boolean"/>
@@ -1642,7 +1642,7 @@
       <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
       <xs:attribute name="durability" type="xs:integer"/>
-      <xs:attribute name="enchantment"/>
+      <xs:attribute name="enchantment" type="enchantmentLevelType"/>
       <xs:attribute name="lock" type="xs:boolean"/>
       <xs:attribute name="locked" type="xs:boolean"/>
       <xs:attribute name="lore"/>
@@ -1662,7 +1662,7 @@
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
       <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
-      <xs:attribute name="enchantment"/>
+      <xs:attribute name="enchantment" type="enchantmentLevelType"/>
       <xs:attribute name="enchantments" type="xs:NMTOKEN"/>
       <xs:attribute name="locked" type="xs:boolean"/>
       <xs:attribute name="lore"/>
@@ -1726,7 +1726,7 @@
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
       <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
-      <xs:attribute name="enchantment"/>
+      <xs:attribute name="enchantment" type="enchantmentLevelType"/>
       <xs:attribute name="lock" type="xs:boolean"/>
       <xs:attribute name="locked" type="xs:boolean"/>
       <xs:attribute name="lore"/>
@@ -1752,7 +1752,7 @@
       </xs:choice>
       <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
-      <xs:attribute name="enchantment"/>
+      <xs:attribute name="enchantment" type="enchantmentLevelType"/>
       <xs:attribute name="lock" type="xs:boolean"/>
       <xs:attribute name="locked" type="xs:boolean"/>
       <xs:attribute name="material" type="itemType"/>
@@ -2482,10 +2482,18 @@
   <xs:simpleType name="enchantmentType">
   	<xs:union memberTypes="enchantmentPattern enchantmentEnum"/>
   </xs:simpleType>
+  <xs:simpleType name="enchantmentLevelType">
+    <xs:union memberTypes="enchantmentEnum enchantmentLevelPattern"/>
+  </xs:simpleType>
   <!--enchantment types-->
   <xs:simpleType name="enchantmentPattern">
   	<xs:restriction base="xs:string">
   		<xs:pattern value="([pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][nN][vV][iI][rR][oO][nN][mM][eE][nN][tT][aA][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][iI][rR][eE]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][aA][lL][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][xX][pP][lL][oO][sS][iI][oO][nN][sS]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][pP][rR][oO][jJ][eE][cC][tT][iI][lL][eE]|[oO][xX][yY][gG][eE][nN]|[wW][aA][tT][eE][rR][ _][wW][oO][rR][kK][eE][rR]|[tT][hH][oO][rR][nN][sS]|[dD][eE][pP][tT][hH][ _][sS][tT][rR][iI][dD][eE][rR]|[fF][rR][oO][sS][tT][ _][wW][aA][lL][kK][eE][rR]|[dD][aA][mM][aA][gG][eE][ _][aA][lL][lL]|[dD][aA][mM][aA][gG][eE][ _][uU][nN][dD][eE][aA][dD]|[dD][aA][mM][aA][gG][eE][ _][aA][rR][tT][hH][rR][oO][pP][oO][dD][sS]|[kK][nN][oO][cC][kK][bB][aA][cC][kK]|[fF][iI][rR][eE][ _][aA][sS][pP][eE][cC][tT]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][mM][oO][bB][sS]|[dD][iI][gG][ _][sS][pP][eE][eE][dD]|[sS][iI][lL][kK][ _][tT][oO][uU][cC][hH]|[dD][uU][rR][aA][bB][iI][lL][iI][tT][yY]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][bB][lL][oO][cC][kK][sS]|[aA][rR][rR][oO][wW][ _][dD][aA][mM][aA][gG][eE]|[aA][rR][rR][oO][wW][ _][kK][nN][oO][cC][kK][bB][aA][cC][kK]|[aA][rR][rR][oO][wW][ _][fF][iI][rR][eE]|[aA][rR][rR][oO][wW][ _][iI][nN][fF][iI][nN][iI][tT][eE]|[lL][uU][cC][kK]|[lL][uU][rR][eE]|[mM][eE][nN][dD][iI][nN][gG]|[vV][aA][nN][iI][sS][hH][iI][nN][gG][ _][cC][uU][rR][sS][eE])"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="enchantmentLevelPattern">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][nN][vV][iI][rR][oO][nN][mM][eE][nN][tT][aA][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][iI][rR][eE]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][aA][lL][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][xX][pP][lL][oO][sS][iI][oO][nN][sS]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][pP][rR][oO][jJ][eE][cC][tT][iI][lL][eE]|[oO][xX][yY][gG][eE][nN]|[wW][aA][tT][eE][rR][ _][wW][oO][rR][kK][eE][rR]|[tT][hH][oO][rR][nN][sS]|[dD][eE][pP][tT][hH][ _][sS][tT][rR][iI][dD][eE][rR]|[fF][rR][oO][sS][tT][ _][wW][aA][lL][kK][eE][rR]|[dD][aA][mM][aA][gG][eE][ _][aA][lL][lL]|[dD][aA][mM][aA][gG][eE][ _][uU][nN][dD][eE][aA][dD]|[dD][aA][mM][aA][gG][eE][ _][aA][rR][tT][hH][rR][oO][pP][oO][dD][sS]|[kK][nN][oO][cC][kK][bB][aA][cC][kK]|[fF][iI][rR][eE][ _][aA][sS][pP][eE][cC][tT]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][mM][oO][bB][sS]|[dD][iI][gG][ _][sS][pP][eE][eE][dD]|[sS][iI][lL][kK][ _][tT][oO][uU][cC][hH]|[dD][uU][rR][aA][bB][iI][lL][iI][tT][yY]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][bB][lL][oO][cC][kK][sS]|[aA][rR][rR][oO][wW][ _][dD][aA][mM][aA][gG][eE]|[aA][rR][rR][oO][wW][ _][kK][nN][oO][cC][kK][bB][aA][cC][kK]|[aA][rR][rR][oO][wW][ _][fF][iI][rR][eE]|[aA][rR][rR][oO][wW][ _][iI][nN][fF][iI][nN][iI][tT][eE]|[lL][uU][cC][kK]|[lL][uU][rR][eE]|[mM][eE][nN][dD][iI][nN][gG]|[vV][aA][nN][iI][sS][hH][iI][nN][gG][ _][cC][uU][rR][sS][eE]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN]|[fF][iI][rR][eE][ _][pP][rR][oO][tT][eE][cC][tT][iI][oO][nN]|[fF][eE][aA][tT][hH][eE][rR][ _][fF][aA][lL][lL][iI][nN][gG]|[bB][lL][aA][sS][tT][ _][pP][rR][oO][tT][eE][cC][tT][iI][oO][nN]|[pP][rR][oO][jJ][eE][cC][tT][iI][lL][eE][ _][pP][rR][oO][tT][eE][cC][tT][iI][oO][nN]|[rR][eE][sS][pP][iI][rR][aA][tT][iI][oO][nN]|[aA][qQ][uU][aA][ _][aA][fF][fF][iI][nN][iI][tT][yY]|[tT][hH][oO][rR][nN][sS]|[dD][eE][pP][tT][hH][ _][sS][tT][rR][iI][dD][eE][rR]|[fF][rR][oO][sS][tT][ _][wW][aA][lL][kK][eE][rR]|[cC][uU][rR][sS][eE][ _][oO][fF][ _][bB][iI][nN][dD][iI][nN][gG]|[sS][hH][aA][rR][pP][nN][eE][sS][sS]|[sS][mM][iI][tT][eE]|[bB][aA][nN][eE][ _][oO][fF][ _][aA][rR][tT][hH][rR][oO][pP][oO][dD][sS]|[kK][nN][oO][cC][kK][bB][aA][cC][kK]|[fF][iI][rR][eE][ _][aA][sS][pP][eE][cC][tT]|[lL][oO][oO][tT][iI][nN][gG]|[eE][fF][fF][iI][cC][iI][eE][nN][cC][yY]|[sS][iI][lL][kK][ _][tT][oO][uU][cC][hH]|[uU][nN][bB][rR][eE][aA][kK][iI][nN][gG]|[fF][oO][rR][tT][uU][nN][eE]|[pP][oO][wW][eE][rR]|[pP][uU][nN][cC][hH]|[fF][lL][aA][mM][eE]|[iI][nN][fF][iI][nN][iI][tT][yY]|[lL][uU][cC][kK][ _][oO][fF][ _][tT][hH][eE][ _][sS][eE][aA]|[lL][uU][rR][eE]|[mM][eE][nN][dD][iI][nN][gG]|[cC][uU][rR][sS][eE][ _][oO][fF][ _][vV][aA][nN][iI][sS][hH][iI][nN][gG])(:[0-9])?"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="enchantmentEnum">
@@ -2523,6 +2531,9 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="textType">
+    <xs:union memberTypes="textEnum textPattern"/>
+  </xs:simpleType>
+  <xs:simpleType name="textEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="black"/>
       <xs:enumeration value="dark blue"/>
@@ -2540,6 +2551,11 @@
       <xs:enumeration value="light purple"/>
       <xs:enumeration value="yellow"/>
       <xs:enumeration value="white"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="textPattern">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([bB][lL][aA][cC][kK]|[dD][aA][rR][kK][ _][bB][lL][uU][eE]|[dD][aA][rR][kK][ _][gG][rR][eE][eE][nN]|[dD][aA][rR][kK][ _][aA][qQ][uU][aA]|[dD][aA][rR][kK][ _][rR][eE][dD]|[dD][aA][rR][kK][ _][pP][uU][rR][pP][lL][eE]|[gG][oO][lL][dD]|[gG][rR][aA][yY]|[dD][aA][rR][kK][ _][gG][rR][aA][yY]|[bB][lL][uU][eE]|[gG][rR][eE][eE][nN]|[aA][qQ][uU][aA]|[rR][eE][dD]|[lL][iI][gG][hH][tT][ _][pP][uU][rR][pP][lL][eE]|[yY][eE][lL][lL][oO][wW]|[wW][hH][iI][tT][eE])"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="dyeType">
