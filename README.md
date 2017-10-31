@@ -50,4 +50,4 @@ Some modules are also not included in the rules due to no maps within the repo u
 After `1.3.6` the overall naming scheme of XML was moved over to using IDs, this large change means older and newer maps would need a different schemas.
 
 ### Should I really use it?
-Yes.
+- Yes.
