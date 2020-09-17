@@ -7,7 +7,6 @@
         <xs:element ref="damage"/>
         <xs:element ref="destroyables"/>
         <xs:element ref="flags"/>
-        <xs:element ref="game-mode"/>
         <xs:element ref="gamemode"/>
         <xs:element ref="if"/>
         <xs:element ref="kill-reward"/>
@@ -26,7 +25,6 @@
         <xs:element ref="autorespawn"/>
         <xs:element ref="blitz"/>
         <xs:element ref="block-drops"/>
-        <xs:element ref="blockdrops"/>
         <xs:element ref="broadcasts"/>
         <xs:element ref="classes"/>
         <xs:element ref="contributors"/>
@@ -48,8 +46,6 @@
         <xs:element ref="itemrepair"/>
         <xs:element ref="keep-potion-bottles"/>
         <xs:element ref="kill-rewards"/>
-        <xs:element ref="killreward"/>
-        <xs:element ref="killrewards"/>
         <xs:element ref="king"/>
         <xs:element ref="kits"/>
         <xs:element ref="lootables"/>
