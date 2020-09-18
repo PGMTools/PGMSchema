@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified">
-	<xs:import></xs:import>
 	<xs:element name="map">
 		<xs:complexType mixed="true">
 			<xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -87,14 +86,19 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="armorkeep">
-		<xs:complexType>
+        <xs:annotation>
+        	<xs:documentation>A node containing all the equipped armor kept when respawning.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
 			<xs:sequence>
 				<xs:element maxOccurs="unbounded" ref="item" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="authors">
-		<xs:complexType>
+        <xs:annotation>
+        	<xs:documentation>The authors of the map, at least one author is required.</xs:documentation></xs:annotation>
+        <xs:complexType>
 			<xs:sequence>
 				<xs:element minOccurs="1" maxOccurs="unbounded"
 					ref="author" />
@@ -142,7 +146,9 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="alert">
-		<xs:complexType mixed="true">
+        <xs:annotation>
+        	<xs:documentation>This will display an [Alert] message</xs:documentation></xs:annotation>
+        <xs:complexType mixed="true">
 			<xs:attribute name="after" type="timeType" use="required" />
 			<xs:attribute name="every" type="timeType" />
 			<xs:attribute name="count" type="xs:NMTOKEN" />
@@ -428,7 +434,45 @@
 	<xs:element name="depletion" type="xs:string" />
 	<xs:element name="include">
 		<xs:complexType>
-			<xs:attribute name="src" type="xs:string" />
+			<xs:attribute name="src">
+				<xs:annotation>
+					<xs:documentation>
+						The PGM plugin will look through it’s
+						plugin-wide include path for includes, and it
+						will also look for them relative to from where
+						they are imported. You can set up a chain of
+						includes that respects those same semantics.
+
+						Included XML files should have the XML header
+						and the main map container. View includes here: http://docs.oc.tc/modules/includes_conditionals
+					</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="tutorial.xml"></xs:enumeration>
+						<xs:enumeration value="continuity-tnt.xml"></xs:enumeration>
+						<xs:enumeration value="blasternauts.xml"></xs:enumeration>
+						<xs:enumeration value="blitz-global.xml"></xs:enumeration>
+						<xs:enumeration value="gs.xml"></xs:enumeration>
+						<xs:enumeration value="gs-ffa.xml"></xs:enumeration>
+						<xs:enumeration value="stamina.xml"></xs:enumeration>
+						<xs:enumeration value="skywars.xml"></xs:enumeration>
+						<xs:enumeration value="block-runner.xml"></xs:enumeration>
+						<xs:enumeration
+							value="disable-boat-crafting.xml">
+						</xs:enumeration>
+						<xs:enumeration value="beta.xml"></xs:enumeration>
+						<xs:enumeration value="ranked.xml"></xs:enumeration>
+						<xs:enumeration value="unranked.xml"></xs:enumeration>
+						<xs:enumeration value="infection.xml"></xs:enumeration>
+						<xs:enumeration value="development.xml"></xs:enumeration>
+						<xs:enumeration value="production.xml"></xs:enumeration>
+						<xs:enumeration value="tournament.xml"></xs:enumeration>
+						<xs:enumeration value="survival-games.xml"></xs:enumeration>
+						<xs:enumeration value="void-death.xml"></xs:enumeration>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="item-mods">
@@ -729,7 +773,12 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="rage">
-		<xs:complexType />
+        <xs:annotation>
+        	<xs:documentation>Enable the one hit kill, rage style gamemode. &#10;
+One hit kills will only be applied to items that have a sharpness enchantment greater than level 1. One shot arrow kills will only be applied to bows that have a power enchantment greater than level 1.
+NOTE: This module must be used in conjunction with another gamemode.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType />
 	</xs:element>
 	<xs:element name="renewables">
 		<xs:complexType>
@@ -1288,7 +1337,10 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="all">
-		<xs:complexType>
+        <xs:annotation>
+        	<xs:documentation>Allow if all of the child filters allow, deny if one or more deny, otherwise abstain.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
 			<xs:sequence>
 				<xs:choice minOccurs="0">
 					<xs:element ref="all" />
@@ -1491,7 +1543,9 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="below">
-		<xs:complexType>
+        <xs:annotation>
+        	<xs:documentation>The above and below regions can be used to conveniently define axis-aligned half-spaces</xs:documentation></xs:annotation>
+        <xs:complexType>
 			<xs:attribute name="id" type="xs:string" />
 			<xs:attribute name="x" type="xs:integer" />
 			<xs:attribute name="y" type="xs:decimal" />
@@ -1827,9 +1881,16 @@
 	</xs:element>
 	<xs:element name="walk-speed" type="xs:decimal" />
 	<xs:element name="author">
-		<xs:complexType mixed="true">
-			<xs:attribute name="uuid" type="uuidType" />
-			<xs:attribute name="contribution" />
+        <xs:annotation>
+        	<xs:documentation>A major author of the map, used in &lt;authors&gt;</xs:documentation>
+        </xs:annotation>
+        <xs:complexType mixed="true">
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="contribution" />
+				</xs:extension>
+			</xs:simpleContent>
+			<!-- <xs:attribute name="uuid" type="uuidType" />  -->
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="respawn">
@@ -2093,7 +2154,9 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="allow">
-		<xs:complexType>
+        <xs:annotation>
+        	<xs:documentation>Allow if the child filter allows, otherwise abstain (transform deny to abstain).</xs:documentation></xs:annotation>
+        <xs:complexType>
 			<xs:choice>
 				<xs:element ref="any" />
 				<xs:element ref="holding" />
@@ -2277,7 +2340,9 @@
 	</xs:element>
 	<xs:element name="game-mode" type="xs:string" />
 	<xs:element name="attribute">
-		<xs:complexType>
+        <xs:annotation>
+        	<xs:documentation>Attribute Modifier</xs:documentation></xs:annotation>
+        <xs:complexType>
 			<xs:simpleContent>
 				<xs:extension base="xs:string">
 					<xs:attribute name="amount" type="xs:decimal" />
@@ -2314,7 +2379,9 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="all-blocks">
-		<xs:complexType />
+        <xs:annotation>
+        	<xs:documentation>Match all block type materials.</xs:documentation></xs:annotation>
+        <xs:complexType />
 	</xs:element>
 	<xs:element name="flag-carried" type="xs:string" />
 	<xs:element name="flag-returned" type="xs:string" />
@@ -2322,7 +2389,9 @@
 		<xs:complexType />
 	</xs:element>
 	<xs:element name="above">
-		<xs:complexType>
+        <xs:annotation>
+        	<xs:documentation>The above and below regions can be used to conveniently define axis-aligned half-spaces</xs:documentation></xs:annotation>
+        <xs:complexType>
 			<xs:attribute name="id" type="xs:string" />
 			<xs:attribute name="x" type="xs:integer" />
 			<xs:attribute name="y" type="xs:integer" />
