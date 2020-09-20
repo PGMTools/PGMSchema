@@ -1,3 +1,7 @@
+
+
+
+
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified">
@@ -1890,7 +1894,7 @@ NOTE: This module must be used in conjunction with another gamemode.</xs:documen
 					<xs:attribute name="contribution" />
 				</xs:extension>
 			</xs:simpleContent>
-			<!-- <xs:attribute name="uuid" type="uuidType" />  -->
+			<xs:attribute name="uuid" type="uuidType" /> 
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="respawn">
