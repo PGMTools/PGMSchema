@@ -1,7 +1,3 @@
-
-
-
-
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
 	elementFormDefault="qualified">
@@ -1822,10 +1818,10 @@ NOTE: This module must be used in conjunction with another gamemode.</xs:documen
 	<xs:element name="health" type="xs:integer" />
 	<xs:element name="helmet">
 		<xs:complexType mixed="true">
-			<xs:sequence>
-				<xs:element minOccurs="0" maxOccurs="unbounded"
-					ref="enchantment" />
-			</xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element ref="attribute" />
+				<xs:element ref="enchantment" />
+			</xs:choice>
 			<xs:attribute name="attributes" type="xs:NMTOKEN" />
 			<xs:attribute name="color" type="hexType" />
 			<xs:attribute name="damage" type="xs:integer" />
