@@ -1715,16 +1715,14 @@ NOTE: This module must be used in conjunction with another gamemode.</xs:documen
 				<xs:element ref="shield" />
 				<xs:element ref="unless" />
 				<xs:element ref="walk-speed" />
+				<xs:element ref="attribute" />
 			</xs:choice>
 			<xs:attribute name="filter" type="xs:string" />
 			<xs:attribute name="force" type="xs:boolean" />
-			<xs:attribute name="id" />
-			<xs:attribute name="lend-kit" type="xs:boolean" />
-			<xs:attribute name="locked" type="xs:boolean" />
-			<xs:attribute name="name" type="xs:string" />
-			<xs:attribute name="parent" type="xs:string" />
+			<xs:attribute name="id" use="required" />
 			<xs:attribute name="parents" />
-			<xs:attribute name="potion-particles" type="xs:boolean" />
+            <xs:attribute name="potion-particles" type="xs:boolean" />
+            <xs:attribute name="reset-ender-pearls" type="xs:boolean"></xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="boots">
@@ -1884,13 +1882,9 @@ NOTE: This module must be used in conjunction with another gamemode.</xs:documen
         <xs:annotation>
         	<xs:documentation>A major author of the map, used in &lt;authors&gt;</xs:documentation>
         </xs:annotation>
-        <xs:complexType mixed="true">
-			<xs:simpleContent>
-				<xs:extension base="xs:string">
-					<xs:attribute name="contribution" />
-				</xs:extension>
-			</xs:simpleContent>
-			<xs:attribute name="uuid" type="uuidType" /> 
+		<xs:complexType mixed="true">
+			<xs:attribute name="uuid" type="uuidType" use="required" />
+			<xs:attribute name="contribution" />
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="respawn">
@@ -2140,10 +2134,10 @@ NOTE: This module must be used in conjunction with another gamemode.</xs:documen
 		<xs:complexType>
 			<xs:simpleContent>
 				<xs:extension base="timeType">
-					<xs:attribute name="id" type="xs:string" />
 					<xs:attribute name="result" type="xs:string" />
-					<xs:attribute name="results" type="xs:string" />
 					<xs:attribute name="show" type="xs:boolean" />
+					<xs:attribute name="overtime"  type="timeType" />
+					<xs:attribute name="max-overtime"  type="timeType" />
 				</xs:extension>
 			</xs:simpleContent>
 		</xs:complexType>
@@ -2334,7 +2328,7 @@ NOTE: This module must be used in conjunction with another gamemode.</xs:documen
 	</xs:element>
 	<xs:element name="contributor">
 		<xs:complexType mixed="true">
-			<xs:attribute name="uuid" type="uuidType" />
+			<xs:attribute name="uuid" type="uuidType" use="required" />
 			<xs:attribute name="contribution" />
 		</xs:complexType>
 	</xs:element>
