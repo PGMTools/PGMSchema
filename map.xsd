@@ -65,6 +65,7 @@
         <xs:element ref="projectiles"/>
         <xs:element ref="proximity-alarms"/>
         <xs:element ref="rage"/>
+        <xs:element ref="ghostsquadron"/>
         <xs:element ref="renewables"/>
         <xs:element ref="respawns"/>
         <xs:element ref="rules"/>
@@ -76,24 +77,30 @@
         <xs:element ref="version"/>
         <xs:element ref="world-borders"/>
       </xs:choice>
+      <xs:attribute name="proto" type="xs:NMTOKEN" use="required"/>
+      <xs:attribute name="name"/>
       <xs:attribute name="game"/>
       <xs:attribute name="internal" type="xs:boolean"/>
-      <xs:attribute name="name"/>
-      <xs:attribute name="proto" type="xs:NMTOKEN" use="required"/>
       <xs:attribute name="title"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="armorkeep">
+    <xs:annotation>
+      <xs:documentation>A node containing all the equipped armor kept when respawning.</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="item"/>
+        <xs:element ref="item" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="authors">
+    <xs:annotation>
+      <xs:documentation>The authors of the map, at least one author is required.</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="1" maxOccurs="unbounded" ref="author"/>
+        <xs:element ref="author" minOccurs="1" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -101,19 +108,21 @@
     <xs:complexType/>
   </xs:element>
   <xs:element name="blitz">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="lives"/>
-        <xs:element minOccurs="0" ref="broadcastLives"/>
-      </xs:sequence>
-    </xs:complexType>
+    <xs:annotation>
+      <xs:documentation>The blitz module is used with the Ghost Squadron
+				gamemode, and is also often combined with the rage
+				module.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType>
+      <xs:restriction base="xs:string"/>
+    </xs:simpleType>
   </xs:element>
   <xs:element name="lives" type="xs:integer"/>
   <xs:element name="broadcastLives" type="xs:boolean"/>
   <xs:element name="block-drops">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="rule"/>
+        <xs:element ref="rule" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="trample" type="xs:boolean"/>
     </xs:complexType>
@@ -121,7 +130,7 @@
   <xs:element name="blockdrops">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="rule"/>
+        <xs:element ref="rule" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -134,6 +143,9 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="alert">
+    <xs:annotation>
+      <xs:documentation>This will display an [Alert] message</xs:documentation>
+    </xs:annotation>
     <xs:complexType mixed="true">
       <xs:attribute name="after" type="timeType" use="required"/>
       <xs:attribute name="every" type="timeType"/>
@@ -152,7 +164,7 @@
   <xs:element name="classes">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="class"/>
+        <xs:element ref="class" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="family" type="xs:string"/>
       <xs:attribute name="restrict" type="xs:boolean"/>
@@ -162,14 +174,14 @@
   <xs:element name="contributors">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="1" maxOccurs="unbounded" ref="contributor"/>
+        <xs:element ref="contributor" minOccurs="1" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="control-points">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="control-point"/>
+        <xs:element ref="control-point" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="capture-filter" type="xs:string"/>
       <xs:attribute name="capture-players" type="xs:string"/>
@@ -195,16 +207,16 @@
   <xs:element name="control-point">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="capture-region"/>
-        <xs:element minOccurs="0" ref="progress-display-region"/>
-        <xs:element minOccurs="0" ref="owner-display-region"/>
+        <xs:element ref="capture-region" minOccurs="0"/>
+        <xs:element ref="progress-display-region" minOccurs="0"/>
+        <xs:element ref="owner-display-region" minOccurs="0"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="capture"/>
           <xs:element ref="capture-filter"/>
           <xs:element ref="captured"/>
           <xs:element ref="progress"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="player-filter"/>
+        <xs:element ref="player-filter" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="capture" type="xs:string"/>
       <xs:attribute name="capture-players" type="xs:string"/>
@@ -265,7 +277,7 @@
   <xs:element name="crafting">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="disable"/>
+        <xs:element ref="disable" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:element ref="disabled"/>
           <xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -291,7 +303,7 @@
   <xs:element name="shape">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="row"/>
+        <xs:element ref="row" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -300,7 +312,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="result"/>
-        <xs:element maxOccurs="unbounded" ref="ingredient"/>
+        <xs:element ref="ingredient" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="override" type="xs:boolean"/>
     </xs:complexType>
@@ -309,8 +321,8 @@
   <xs:element name="disabledamage">
     <xs:complexType>
       <xs:choice>
-        <xs:element maxOccurs="unbounded" ref="damage"/>
-        <xs:element maxOccurs="unbounded" ref="cause"/>
+        <xs:element ref="damage" maxOccurs="unbounded"/>
+        <xs:element ref="cause" maxOccurs="unbounded"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -318,14 +330,14 @@
   <xs:element name="falling-blocks">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="rule"/>
+        <xs:element ref="rule" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="filters">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="completed"/>
+        <xs:element ref="completed" minOccurs="0"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="all"/>
           <xs:element ref="allow"/>
@@ -351,9 +363,9 @@
         </xs:choice>
         <xs:choice>
           <xs:element ref="flying"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="score"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="apply"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="class"/>
+          <xs:element ref="score" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="apply" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="class" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
       </xs:sequence>
     </xs:complexType>
@@ -415,34 +427,68 @@
   <xs:element name="depletion" type="xs:string"/>
   <xs:element name="include">
     <xs:complexType>
-      <xs:attribute name="src" type="xs:string"/>
+      <xs:attribute name="src">
+        <xs:annotation>
+          <xs:documentation>The PGM plugin will look through it’s
+						plugin-wide include path for includes, and it
+						will also look for them relative to from where
+						they are imported. You can set up a chain of
+						includes that respects those same semantics.
+
+						Included XML files should have the XML header
+						and the main map container. View includes here: http://docs.oc.tc/modules/includes_conditionals</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="tutorial.xml"/>
+            <xs:enumeration value="continuity-tnt.xml"/>
+            <xs:enumeration value="blasternauts.xml"/>
+            <xs:enumeration value="blitz-global.xml"/>
+            <xs:enumeration value="gs.xml"/>
+            <xs:enumeration value="gs-ffa.xml"/>
+            <xs:enumeration value="stamina.xml"/>
+            <xs:enumeration value="skywars.xml"/>
+            <xs:enumeration value="block-runner.xml"/>
+            <xs:enumeration value="disable-boat-crafting.xml"/>
+            <xs:enumeration value="beta.xml"/>
+            <xs:enumeration value="ranked.xml"/>
+            <xs:enumeration value="unranked.xml"/>
+            <xs:enumeration value="infection.xml"/>
+            <xs:enumeration value="development.xml"/>
+            <xs:enumeration value="production.xml"/>
+            <xs:enumeration value="tournament.xml"/>
+            <xs:enumeration value="survival-games.xml"/>
+            <xs:enumeration value="void-death.xml"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:attribute>
     </xs:complexType>
   </xs:element>
   <xs:element name="item-mods">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="rule"/>
+        <xs:element ref="rule" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="itemkeep">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="item"/>
+        <xs:element ref="item" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="itemremove">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="item"/>
+        <xs:element ref="item" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="itemrepair">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="item"/>
+        <xs:element ref="item" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -452,23 +498,23 @@
   <xs:element name="kill-rewards">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="kill-reward"/>
-        <xs:element minOccurs="0" ref="filter"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
+        <xs:element ref="kill-reward" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="filter" minOccurs="0"/>
+        <xs:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="killreward">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="kill-streak"/>
+        <xs:element ref="kill-streak" minOccurs="0"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="filter"/>
           <xs:element ref="item"/>
           <xs:element ref="kit"/>
           <xs:element ref="potion"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="effect"/>
+        <xs:element ref="effect" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="kit" type="xs:string"/>
     </xs:complexType>
@@ -483,14 +529,14 @@
   <xs:element name="king">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="hills"/>
+        <xs:element ref="hills" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="hills">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="hill"/>
+        <xs:element ref="hill" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="capture-rule" type="xs:string"/>
       <xs:attribute name="capture-time" type="xs:NMTOKEN"/>
@@ -506,9 +552,9 @@
   <xs:element name="hill">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="capture"/>
-        <xs:element minOccurs="0" ref="progress"/>
-        <xs:element minOccurs="0" ref="captured"/>
+        <xs:element ref="capture" minOccurs="0"/>
+        <xs:element ref="progress" minOccurs="0"/>
+        <xs:element ref="captured" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="capture" type="xs:string"/>
       <xs:attribute name="capture-rule" type="xs:string"/>
@@ -543,7 +589,7 @@
   <xs:element name="give">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="kit"/>
+        <xs:element ref="kit" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="kit" type="xs:string"/>
@@ -552,7 +598,7 @@
   <xs:element name="lend">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="kit"/>
+        <xs:element ref="kit" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="kit" type="xs:string"/>
@@ -587,7 +633,7 @@
   <xs:element name="mobs">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="filter"/>
+        <xs:element ref="filter" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="filter" type="xs:string"/>
     </xs:complexType>
@@ -595,7 +641,7 @@
   <xs:element name="modes">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="mode"/>
+        <xs:element ref="mode" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="boss-bar" type="xs:boolean"/>
     </xs:complexType>
@@ -621,7 +667,7 @@
   <xs:element name="pickups">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="pickup"/>
+        <xs:element ref="pickup" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -655,7 +701,7 @@
   <xs:element name="projectiles">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="projectile"/>
+        <xs:element ref="projectile" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -664,7 +710,7 @@
       <xs:choice>
         <xs:element ref="effect"/>
         <xs:element ref="destroy-filter"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="potion"/>
+        <xs:element ref="potion" minOccurs="0" maxOccurs="unbounded"/>
       </xs:choice>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="name"/>
@@ -690,7 +736,7 @@
   <xs:element name="proximity-alarms">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="proximity-alarm"/>
+        <xs:element ref="proximity-alarm" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -713,12 +759,18 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="rage">
+    <xs:annotation>
+      <xs:documentation>Enable the one hit kill, rage style gamemode. 
+
+One hit kills will only be applied to items that have a sharpness enchantment greater than level 1. One shot arrow kills will only be applied to bows that have a power enchantment greater than level 1.
+NOTE: This module must be used in conjunction with another gamemode.</xs:documentation>
+    </xs:annotation>
     <xs:complexType/>
   </xs:element>
   <xs:element name="renewables">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="renewable"/>
+        <xs:element ref="renewable" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="interval" type="xs:NMTOKEN"/>
     </xs:complexType>
@@ -726,12 +778,12 @@
   <xs:element name="renewable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="renew-filer"/>
-        <xs:element minOccurs="0" ref="region"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="renew"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="replace"/>
-        <xs:element minOccurs="0" ref="renew-filter"/>
-        <xs:element minOccurs="0" ref="replace-filter"/>
+        <xs:element ref="renew-filer" minOccurs="0"/>
+        <xs:element ref="region" minOccurs="0"/>
+        <xs:element ref="renew" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="replace" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="renew-filter" minOccurs="0"/>
+        <xs:element ref="replace-filter" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="avoid-entities" type="xs:boolean"/>
       <xs:attribute name="avoid-players" type="xs:integer"/>
@@ -774,14 +826,14 @@
   <xs:element name="respawns">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="respawn"/>
+        <xs:element ref="respawn" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="rules">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="rule"/>
+        <xs:element ref="rule" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -820,8 +872,8 @@
   <xs:element name="toolrepair">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="tool"/>
-        <xs:element minOccurs="0" ref="item"/>
+        <xs:element ref="tool" maxOccurs="unbounded"/>
+        <xs:element ref="item" minOccurs="0"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -829,7 +881,7 @@
   <xs:element name="tutorial">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="stage"/>
+        <xs:element ref="stage" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -837,7 +889,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element ref="message"/>
-        <xs:element minOccurs="0" ref="teleport"/>
+        <xs:element ref="teleport" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="title" use="required"/>
     </xs:complexType>
@@ -853,7 +905,7 @@
   <xs:element name="world-borders">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="world-border"/>
+        <xs:element ref="world-border" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="buffer" type="xs:integer"/>
       <xs:attribute name="center"/>
@@ -880,7 +932,8 @@
         <xs:element ref="fall-chance"/>
         <xs:element ref="fall-speed"/>
         <xs:element ref="land-chance"/>
-         <xs:element ref="match"/> <!-- Error? -->
+        <xs:element ref="match"/>
+        <!-- Error? -->
         <xs:element ref="modify"/>
         <xs:element ref="replacement"/>
         <xs:element ref="sticky"/>
@@ -899,7 +952,7 @@
   <xs:element name="drops">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
+        <xs:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -909,10 +962,10 @@
   <xs:element name="match">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="all-blocks"/>
+        <xs:element ref="all-blocks" minOccurs="0"/>
         <xs:choice>
-          <xs:element maxOccurs="unbounded" ref="item"/>
-          <xs:element maxOccurs="unbounded" ref="material"/>
+          <xs:element ref="item" maxOccurs="unbounded"/>
+          <xs:element ref="material" maxOccurs="unbounded"/>
         </xs:choice>
       </xs:sequence>
     </xs:complexType>
@@ -920,10 +973,10 @@
   <xs:element name="modify">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="attribute"/>
-        <xs:element minOccurs="0" ref="enchantment"/>
-        <xs:element minOccurs="0" ref="can-destroy"/>
-        <xs:element minOccurs="0" ref="can-place-on"/>
+        <xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="enchantment" minOccurs="0"/>
+        <xs:element ref="can-destroy" minOccurs="0"/>
+        <xs:element ref="can-place-on" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="name"/>
       <xs:attribute name="show-attributes" type="xs:boolean"/>
@@ -968,23 +1021,23 @@
   <xs:element name="any">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="flag-carried"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cause"/>
+        <xs:element ref="flag-carried" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="cause" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice minOccurs="0">
           <xs:element ref="deny"/>
           <xs:element ref="always"/>
         </xs:choice>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="option"/>
+        <xs:element ref="option" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="any"/>
           <xs:element ref="item"/>
         </xs:choice>
         <xs:choice>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="entity"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="carrying-flag"/>
+          <xs:element ref="entity" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="carrying-flag" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="time"/>
-        <xs:element minOccurs="0" ref="flag-returned"/>
+        <xs:element ref="time" minOccurs="0"/>
+        <xs:element ref="flag-returned" minOccurs="0"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="all"/>
           <xs:element ref="filter"/>
@@ -996,9 +1049,9 @@
         </xs:choice>
         <xs:choice>
           <xs:element ref="region"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="wearing"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="holding"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="carrying"/>
+          <xs:element ref="wearing" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="holding" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="carrying" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="count" type="xs:NMTOKEN"/>
@@ -1013,8 +1066,8 @@
   <xs:element name="option">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="any"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="item"/>
+        <xs:element ref="any" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="item" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="weight" type="xs:integer"/>
     </xs:complexType>
@@ -1028,11 +1081,11 @@
           <xs:element ref="everywhere"/>
           <xs:element ref="intersect"/>
         </xs:choice>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="circle"/>
+        <xs:element ref="circle" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
           <xs:element ref="point"/>
           <xs:element ref="region"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="complement"/>
+          <xs:element ref="complement" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
         <xs:choice minOccurs="0">
           <xs:element ref="below"/>
@@ -1046,9 +1099,9 @@
         <xs:choice>
           <xs:element ref="mirror"/>
           <xs:element ref="union"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="sphere"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="translate"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="block"/>
+          <xs:element ref="sphere" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="translate" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="block" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="id"/>
@@ -1085,13 +1138,13 @@
   <xs:element name="not">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="region"/>
-        <xs:element minOccurs="0" ref="all"/>
+        <xs:element ref="region" minOccurs="0"/>
+        <xs:element ref="all" minOccurs="0"/>
         <xs:choice minOccurs="0">
           <xs:element ref="team"/>
           <xs:element ref="wearing"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="not"/>
+        <xs:element ref="not" minOccurs="0"/>
         <xs:choice minOccurs="0">
           <xs:element ref="carrying"/>
           <xs:element ref="carrying-flag"/>
@@ -1105,8 +1158,8 @@
           <xs:element ref="gliding"/>
           <xs:element ref="same-team"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="any"/>
-        <xs:element minOccurs="0" ref="objective"/>
+        <xs:element ref="any" minOccurs="0"/>
+        <xs:element ref="objective" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="id" type="xs:NMTOKEN"/>
     </xs:complexType>
@@ -1144,8 +1197,8 @@
   <xs:element name="box">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="region"/>
-        <xs:element minOccurs="0" ref="redeemables"/>
+        <xs:element ref="region" minOccurs="0"/>
+        <xs:element ref="redeemables" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="kit" type="xs:string"/>
@@ -1158,7 +1211,7 @@
   <xs:element name="redeemables">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="item"/>
+        <xs:element ref="item" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="region" type="xs:string"/>
     </xs:complexType>
@@ -1169,8 +1222,8 @@
   <xs:element name="cores">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="cores"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="core"/>
+        <xs:element ref="cores" minOccurs="0"/>
+        <xs:element ref="core" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="leak" type="xs:integer"/>
       <xs:attribute name="material"/>
@@ -1182,7 +1235,7 @@
   <xs:element name="core">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="region"/>
+        <xs:element ref="region" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="name"/>
@@ -1196,7 +1249,7 @@
   <xs:element name="translate">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="region"/>
+        <xs:element ref="region" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="offset" use="required"/>
@@ -1252,13 +1305,16 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="all">
+    <xs:annotation>
+      <xs:documentation>Allow if all of the child filters allow, deny if one or more deny, otherwise abstain.</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:sequence>
         <xs:choice minOccurs="0">
           <xs:element ref="all"/>
           <xs:element ref="walking"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="match-finished"/>
+        <xs:element ref="match-finished" minOccurs="0"/>
         <xs:choice minOccurs="0">
           <xs:element ref="above"/>
           <xs:element ref="flag-carried"/>
@@ -1267,7 +1323,7 @@
           <xs:element ref="attacker"/>
           <xs:element ref="victim"/>
         </xs:sequence>
-        <xs:element minOccurs="0" ref="cuboid"/>
+        <xs:element ref="cuboid" minOccurs="0"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="any"/>
           <xs:element ref="carrying"/>
@@ -1399,8 +1455,8 @@
   <xs:element name="wools">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="wools"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="wool"/>
+        <xs:element ref="wools" minOccurs="0"/>
+        <xs:element ref="wool" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="craftable" type="xs:boolean"/>
       <xs:attribute name="location"/>
@@ -1410,7 +1466,7 @@
   <xs:element name="wool">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="monument"/>
+        <xs:element ref="monument" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="color" type="dyeType" use="required"/>
       <xs:attribute name="craftable" type="xs:boolean"/>
@@ -1446,12 +1502,15 @@
   <xs:element name="teams">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="team"/>
+        <xs:element ref="team" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="show-name-tags" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="below">
+    <xs:annotation>
+      <xs:documentation>The above and below regions can be used to conveniently define axis-aligned half-spaces</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="x" type="xs:integer"/>
@@ -1510,8 +1569,8 @@
   <xs:element name="destroyables">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="destroyables"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="destroyable"/>
+        <xs:element ref="destroyables" minOccurs="0"/>
+        <xs:element ref="destroyable" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="completion"/>
       <xs:attribute name="id"/>
@@ -1529,7 +1588,7 @@
   <xs:element name="destroyable">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="region"/>
+        <xs:element ref="region" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="completion"/>
       <xs:attribute name="id" type="xs:string"/>
@@ -1565,7 +1624,7 @@
   <xs:element name="result">
     <xs:complexType mixed="true">
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="enchantment"/>
+        <xs:element ref="enchantment" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="amount" type="xs:integer"/>
       <xs:attribute name="color" type="hexType"/>
@@ -1620,16 +1679,14 @@
         <xs:element ref="shield"/>
         <xs:element ref="unless"/>
         <xs:element ref="walk-speed"/>
+        <xs:element ref="attribute"/>
       </xs:choice>
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="force" type="xs:boolean"/>
-      <xs:attribute name="id"/>
-      <xs:attribute name="lend-kit" type="xs:boolean"/>
-      <xs:attribute name="locked" type="xs:boolean"/>
-      <xs:attribute name="name" type="xs:string"/>
-      <xs:attribute name="parent" type="xs:string"/>
+      <xs:attribute name="id" use="required"/>
       <xs:attribute name="parents"/>
       <xs:attribute name="potion-particles" type="xs:boolean"/>
+      <xs:attribute name="reset-ender-pearls" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="boots">
@@ -1720,9 +1777,10 @@
   <xs:element name="health" type="xs:integer"/>
   <xs:element name="helmet">
     <xs:complexType mixed="true">
-      <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="enchantment"/>
-      </xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="attribute"/>
+        <xs:element ref="enchantment"/>
+      </xs:choice>
       <xs:attribute name="attributes" type="xs:NMTOKEN"/>
       <xs:attribute name="color" type="hexType"/>
       <xs:attribute name="damage" type="xs:integer"/>
@@ -1780,15 +1838,18 @@
   </xs:element>
   <xs:element name="walk-speed" type="xs:decimal"/>
   <xs:element name="author">
+    <xs:annotation>
+      <xs:documentation>A major author of the map, used in &lt;authors&gt;</xs:documentation>
+    </xs:annotation>
     <xs:complexType mixed="true">
-      <xs:attribute name="uuid" type="uuidType"/>
+      <xs:attribute name="uuid" type="uuidType" use="required"/>
       <xs:attribute name="contribution"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="respawn">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="message"/>
+        <xs:element ref="message" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="auto" type="xs:boolean"/>
       <xs:attribute name="blackout" type="xs:boolean"/>
@@ -1829,7 +1890,7 @@
   <xs:element name="class">
     <xs:complexType mixed="true">
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="kit"/>
+        <xs:element ref="kit" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="default" type="xs:boolean"/>
       <xs:attribute name="description"/>
@@ -1907,7 +1968,7 @@
   <xs:element name="pickup-kit">
     <xs:complexType>
       <xs:sequence>
-        <xs:element maxOccurs="unbounded" ref="potion"/>
+        <xs:element ref="potion" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="force" type="xs:boolean"/>
     </xs:complexType>
@@ -1920,7 +1981,7 @@
           <xs:element ref="spawns"/>
           <xs:element ref="default"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="filter"/>
+        <xs:element ref="filter" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="angle"/>
       <xs:attribute name="exclusive" type="xs:boolean"/>
@@ -1959,7 +2020,7 @@
   <xs:element name="message">
     <xs:complexType mixed="true">
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="line"/>
+        <xs:element ref="line" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -1988,7 +2049,7 @@
   <xs:element name="dynamic">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="filter"/>
+        <xs:element ref="filter" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="filter" type="xs:string"/>
       <xs:attribute name="location"/>
@@ -2000,7 +2061,7 @@
   <xs:element name="structure">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="region"/>
+        <xs:element ref="region" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="air" type="xs:boolean"/>
       <xs:attribute name="clear" type="xs:boolean"/>
@@ -2030,10 +2091,10 @@
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="timeType">
-          <xs:attribute name="id" type="xs:string"/>
           <xs:attribute name="result" type="xs:string"/>
-          <xs:attribute name="results" type="xs:string"/>
           <xs:attribute name="show" type="xs:boolean"/>
+          <xs:attribute name="overtime" type="timeType"/>
+          <xs:attribute name="max-overtime" type="timeType"/>
         </xs:extension>
       </xs:simpleContent>
     </xs:complexType>
@@ -2044,6 +2105,9 @@
     </xs:complexType>
   </xs:element>
   <xs:element name="allow">
+    <xs:annotation>
+      <xs:documentation>Allow if the child filter allows, otherwise abstain (transform deny to abstain).</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:choice>
         <xs:element ref="any"/>
@@ -2075,21 +2139,21 @@
   <xs:element name="complement">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="complement"/>
+        <xs:element ref="complement" minOccurs="0"/>
         <xs:choice>
           <xs:element ref="everywhere"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="cylinder"/>
+          <xs:element ref="cylinder" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="negative"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="union"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="region"/>
-        <xs:element minOccurs="0" ref="above"/>
-        <xs:element minOccurs="0" ref="below"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="circle"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="rectangle"/>
+        <xs:element ref="negative" minOccurs="0"/>
+        <xs:element ref="union" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="region" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="above" minOccurs="0"/>
+        <xs:element ref="below" minOccurs="0"/>
+        <xs:element ref="circle" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="rectangle" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="block"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="cuboid"/>
+          <xs:element ref="block" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element ref="cuboid" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
       </xs:sequence>
       <xs:attribute name="id" type="xs:string"/>
@@ -2098,7 +2162,7 @@
   <xs:element name="union">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="sphere"/>
+        <xs:element ref="sphere" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice minOccurs="0" maxOccurs="unbounded">
           <xs:element ref="block"/>
           <xs:element ref="circle"/>
@@ -2124,7 +2188,7 @@
   <xs:element name="intersect">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="region"/>
+        <xs:element ref="region" minOccurs="0"/>
         <xs:choice minOccurs="0">
           <xs:element ref="above"/>
           <xs:element ref="cuboid"/>
@@ -2177,9 +2241,9 @@
         <xs:choice>
           <xs:element ref="cylinder"/>
           <xs:element ref="everywhere"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="cuboid"/>
+          <xs:element ref="cuboid" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="region"/>
+        <xs:element ref="region" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice minOccurs="0">
           <xs:element ref="block"/>
           <xs:element ref="filter"/>
@@ -2212,12 +2276,15 @@
   </xs:element>
   <xs:element name="contributor">
     <xs:complexType mixed="true">
-      <xs:attribute name="uuid" type="uuidType"/>
+      <xs:attribute name="uuid" type="uuidType" use="required"/>
       <xs:attribute name="contribution"/>
     </xs:complexType>
   </xs:element>
   <xs:element name="game-mode" type="xs:string"/>
   <xs:element name="attribute">
+    <xs:annotation>
+      <xs:documentation>Attribute Modifier</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:simpleContent>
         <xs:extension base="xs:string">
@@ -2231,18 +2298,18 @@
   <!--enchantmentType-->
   <xs:element name="enchantment">
     <xs:complexType mixed="true">
-    	<xs:simpleContent>
-		  <xs:extension base="enchantmentType">
-		  	<xs:attribute name="level" type="xs:integer"/>
-		  </xs:extension>
-		</xs:simpleContent>
+      <xs:simpleContent>
+        <xs:extension base="enchantmentType">
+          <xs:attribute name="level" type="xs:integer"/>
+        </xs:extension>
+      </xs:simpleContent>
     </xs:complexType>
   </xs:element>
   <xs:element name="can-destroy">
     <xs:complexType>
       <xs:choice>
         <xs:element ref="all-blocks"/>
-        <xs:element maxOccurs="unbounded" ref="material"/>
+        <xs:element ref="material" maxOccurs="unbounded"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
@@ -2250,11 +2317,14 @@
     <xs:complexType>
       <xs:choice>
         <xs:element ref="all-blocks"/>
-        <xs:element maxOccurs="unbounded" ref="material"/>
+        <xs:element ref="material" maxOccurs="unbounded"/>
       </xs:choice>
     </xs:complexType>
   </xs:element>
   <xs:element name="all-blocks">
+    <xs:annotation>
+      <xs:documentation>Match all block type materials.</xs:documentation>
+    </xs:annotation>
     <xs:complexType/>
   </xs:element>
   <xs:element name="flag-carried" type="xs:string"/>
@@ -2263,6 +2333,9 @@
     <xs:complexType/>
   </xs:element>
   <xs:element name="above">
+    <xs:annotation>
+      <xs:documentation>The above and below regions can be used to conveniently define axis-aligned half-spaces</xs:documentation>
+    </xs:annotation>
     <xs:complexType>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="x" type="xs:integer"/>
@@ -2280,16 +2353,16 @@
   <xs:element name="negative">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="cuboid"/>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="complement"/>
+        <xs:element ref="cuboid" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="complement" minOccurs="0" maxOccurs="unbounded"/>
         <xs:choice minOccurs="0">
           <xs:element ref="cylinder"/>
           <xs:element ref="intersect"/>
         </xs:choice>
-        <xs:element minOccurs="0" ref="union"/>
+        <xs:element ref="union" minOccurs="0"/>
         <xs:choice>
           <xs:element ref="circle"/>
-          <xs:element minOccurs="0" maxOccurs="unbounded" ref="region"/>
+          <xs:element ref="region" minOccurs="0" maxOccurs="unbounded"/>
           <xs:choice minOccurs="0" maxOccurs="unbounded">
             <xs:element ref="mirror"/>
             <xs:element ref="rectangle"/>
@@ -2330,7 +2403,7 @@
   <xs:element name="block">
     <xs:complexType mixed="true">
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="all"/>
+        <xs:element ref="all" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="location"/>
@@ -2363,7 +2436,7 @@
   <xs:element name="post">
     <xs:complexType mixed="true">
       <xs:sequence>
-        <xs:element minOccurs="0" maxOccurs="unbounded" ref="block"/>
+        <xs:element ref="block" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
       <xs:attribute name="id" type="xs:string"/>
       <xs:attribute name="owner" type="xs:string"/>
@@ -2378,8 +2451,8 @@
   <xs:element name="net">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" ref="region"/>
-        <xs:element minOccurs="0" ref="capture-filter"/>
+        <xs:element ref="region" minOccurs="0"/>
+        <xs:element ref="capture-filter" minOccurs="0"/>
       </xs:sequence>
       <xs:attribute name="capture-filter" type="xs:string"/>
       <xs:attribute name="deny-message"/>
@@ -2480,15 +2553,15 @@
     <xs:union memberTypes="entityType creatureType"/>
   </xs:simpleType>
   <xs:simpleType name="enchantmentType">
-  	<xs:union memberTypes="enchantmentPattern enchantmentEnum"/>
+    <xs:union memberTypes="enchantmentPattern enchantmentEnum"/>
   </xs:simpleType>
   <xs:simpleType name="enchantmentLevelType">
     <xs:union memberTypes="enchantmentEnum enchantmentLevelPattern"/>
   </xs:simpleType>
   <!--enchantment types-->
   <xs:simpleType name="enchantmentPattern">
-  	<xs:restriction base="xs:string">
-  		<xs:pattern value="([pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][nN][vV][iI][rR][oO][nN][mM][eE][nN][tT][aA][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][iI][rR][eE]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][aA][lL][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][xX][pP][lL][oO][sS][iI][oO][nN][sS]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][pP][rR][oO][jJ][eE][cC][tT][iI][lL][eE]|[oO][xX][yY][gG][eE][nN]|[wW][aA][tT][eE][rR][ _][wW][oO][rR][kK][eE][rR]|[tT][hH][oO][rR][nN][sS]|[dD][eE][pP][tT][hH][ _][sS][tT][rR][iI][dD][eE][rR]|[fF][rR][oO][sS][tT][ _][wW][aA][lL][kK][eE][rR]|[dD][aA][mM][aA][gG][eE][ _][aA][lL][lL]|[dD][aA][mM][aA][gG][eE][ _][uU][nN][dD][eE][aA][dD]|[dD][aA][mM][aA][gG][eE][ _][aA][rR][tT][hH][rR][oO][pP][oO][dD][sS]|[kK][nN][oO][cC][kK][bB][aA][cC][kK]|[fF][iI][rR][eE][ _][aA][sS][pP][eE][cC][tT]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][mM][oO][bB][sS]|[dD][iI][gG][ _][sS][pP][eE][eE][dD]|[sS][iI][lL][kK][ _][tT][oO][uU][cC][hH]|[dD][uU][rR][aA][bB][iI][lL][iI][tT][yY]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][bB][lL][oO][cC][kK][sS]|[aA][rR][rR][oO][wW][ _][dD][aA][mM][aA][gG][eE]|[aA][rR][rR][oO][wW][ _][kK][nN][oO][cC][kK][bB][aA][cC][kK]|[aA][rR][rR][oO][wW][ _][fF][iI][rR][eE]|[aA][rR][rR][oO][wW][ _][iI][nN][fF][iI][nN][iI][tT][eE]|[lL][uU][cC][kK]|[lL][uU][rR][eE]|[mM][eE][nN][dD][iI][nN][gG]|[vV][aA][nN][iI][sS][hH][iI][nN][gG][ _][cC][uU][rR][sS][eE])"/>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][nN][vV][iI][rR][oO][nN][mM][eE][nN][tT][aA][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][iI][rR][eE]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][fF][aA][lL][lL]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][eE][xX][pP][lL][oO][sS][iI][oO][nN][sS]|[pP][rR][oO][tT][eE][cC][tT][iI][oO][nN][ _][pP][rR][oO][jJ][eE][cC][tT][iI][lL][eE]|[oO][xX][yY][gG][eE][nN]|[wW][aA][tT][eE][rR][ _][wW][oO][rR][kK][eE][rR]|[tT][hH][oO][rR][nN][sS]|[dD][eE][pP][tT][hH][ _][sS][tT][rR][iI][dD][eE][rR]|[fF][rR][oO][sS][tT][ _][wW][aA][lL][kK][eE][rR]|[dD][aA][mM][aA][gG][eE][ _][aA][lL][lL]|[dD][aA][mM][aA][gG][eE][ _][uU][nN][dD][eE][aA][dD]|[dD][aA][mM][aA][gG][eE][ _][aA][rR][tT][hH][rR][oO][pP][oO][dD][sS]|[kK][nN][oO][cC][kK][bB][aA][cC][kK]|[fF][iI][rR][eE][ _][aA][sS][pP][eE][cC][tT]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][mM][oO][bB][sS]|[dD][iI][gG][ _][sS][pP][eE][eE][dD]|[sS][iI][lL][kK][ _][tT][oO][uU][cC][hH]|[dD][uU][rR][aA][bB][iI][lL][iI][tT][yY]|[lL][oO][oO][tT][ _][bB][oO][nN][uU][sS][ _][bB][lL][oO][cC][kK][sS]|[aA][rR][rR][oO][wW][ _][dD][aA][mM][aA][gG][eE]|[aA][rR][rR][oO][wW][ _][kK][nN][oO][cC][kK][bB][aA][cC][kK]|[aA][rR][rR][oO][wW][ _][fF][iI][rR][eE]|[aA][rR][rR][oO][wW][ _][iI][nN][fF][iI][nN][iI][tT][eE]|[lL][uU][cC][kK]|[lL][uU][rR][eE]|[mM][eE][nN][dD][iI][nN][gG]|[vV][aA][nN][iI][sS][hH][iI][nN][gG][ _][cC][uU][rR][sS][eE])"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="enchantmentLevelPattern">
@@ -2499,35 +2572,29 @@
   <xs:simpleType name="enchantmentEnum">
     <xs:restriction base="xs:string">
       <xs:enumeration value="protection"/>
-        <xs:enumeration value="protection fire"/>
-        <xs:enumeration value="protection fall"/>
-        <xs:enumeration value="feather_falling"/>
-        <xs:enumeration value="blast_protection"/>
-        <xs:enumeration value="projectile_protection"/>
-        <xs:enumeration value="respiration"/>
-        <xs:enumeration value="aqua_affinity"/>
-        <xs:enumeration value="thorns"/>
-        <xs:enumeration value="depth_strider"/>
-        <xs:enumeration value="frost_walker"/>
-        <xs:enumeration value="curse_of_binding"/>
-        <xs:enumeration value="sharpness"/>
-        <xs:enumeration value="smite"/>
-        <xs:enumeration value="bane_of_arthropods"/>
-        <xs:enumeration value="knockback"/>
-        <xs:enumeration value="fire_aspect"/>
-        <xs:enumeration value="looting"/>
-        <xs:enumeration value="efficiency"/>
-        <xs:enumeration value="silk_touch"/>
-        <xs:enumeration value="unbreaking"/>
-        <xs:enumeration value="fortune"/>
-        <xs:enumeration value="power"/>
-        <xs:enumeration value="punch"/>
-        <xs:enumeration value="flame"/>
-        <xs:enumeration value="infinity"/>
-        <xs:enumeration value="luck_of_the_sea"/>
-        <xs:enumeration value="lure"/>
-        <xs:enumeration value="mending"/>
-        <xs:enumeration value="curse_of_vanishing"/>
+      <xs:enumeration value="fire_protection"/>
+      <xs:enumeration value="feather_falling"/>
+      <xs:enumeration value="blast_protection"/>
+      <xs:enumeration value="projectile_protection"/>
+      <xs:enumeration value="respiration"/>
+      <xs:enumeration value="aqua_affinity"/>
+      <xs:enumeration value="thorns"/>
+      <xs:enumeration value="sharpness"/>
+      <xs:enumeration value="smite"/>
+      <xs:enumeration value="bane_of_arthropods"/>
+      <xs:enumeration value="knockback"/>
+      <xs:enumeration value="fire_aspect"/>
+      <xs:enumeration value="looting"/>
+      <xs:enumeration value="efficiency"/>
+      <xs:enumeration value="silk_touch"/>
+      <xs:enumeration value="unbreaking"/>
+      <xs:enumeration value="fortune"/>
+      <xs:enumeration value="power"/>
+      <xs:enumeration value="punch"/>
+      <xs:enumeration value="flame"/>
+      <xs:enumeration value="infinity"/>
+      <xs:enumeration value="luck_of_the_sea"/>
+      <xs:enumeration value="lure"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="textType">
@@ -3072,11 +3139,14 @@
   </xs:simpleType>
   <xs:simpleType name="hexType">
     <xs:restriction base="xs:string">
-      <xs:length value="6" fixed="true" />
+      <xs:length value="6" fixed="true"/>
       <xs:pattern value="[0-9a-fA-F]{6}"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="uuidType">
+    <xs:annotation>
+      <xs:documentation>A UUID is a unique user identifier that is used to keep track of players even if they change their name. You can check player UUID's at https://mcuuid.net. If an author or contributor is defined without a UUID that player will not get any mapmaker perks on the map.</xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:minLength value="32"/>
       <xs:maxLength value="36"/>
@@ -3093,4 +3163,11 @@
       <xs:pattern value="[0-9]+\.*[0-9]*\.*[0-9]*"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:element name="ghostsquadron">
+    <xs:complexType>
+      <xs:annotation>
+        <xs:documentation>Enables the ghostsquadron gamemode and all its features. Ghost squadron maps set a custom gamemode title in the gs.xml with the &lt;map game="Ghost Squadron"&gt; attribute. When not using the default GS XML include a custom title should be set. The default ghostsquadron classes can be found here: https://raw.githubusercontent.com/OvercastNetwork/maps.oc.tc/master/Blitz/GS/gs.xml</xs:documentation>
+      </xs:annotation>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

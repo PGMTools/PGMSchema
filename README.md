@@ -11,9 +11,9 @@ An XML schema is a description of a type of XML document, typically expressed in
 At the top of your XML within the `map` element add the following.
 
 ```
-<map proto="1.4.3"
+<map proto="1.4.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PGMTools/PGMSchema/master/map.xsd">
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/harvanchik/PGMSchema/master/map.xsd">
 ```
 
 This will allow you to run your XML through an online schema validator such as [FreeFormatter](https://www.freeformatter.com/xml-validator-xsd.html).
